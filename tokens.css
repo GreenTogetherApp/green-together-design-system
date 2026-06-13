@@ -1,0 +1,239 @@
+/* Green Together — Design tokens (vendored snapshot)
+   ============================================================
+   SOURCE OF TRUTH: claude.ai/design project "Green Together Design System"
+   (projectId b38f3985-1de7-461e-bb9b-e9e51e69e93c), file colors_and_type.css.
+
+   This is a PINNED SNAPSHOT — see src/design-system/VERSION.md for the pull
+   date and how to bump it. Do not hand-edit token values here; edit them in
+   the design-system project and re-pull, so the system stays the single
+   source of truth.
+
+   Differences from the upstream file (intentional, for the Vite/npm app):
+     - @font-face blocks removed — fonts load via @fontsource packages in index.css.
+     - phosphor-icons.css @import removed — icons load via @phosphor-icons/react.
+     - html/body base rule removed — owned by index.css (admin density: 14px base).
+   ============================================================ */
+
+:root {
+  /* ─── Brand tint ramps (11 stops, 50 → 950) ────────── */
+  --brand-green-50:  #E8F8F0;
+  --brand-green-100: #C5EFD7;
+  --brand-green-200: #94E2B6;
+  --brand-green-300: #5FD08F;
+  --brand-green-400: #3CC178;
+  --brand-green-500: #22B573;  /* brand anchor */
+  --brand-green-600: #1A9961;
+  --brand-green-700: #14784C;
+  --brand-green-800: #0F5C3A;
+  --brand-green-900: #0A4329;
+  --brand-green-950: #052618;
+
+  --brand-dark-blue-50:  #E6F2F8;
+  --brand-dark-blue-100: #C2DFEC;
+  --brand-dark-blue-200: #94C6DD;
+  --brand-dark-blue-300: #5FA8CA;
+  --brand-dark-blue-400: #2E8AB5;
+  --brand-dark-blue-500: #0B618F;  /* brand anchor */
+  --brand-dark-blue-600: #095378;
+  --brand-dark-blue-700: #084362;
+  --brand-dark-blue-800: #06334A;
+  --brand-dark-blue-900: #042234;
+  --brand-dark-blue-950: #02131F;
+
+  --brand-light-blue-50:  #E8F6FC;
+  --brand-light-blue-100: #C6E8F7;
+  --brand-light-blue-200: #99D5F0;
+  --brand-light-blue-300: #6BC1E8;
+  --brand-light-blue-400: #45B5E5;
+  --brand-light-blue-500: #29ABE2;  /* brand anchor */
+  --brand-light-blue-600: #1F8FBE;
+  --brand-light-blue-700: #18729A;
+  --brand-light-blue-800: #115676;
+  --brand-light-blue-900: #0B3D54;
+  --brand-light-blue-950: #06222F;
+
+  --brand-yellow-50:  #FEF5E0;
+  --brand-yellow-100: #FCE6B3;
+  --brand-yellow-200: #FAD27D;
+  --brand-yellow-300: #F8BE47;
+  --brand-yellow-400: #F6B226;
+  --brand-yellow-500: #F4A604;  /* brand anchor */
+  --brand-yellow-600: #C88803;
+  --brand-yellow-700: #9C6B02;
+  --brand-yellow-800: #704D02;
+  --brand-yellow-900: #4D3501;
+  --brand-yellow-950: #2A1D00;
+
+  /* ─── Brand colors (back-compat aliases) ───────────── */
+  --gt-green:        var(--brand-green-500);
+  --gt-green-deep:   var(--brand-green-800);  /* primary-active */
+  --gt-green-fresh:  var(--brand-green-600);  /* primary-hover */
+  --gt-green-soft:   var(--brand-green-50);
+
+  --gt-blue-dark:    var(--brand-dark-blue-500);
+  --gt-blue-light:   var(--brand-light-blue-500);
+  --gt-blue-pale:    var(--brand-light-blue-100);
+
+  --gt-yellow:       var(--brand-yellow-500);
+  --gt-orange:       #F54A00;
+
+  --gt-red:          #E11D48;
+  --gt-red-soft:     #FCA5A5;
+
+  /* ─── Data viz tokens ──────────────────────────────── */
+  /* Surface A — green-led */
+  --chart-a-1: var(--brand-green-500);
+  --chart-a-2: var(--brand-light-blue-500);
+  --chart-a-3: #2CBFB2;
+  --chart-a-4: var(--brand-yellow-500);
+  --chart-a-5: #116841;
+  --chart-a-6: #7CCBEB;
+  --chart-a-7: #8C97A1;
+  --chart-a-8: #6C5CE7;
+
+  /* Surface B — dark-blue-led (the admin / data-heavy surface — this app) */
+  --chart-b-1: var(--brand-dark-blue-500);
+  --chart-b-2: var(--brand-light-blue-500);
+  --chart-b-3: #2CBFB2;
+  --chart-b-4: var(--brand-yellow-500);
+  --chart-b-5: #084F73;
+  --chart-b-6: #6BACD3;
+  --chart-b-7: #8C97A1;
+  --chart-b-8: #4A5562;
+
+  /* Sequential (heatmap / intensity) — dark-blue family, 5 steps */
+  --seq-1: #E8F3FA;
+  --seq-2: #B8D8EE;
+  --seq-3: #6BACD3;
+  --seq-4: #3385B4;
+  --seq-5: var(--brand-dark-blue-500);
+
+  /* Diverging — negative/warning/neutral/positive */
+  --div-negative:   #E11D48;
+  --div-warning:    var(--brand-yellow-500);
+  --div-neutral:    #E8ECF0;
+  --div-positive-1: #52C89A;
+  --div-positive-2: var(--brand-green-500);
+
+  /* Semantic chart colors (surface-invariant) */
+  --chart-success: var(--brand-green-500);
+  --chart-warning: var(--brand-yellow-500);
+  --chart-error:   #E11D48;
+  --chart-neutral: #8C97A1;
+  --chart-target:  var(--brand-dark-blue-500);
+  --chart-info:    var(--brand-light-blue-500);
+
+  /* ─── Neutrals (true brand) ────────────────────────── */
+  --gt-ink:          #1A2026;  /* primary text */
+  --gt-ink-2:        #2E363E;  /* alt text */
+  --gt-text-2:       #4A5560;  /* secondary text */
+  --gt-placeholder:  #8C97A1;  /* placeholder/muted */
+  --gt-line:         #D5DBE1;  /* borders */
+  --gt-surface-2:    #F7F9FA;  /* tinted surface (cards, disabled bg) */
+  --gt-surface:      #FFFFFF;  /* base surface */
+  --gt-bg-warm:      #F5F5F5;  /* page bg (neutral) */
+
+  /* ─── Semantic color tokens ────────────────────────── */
+  --color-bg:                  var(--gt-surface);
+  --color-bg-subtle:           var(--gt-surface-2);
+  --color-bg-muted:            var(--gt-bg-warm);
+  --color-fg:                  var(--gt-ink);
+  --color-fg-muted:            var(--gt-text-2);
+  --color-fg-subtle:           var(--gt-placeholder);
+  --color-border:              var(--gt-line);
+  --color-border-strong:       var(--gt-ink-2);
+
+  --color-primary:             var(--gt-green);
+  --color-primary-hover:       var(--gt-green-fresh);
+  --color-primary-active:      var(--gt-green-deep);
+  --color-primary-fg:          #FFFFFF;
+  --color-primary-soft:        var(--gt-green-soft);
+
+  --color-secondary:           var(--gt-blue-dark);
+  --color-secondary-fg:        #FFFFFF;
+
+  --color-success:             var(--gt-green);
+  --color-info:                var(--gt-blue-light);
+  --color-warning:             var(--gt-yellow);
+  --color-danger:              var(--gt-red);
+
+  --color-focus-ring:          var(--gt-blue-light);
+
+  /* Disabled */
+  --color-disabled-bg:         #F7F9FA;
+  --color-disabled-border:     #8C97A1;
+  --color-disabled-fg:         #8C97A1;
+
+  /* ─── Type families ────────────────────────────────── */
+  --font-sans:   "Geist Variable", "Geist", "Inter", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-serif:  "El Messiri", Georgia, "Iowan Old Style", serif;
+  --font-mono:   "Geist Mono Variable", "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --font-headings:        var(--font-sans);
+  --font-headings-serif:  var(--font-serif);
+  --font-body:            var(--font-sans);
+
+  /* ─── Heading scale (canonical) ────────────────────── */
+  --h00-family:   var(--font-headings-serif);
+  --h00-weight:   600; --h00-size: 64px; --h00-lh: 72px;   --h00-tracking: -1.5px;
+  --h1-family:    var(--font-headings);
+  --h1-weight:    600; --h1-size:  48px; --h1-lh:  48px;   --h1-tracking:  -1.5px;
+  --h2-family:    var(--font-headings);
+  --h2-weight:    600; --h2-size:  30px; --h2-lh:  30px;   --h2-tracking:  -1px;
+  --h3-family:    var(--font-headings-serif);
+  --h3-weight:    600; --h3-size:  24px; --h3-lh:  28.8px; --h3-tracking:  -1px;
+  --h4-family:    var(--font-headings);
+  --h4-weight:    600; --h4-size:  20px; --h4-lh:  24px;   --h4-tracking:  0;
+
+  /* ─── Paragraph scale ──────────────────────────────── */
+  --p-large-size:  18px;  --p-large-lh: 27px;
+  --p-size:        16px;  --p-lh:       24px;
+  --p-small-size:  14px;  --p-small-lh: 20px;
+  --p-mini-size:   12px;  --p-mini-lh:  16px;
+  --p-weight:          400;
+  --p-medium-weight:   500;
+  --p-bold-weight:     600;
+
+  /* ─── Caption / mono ───────────────────────────────── */
+  --caption-size: 12px; --caption-lh: 21px; --caption-tracking: 1.5px; --caption-weight: 400;
+  --mono-size: 16px; --mono-lh: 24px; --mono-tracking: 0; --mono-weight: 400;
+
+  /* ─── Spacing — 8px mini-unit ─────────────────────── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
+
+  /* ─── Radius ───────────────────────────────────────── */
+  --radius-xs: 4px; --radius-sm: 6px; --radius: 8px; --radius-md: 10px;
+  --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
+
+  /* ─── Shadows ──────────────────────────────────────── */
+  --shadow-xs:  0 1px 2px 0 rgba(0,0,0,0.05);
+  --shadow-sm:  0 1px 2px -1px rgba(0,0,0,0.10), 0 1px 3px 0 rgba(0,0,0,0.10);
+  --shadow:     0 2px 4px 0 rgba(0,0,0,0.05);
+  --shadow-md:  0 4px 8px 0 rgba(0,0,0,0.08);
+  --shadow-lg:  0 8px 16px 0 rgba(0,0,0,0.12);
+  --shadow-focus: 0 0 0 3px rgba(41,171,226,0.30); /* light-blue focus ring */
+
+  /* ─── Motion ───────────────────────────────────────── */
+  --ease: cubic-bezier(.2,.8,.2,1); --ease-out: cubic-bezier(0,0,.2,1);
+  --dur-fast: 120ms; --dur: 200ms; --dur-slow: 320ms;
+
+  --icon-size: 18px;
+}
+
+/* ─── Typographic helper classes (additive; opt-in) ────── */
+.h00, .display {
+  font-family: var(--h00-family); font-weight: var(--h00-weight);
+  font-size: var(--h00-size); line-height: var(--h00-lh); letter-spacing: var(--h00-tracking);
+  color: var(--color-fg); margin: 0;
+}
+.h1 { font-family: var(--h1-family); font-weight: var(--h1-weight); font-size: var(--h1-size); line-height: var(--h1-lh); letter-spacing: var(--h1-tracking); margin: 0; }
+.h2 { font-family: var(--h2-family); font-weight: var(--h2-weight); font-size: var(--h2-size); line-height: var(--h2-lh); letter-spacing: var(--h2-tracking); margin: 0; }
+.h3 { font-family: var(--h3-family); font-weight: var(--h3-weight); font-size: var(--h3-size); line-height: var(--h3-lh); letter-spacing: var(--h3-tracking); margin: 0; }
+.h4 { font-family: var(--h4-family); font-weight: var(--h4-weight); font-size: var(--h4-size); line-height: var(--h4-lh); letter-spacing: var(--h4-tracking); margin: 0; }
+
+.caption {
+  font: var(--caption-weight) var(--caption-size)/var(--caption-lh) var(--font-body);
+  letter-spacing: var(--caption-tracking); text-transform: uppercase;
+}
+.mono { font: var(--mono-weight) var(--mono-size)/var(--mono-lh) var(--font-mono); }

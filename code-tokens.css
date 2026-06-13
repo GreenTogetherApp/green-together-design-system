@@ -1,17 +1,16 @@
-/* Green Together — Design tokens (vendored snapshot)
+/* Green Together — CODE tokens (code-tokens.css)
    ============================================================
-   SOURCE OF TRUTH: claude.ai/design project "Green Together Design System"
-   (projectId b38f3985-1de7-461e-bb9b-e9e51e69e93c), file colors_and_type.css.
+   The design tokens as CSS variables, for CODE consumers (CSS / Tailwind / Lovable).
+   The SAME tokens in Figma format live in `figma-tokens.json` (for designers).
 
-   This is a PINNED SNAPSHOT — see src/design-system/VERSION.md for the pull
-   date and how to bump it. Do not hand-edit token values here; edit them in
-   the design-system project and re-pull, so the system stays the single
-   source of truth.
+   PROVENANCE — this is a mirror, not the master. Do not hand-edit as the source:
+     Figma (adjust components, via Figma MCP)
+       → claude.ai/design   (spec + merge — the DESIGN source of truth)
+       → this repo          (the CODE mirror)
+   Edit upstream, then re-sync here. See VERSION.md.
 
-   Differences from the upstream file (intentional, for the Vite/npm app):
-     - @font-face blocks removed — fonts load via @fontsource packages in index.css.
-     - phosphor-icons.css @import removed — icons load via @phosphor-icons/react.
-     - html/body base rule removed — owned by index.css (admin density: 14px base).
+   Fonts via @fontsource / Google Fonts; icons via @phosphor-icons/react (see README) —
+   not bundled here.
    ============================================================ */
 
 :root {

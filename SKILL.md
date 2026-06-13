@@ -1,8 +1,9 @@
 <!-- Mirrored from the claude.ai/design project "Green Together Design System" so the whole
-     team can use it. In THIS repo: the tokens are in `tokens.css` (= the project's
-     `colors_and_type.css`). The `assets/` (icons, logos, fonts) and `ui_kits/web/` referenced
-     below live in the design-system project; in code, load fonts via @fontsource / Google Fonts
-     and icons via @phosphor-icons/react (see README "Fonts" + "Icons"). -->
+     team can use it. In THIS repo: the tokens are in `code-tokens.css` (CSS form, = the
+     project's `colors_and_type.css`) and `figma-tokens.json` (the same values in Figma Tokens
+     Studio format). The `assets/` (icons, logos, fonts) and `ui_kits/web/` referenced below
+     live in the design-system project; in code, load fonts via @fontsource / Google Fonts and
+     icons via @phosphor-icons/react (see README "Fonts" + "Icons"). -->
 
 ---
 name: green-together-design
@@ -49,14 +50,14 @@ user-invocable: true
 ## How to use this skill
 
 1. Read `GUIDELINES.md` (full content/visual/iconography fundamentals).
-2. Import `tokens.css` in any HTML you generate — it provides all the tokens (`--gt-green`, `--font-sans`, `--h00-size`, etc.).
+2. Import `code-tokens.css` in any HTML you generate — it provides all the tokens (`--gt-green`, `--font-sans`, `--h00-size`, etc.). *(Designers: the same tokens are in `figma-tokens.json` for Tokens Studio.)*
 3. For UI components, lift directly from `ui_kits/web/` (in the design-system project) — modular, reusable JSX.
 4. Copy logos from `assets/` — don't redraw them.
 5. For icons, use `@phosphor-icons/react` (Regular). Never substitute emoji, unicode glyphs, or Lucide.
 
 ## Output guidance
 
-- Slides, prototypes, mocks → static HTML with `<link rel="stylesheet" href="tokens.css">`.
+- Slides, prototypes, mocks → static HTML with `<link rel="stylesheet" href="code-tokens.css">`.
 - Production handoff → copy the tokens and reference Geist + El Messiri + Geist Mono from Google Fonts / @fontsource.
 - **No fabricated content.** Don't pad with extra sections or fake stats unless asked.
 - **No new visual motifs.** No bluish-purple gradients, no emoji, no left-border-only cards. The four-color mark is the brand expression.

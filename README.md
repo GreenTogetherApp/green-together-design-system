@@ -28,11 +28,11 @@ can actually open it** — not locked to one person's individual plan, and not e
 
 ### Option A — Prompt / paste (fastest, for Lovable)
 1. Copy the block in **[`PROMPT.md`](./PROMPT.md)** into your Lovable prompt as the design direction.
-2. Paste the contents of **`tokens.css`** so the exact colours/type/spacing are available.
+2. Paste the contents of **`code-tokens.css`** so the exact colours/type/spacing are available.
 3. Build screens; reference the tokens (e.g. *"cards use `--radius-lg` + `--shadow-sm`, primary buttons use `--color-primary`"*).
 
 ### Option B — Import the file (for a connected codebase)
-1. Drop **`tokens.css`** into the project and import it once at the app root.
+1. Drop **`code-tokens.css`** into the project and import it once at the app root.
 2. Load fonts + icons (see below).
 3. Point Tailwind/theme at the CSS variables (`--color-primary`, `--radius-lg`, …) instead of hard-coded hex/px.
 
@@ -80,15 +80,37 @@ import { Leaf } from '@phosphor-icons/react'
 
 ## What's in here
 
-| File | What it is |
-|---|---|
-| `GUIDELINES.md` | **The complete written design system** — every foundation + rule. |
-| `SKILL.md` | At-a-glance spec / agent skill. |
-| `tokens.css` | All design tokens (colours, type, spacing, radius, shadows, motion). |
-| `PROMPT.md` | Paste-ready design-system block for Lovable / AI prompts. |
-| `VERSION.md` | Provenance + the re-sync / cadence model. |
+Filenames are deliberately descriptive so the **same tokens in two formats** never get
+conflated — `code-tokens.css` (the developer/CSS form) vs `figma-tokens.json` (the designer/Figma form):
 
-**Still to mirror in** (live in the claude.ai/design project; tracked in `VERSION.md`):
-`tokens.json` (Figma Tokens Studio), the `ui_kits/web/` React component kit, the `preview/`
-component cards, and `assets/` (logos + Phosphor icon SVGs). Fonts and icons are consumed via
-npm (above), so they aren't vendored here.
+| File | Who it's for | What it is |
+|---|---|---|
+| `GUIDELINES.md` | everyone | **The complete written design system** — every foundation + rule. |
+| `SKILL.md` | everyone / agents | At-a-glance spec / agent skill. |
+| `code-tokens.css` | **developers** | All design tokens as **CSS variables** (CSS / Tailwind / Lovable). |
+| `figma-tokens.json` | **designers** | The **same** tokens in **Figma Tokens Studio** format (import into Figma). |
+| `PROMPT.md` | Lovable / AI | Paste-ready design-system block for prompts. |
+| `VERSION.md` | maintainers | Provenance + the re-sync / cadence model. |
+
+> **`code-tokens.css` and `figma-tokens.json` hold the identical token values** — one for code,
+> one for Figma. Edit neither by hand as a master; both are mirrors re-synced from upstream
+> (see provenance below + `VERSION.md`).
+
+**Components** are not vendored here as a competing source — **see them live and in use in the
+prototype** (link above) to avoid a partial/stale copy drifting from the real thing. Fonts and
+icons are consumed via npm (above), so they aren't vendored either. Logos + Phosphor icon SVGs
+live in the claude.ai/design project (tracked in `VERSION.md`).
+
+---
+
+## Provenance — where the truth comes from
+
+```
+Figma  ──(Figma MCP: adjust a component)──▶  claude.ai/design  ──(re-sync)──▶  this repo
+ │                                            (spec + merge =                   (the CODE +
+ │                                             DESIGN source of truth)           Figma-format mirror)
+ └─ known gap: Figma ⇄ claude.ai sync is still manual — flagged for the team.
+```
+
+Edit **upstream**, then re-sync here — don't hand-edit `code-tokens.css` / `figma-tokens.json`
+as if they were the master. The same provenance note is in the header of `code-tokens.css`.

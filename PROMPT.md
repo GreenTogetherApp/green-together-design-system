@@ -1,7 +1,8 @@
 # Lovable / AI prompt block
 
 Copy everything in the box below into your Lovable prompt as the design direction, then
-paste `tokens.css` after it.
+paste `code-tokens.css` after it. *(`code-tokens.css` is the developer/CSS form of the
+tokens; `figma-tokens.json` is the same values in Figma Tokens Studio format for designers.)*
 
 ---
 
@@ -47,5 +48,5 @@ Use the CSS variables from the tokens file I'm pasting next — reference them
 
 ---
 
-Then paste the full contents of **`tokens.css`** right after, so the exact token values
+Then paste the full contents of **`code-tokens.css`** right after, so the exact token values
 are available to reference.

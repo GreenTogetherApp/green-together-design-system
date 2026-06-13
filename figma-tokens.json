@@ -1,0 +1,203 @@
+{
+  "color": {
+    "brand": {
+      "green": {
+        "50": { "value": "#E8F8F0", "type": "color" },
+        "100": { "value": "#C5EFD7", "type": "color" },
+        "200": { "value": "#94E2B6", "type": "color" },
+        "300": { "value": "#5FD08F", "type": "color" },
+        "400": { "value": "#3CC178", "type": "color" },
+        "500": { "value": "#22B573", "type": "color" },
+        "600": { "value": "#1A9961", "type": "color" },
+        "700": { "value": "#14784C", "type": "color" },
+        "800": { "value": "#0F5C3A", "type": "color" },
+        "900": { "value": "#0A4329", "type": "color" },
+        "950": { "value": "#052618", "type": "color" }
+      },
+      "dark-blue": {
+        "50": { "value": "#E6F2F8", "type": "color" },
+        "100": { "value": "#C2DFEC", "type": "color" },
+        "200": { "value": "#94C6DD", "type": "color" },
+        "300": { "value": "#5FA8CA", "type": "color" },
+        "400": { "value": "#2E8AB5", "type": "color" },
+        "500": { "value": "#0B618F", "type": "color" },
+        "600": { "value": "#095378", "type": "color" },
+        "700": { "value": "#084362", "type": "color" },
+        "800": { "value": "#06334A", "type": "color" },
+        "900": { "value": "#042234", "type": "color" },
+        "950": { "value": "#02131F", "type": "color" }
+      },
+      "light-blue": {
+        "50": { "value": "#E8F6FC", "type": "color" },
+        "100": { "value": "#C6E8F7", "type": "color" },
+        "200": { "value": "#99D5F0", "type": "color" },
+        "300": { "value": "#6BC1E8", "type": "color" },
+        "400": { "value": "#45B5E5", "type": "color" },
+        "500": { "value": "#29ABE2", "type": "color" },
+        "600": { "value": "#1F8FBE", "type": "color" },
+        "700": { "value": "#18729A", "type": "color" },
+        "800": { "value": "#115676", "type": "color" },
+        "900": { "value": "#0B3D54", "type": "color" },
+        "950": { "value": "#06222F", "type": "color" }
+      },
+      "yellow": {
+        "50": { "value": "#FEF5E0", "type": "color" },
+        "100": { "value": "#FCE6B3", "type": "color" },
+        "200": { "value": "#FAD27D", "type": "color" },
+        "300": { "value": "#F8BE47", "type": "color" },
+        "400": { "value": "#F6B226", "type": "color" },
+        "500": { "value": "#F4A604", "type": "color" },
+        "600": { "value": "#C88803", "type": "color" },
+        "700": { "value": "#9C6B02", "type": "color" },
+        "800": { "value": "#704D02", "type": "color" },
+        "900": { "value": "#4D3501", "type": "color" },
+        "950": { "value": "#2A1D00", "type": "color" }
+      }
+    },
+    "neutral": {
+      "ink": { "value": "#1A2026", "type": "color" },
+      "ink-2": { "value": "#2E363E", "type": "color" },
+      "text-2": { "value": "#4A5560", "type": "color" },
+      "placeholder": { "value": "#8C97A1", "type": "color" },
+      "line": { "value": "#D5DBE1", "type": "color" },
+      "surface-2": { "value": "#F7F9FA", "type": "color" },
+      "surface": { "value": "#FFFFFF", "type": "color" },
+      "bg-warm": { "value": "#F5F5F5", "type": "color" }
+    },
+    "status": {
+      "success": { "value": "{color.brand.green.500}", "type": "color" },
+      "info": { "value": "{color.brand.light-blue.500}", "type": "color" },
+      "warning": { "value": "{color.brand.yellow.500}", "type": "color" },
+      "danger": { "value": "#E11D48", "type": "color" }
+    },
+    "chart": {
+      "a-1": { "value": "{color.brand.green.500}", "type": "color" },
+      "a-2": { "value": "{color.brand.light-blue.500}", "type": "color" },
+      "a-3": { "value": "#2CBFB2", "type": "color" },
+      "a-4": { "value": "{color.brand.yellow.500}", "type": "color" },
+      "a-5": { "value": "#116841", "type": "color" },
+      "a-6": { "value": "#7CCBEB", "type": "color" },
+      "a-7": { "value": "#8C97A1", "type": "color" },
+      "a-8": { "value": "#6C5CE7", "type": "color" },
+      "b-1": { "value": "{color.brand.dark-blue.500}", "type": "color" },
+      "b-2": { "value": "{color.brand.light-blue.500}", "type": "color" },
+      "b-3": { "value": "#2CBFB2", "type": "color" },
+      "b-4": { "value": "{color.brand.yellow.500}", "type": "color" },
+      "b-5": { "value": "#084F73", "type": "color" },
+      "b-6": { "value": "#6BACD3", "type": "color" },
+      "b-7": { "value": "#8C97A1", "type": "color" },
+      "b-8": { "value": "#4A5562", "type": "color" },
+      "seq-1": { "value": "#E8F3FA", "type": "color" },
+      "seq-2": { "value": "#B8D8EE", "type": "color" },
+      "seq-3": { "value": "#6BACD3", "type": "color" },
+      "seq-4": { "value": "#3385B4", "type": "color" },
+      "seq-5": { "value": "{color.brand.dark-blue.500}", "type": "color" },
+      "div-negative": { "value": "#E11D48", "type": "color" },
+      "div-warning": { "value": "{color.brand.yellow.500}", "type": "color" },
+      "div-neutral": { "value": "#E8ECF0", "type": "color" },
+      "div-positive-1": { "value": "#52C89A", "type": "color" },
+      "div-positive-2": { "value": "{color.brand.green.500}", "type": "color" },
+      "success": { "value": "{color.brand.green.500}", "type": "color" },
+      "warning": { "value": "{color.brand.yellow.500}", "type": "color" },
+      "error": { "value": "#E11D48", "type": "color" },
+      "neutral": { "value": "#8C97A1", "type": "color" },
+      "target": { "value": "{color.brand.dark-blue.500}", "type": "color" },
+      "info": { "value": "{color.brand.light-blue.500}", "type": "color" }
+    }
+  },
+  "spacing": {
+    "1": { "value": 4, "type": "dimension" },
+    "2": { "value": 8, "type": "dimension" },
+    "3": { "value": 12, "type": "dimension" },
+    "4": { "value": 16, "type": "dimension" },
+    "5": { "value": 24, "type": "dimension" },
+    "6": { "value": 32, "type": "dimension" },
+    "7": { "value": 48, "type": "dimension" },
+    "8": { "value": 64, "type": "dimension" },
+    "9": { "value": 96, "type": "dimension" }
+  },
+  "radius": {
+    "xs": { "value": 4, "type": "dimension" },
+    "sm": { "value": 6, "type": "dimension" },
+    "base": { "value": 8, "type": "dimension" },
+    "md": { "value": 10, "type": "dimension" },
+    "lg": { "value": 16, "type": "dimension" },
+    "xl": { "value": 24, "type": "dimension" },
+    "full": { "value": 9999, "type": "dimension" }
+  },
+  "shadow": {
+    "xs": { "value": "0 1px 2px 0 rgba(0,0,0,0.05)", "type": "boxShadow" },
+    "sm": { "value": "0 1px 2px -1px rgba(0,0,0,0.10), 0 1px 3px 0 rgba(0,0,0,0.10)", "type": "boxShadow" },
+    "base": { "value": "0 2px 4px 0 rgba(0,0,0,0.05)", "type": "boxShadow" },
+    "md": { "value": "0 4px 8px 0 rgba(0,0,0,0.08)", "type": "boxShadow" },
+    "lg": { "value": "0 8px 16px 0 rgba(0,0,0,0.12)", "type": "boxShadow" },
+    "focus": { "value": "0 0 0 3px rgba(41,171,226,0.30)", "type": "boxShadow" }
+  },
+  "typography": {
+    "family": {
+      "sans": { "value": "Geist", "type": "fontFamily" },
+      "serif": { "value": "El Messiri", "type": "fontFamily" },
+      "mono": { "value": "Geist Mono", "type": "fontFamily" }
+    },
+    "weight": {
+      "regular": { "value": 400, "type": "fontWeight" },
+      "medium": { "value": 500, "type": "fontWeight" },
+      "semibold": { "value": 600, "type": "fontWeight" },
+      "bold": { "value": 700, "type": "fontWeight" }
+    },
+    "heading": {
+      "00": {
+        "fontFamily": { "value": "El Messiri", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 64, "type": "dimension" },
+        "lineHeight": { "value": 72, "type": "dimension" },
+        "letterSpacing": { "value": -1.5, "type": "dimension" }
+      },
+      "h1": {
+        "fontFamily": { "value": "Geist", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 48, "type": "dimension" },
+        "lineHeight": { "value": 48, "type": "dimension" },
+        "letterSpacing": { "value": -1.5, "type": "dimension" }
+      },
+      "h2": {
+        "fontFamily": { "value": "Geist", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 30, "type": "dimension" },
+        "lineHeight": { "value": 30, "type": "dimension" },
+        "letterSpacing": { "value": -1, "type": "dimension" }
+      },
+      "h3": {
+        "fontFamily": { "value": "El Messiri", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 24, "type": "dimension" },
+        "lineHeight": { "value": 28.8, "type": "dimension" },
+        "letterSpacing": { "value": -1, "type": "dimension" }
+      },
+      "h4": {
+        "fontFamily": { "value": "Geist", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 20, "type": "dimension" },
+        "lineHeight": { "value": 24, "type": "dimension" },
+        "letterSpacing": { "value": 0, "type": "dimension" }
+      }
+    },
+    "paragraph": {
+      "large": { "fontSize": { "value": 18, "type": "dimension" }, "lineHeight": { "value": 27, "type": "dimension" } },
+      "base": { "fontSize": { "value": 16, "type": "dimension" }, "lineHeight": { "value": 24, "type": "dimension" } },
+      "small": { "fontSize": { "value": 14, "type": "dimension" }, "lineHeight": { "value": 20, "type": "dimension" } },
+      "mini": { "fontSize": { "value": 12, "type": "dimension" }, "lineHeight": { "value": 16, "type": "dimension" } }
+    },
+    "caption": {
+      "fontSize": { "value": 12, "type": "dimension" },
+      "lineHeight": { "value": 21, "type": "dimension" },
+      "letterSpacing": { "value": 1.5, "type": "dimension" },
+      "weight": { "value": 400, "type": "fontWeight" }
+    },
+    "mono": {
+      "fontSize": { "value": 16, "type": "dimension" },
+      "lineHeight": { "value": 24, "type": "dimension" },
+      "weight": { "value": 400, "type": "fontWeight" }
+    }
+  }
+}

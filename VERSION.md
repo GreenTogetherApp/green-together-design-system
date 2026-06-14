@@ -12,6 +12,23 @@
 > project's *other* files — components/previews/README — may move independently; this package
 > tracks the tokens.)
 
+### ⚠️ Pending upstream correction — surface-scoped primary (2026-06-13)
+
+The team approved **dark blue `#0B618F` as the primary action colour on Surface B** (the
+admin / business SaaS), with green reserved for savings / positive delta. The shipped Sam
+prototype already does this (its Tailwind theme sets `primary = #0B618F`). This repo has now
+been corrected to match — `--color-primary` is **surface-scoped** (`:root` = green = Surface A;
+`[data-surface="b"]` = dark blue), plus a new `--color-positive` (green) and the *Surfaces*
+section in `GUIDELINES.md`.
+
+**The upstream design master (claude.ai/design) still describes primary as globally green** and
+needs the same correction so design and this mirror stop diverging on this point. Until that's
+done, **this repo's surface-scoped model is the corrected reference.** Two follow-ups for the
+team:
+- Update the claude.ai/design system text + tokens to the surface-scoped primary.
+- Optionally migrate the Sam prototype from its hardcoded Tailwind blue to the
+  `data-surface="b"` token (visually identical; just makes it DS-driven instead of bypassed).
+
 ## The cadence model (why this exists)
 
 ```

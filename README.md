@@ -40,19 +40,23 @@ can actually open it** — not locked to one person's individual plan, and not e
 
 ## The brand at a glance
 
-**Four-colour mark — multi-colour is intentional.** Green is the *primary action* colour;
-light-blue (info/focus) and dark-blue (secondary) carry equal weight in data-rich screens;
-yellow is a sparing accent.
+**Four-colour mark — multi-colour is intentional.** The **primary action colour is
+surface-scoped** (see below): green on the individual/employee surface, **dark blue on the
+admin/business surface**. Light-blue is info/focus throughout; yellow is a sparing accent.
 
 | | Hex | Token |
 |---|---|---|
-| Green (primary action) | `#22B573` | `--gt-green` |
-| Dark blue (secondary) | `#0B618F` | `--gt-blue-dark` |
+| Green | `#22B573` | `--gt-green` — Surface A primary; *savings / positive delta* everywhere |
+| Dark blue | `#0B618F` | `--gt-blue-dark` — Surface B primary |
 | Light blue (info / focus) | `#29ABE2` | `--gt-blue-light` |
 | Yellow (accent) | `#F4A604` | `--gt-yellow` |
 
-> **Surface A vs B.** Employee/consumer screens are green-led and may use gamification.
-> The **admin / data surface is dark-blue-led**, serious, data-dense — *no gamification*.
+> **Two surfaces — split by audience/product, never by device.** A responsive admin page at
+> 375px is still Surface B. Don't flip the palette on resize, only when crossing products.
+> - **Surface A** — individual/employee app: **green** primary, motivational, gamification OK. (`:root` default.)
+> - **Surface B** — admin/business SaaS (the CSO dashboard): **dark-blue** primary, serious, data-dense, *no gamification*. Green is reserved for savings / positive delta. Set `data-surface="b"` on the root.
+>
+> The four-colour logo, type, spacing, radius and icons are identical on both — that's the brand thread. Full detail in [`GUIDELINES.md`](./GUIDELINES.md) → *Surfaces*.
 
 **Type** — Geist (UI/body) · El Messiri (only the 64px display + 24px section title) · Geist Mono (data).
 **Spacing** 8px base. **Radius** inputs 8 · tabs 10 · cards 16 · modals 24. **Focus** 3px light-blue ring.

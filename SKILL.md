@@ -23,8 +23,10 @@ user-invocable: true
 - Always use the canonical PNGs in `assets/logo-on-*.png`. Never recolor the four-element mark.
 
 **The palette**
-- Primary action / success: **`#22B573`** green (hover `#1C9961`, active `#116841`).
-- Secondary: **`#0B618F`** dark blue.
+- **Primary action is surface-scoped** (split by audience/product, *not* by device):
+  - *Surface A* (individual / employee app): **`#22B573`** green (hover `#1A9961`, active `#0F5C3A`). `:root` default.
+  - *Surface B* (admin / business SaaS — e.g. the CSO dashboard): **`#0B618F`** dark blue (hover `#095378`, active `#084362`). Set `data-surface="b"` on the root.
+- Success / **savings / positive delta**: **`#22B573`** green. On Surface B this is green's *only* job — never a generic action button.
 - Info / focus: **`#29ABE2`** light blue.
 - Warning / accent: **`#F4A604`** yellow.
 - Danger: **`#E11D48`** red.

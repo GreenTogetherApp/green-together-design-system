@@ -142,7 +142,10 @@
   --color-border:              var(--gt-line);
   --color-border-strong:       var(--gt-ink-2);
 
-  --color-primary:             var(--gt-green);
+  /* Primary action is SURFACE-SCOPED — see the [data-surface] blocks below.
+     Default (:root) = Surface A (green). Surface B (admin / business SaaS)
+     overrides primary to dark-blue and repurposes green to mean savings only. */
+  --color-primary:             var(--gt-green);        /* Surface A default */
   --color-primary-hover:       var(--gt-green-fresh);
   --color-primary-active:      var(--gt-green-deep);
   --color-primary-fg:          #FFFFFF;
@@ -150,6 +153,11 @@
 
   --color-secondary:           var(--gt-blue-dark);
   --color-secondary-fg:        #FFFFFF;
+
+  /* Positive / savings semantic — green on BOTH surfaces (on Surface B this is
+     green's *only* job: a saving or a positive delta, never a generic action). */
+  --color-positive:            var(--gt-green);
+  --color-positive-soft:       var(--gt-green-soft);
 
   --color-success:             var(--gt-green);
   --color-info:                var(--gt-blue-light);
@@ -218,6 +226,38 @@
   --dur-fast: 120ms; --dur: 200ms; --dur-slow: 320ms;
 
   --icon-size: 18px;
+}
+
+/* ─── Surface scope ─────────────────────────────────────────────────────────
+   The brand runs TWO surfaces. The split is by audience/product, NEVER by
+   device or viewport — a responsive admin page at 375px is still Surface B.
+
+   • Surface A — the individual / employee experience. Green-led, motivational,
+     gamification OK. This is the :root default above, so no attribute is needed.
+   • Surface B — the admin / business SaaS (e.g. the CSO dashboard). Dark-blue
+     primary: measured, credible, data-dense, no gamification. Green is NOT
+     removed — it's reserved for savings / positive delta (--color-positive).
+
+   Apply Surface B by setting data-surface="b" on the app root (e.g. <html> or
+   the top-level app wrapper). Everything below inherits it. The constant brand
+   thread across both: the four-colour logo, type, spacing, radius, icons. */
+[data-surface="b"] {
+  --color-primary:        var(--gt-blue-dark);            /* #0B618F */
+  --color-primary-hover:  var(--brand-dark-blue-600);     /* #095378 */
+  --color-primary-active: var(--brand-dark-blue-700);     /* #084362 */
+  --color-primary-fg:     #FFFFFF;
+  --color-primary-soft:   var(--brand-dark-blue-50);      /* #E6F2F8 */
+  /* --color-positive stays green — savings / positive delta only. */
+}
+
+/* Explicit opt-in to Surface A (same as :root) — handy when a single document
+   hosts both surfaces and you need to scope a region back to green. */
+[data-surface="a"] {
+  --color-primary:        var(--gt-green);
+  --color-primary-hover:  var(--gt-green-fresh);
+  --color-primary-active: var(--gt-green-deep);
+  --color-primary-fg:     #FFFFFF;
+  --color-primary-soft:   var(--gt-green-soft);
 }
 
 /* ─── Typographic helper classes (additive; opt-in) ────── */

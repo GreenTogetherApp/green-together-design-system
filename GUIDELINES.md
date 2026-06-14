@@ -78,7 +78,23 @@ Each element gets its own color, so the mark always reads as multi-colored on li
 
 ## Visual foundations
 
-**Palette identity.** Multi-colour, not a single dominant hue. The four brand colours appear together in the mark and across the product — green is the *primary action* colour; light blue (info/focus) and dark blue (secondary) carry equal weight in data-rich surfaces. Yellow is a sun accent, used sparingly for warnings, achievements, and the mark.
+**Palette identity.** Multi-colour, not a single dominant hue. The four brand colours appear together in the mark and across the product. **The primary action colour is surface-scoped** (see *Surfaces* below): green leads the individual/employee surface; **dark blue leads the admin/business surface**, where green is reserved for *savings / positive delta*. Light blue is info/focus throughout. Yellow is a sun accent, used sparingly for warnings, achievements, and the mark.
+
+### Surfaces — the brand runs two
+
+The split is by **audience and product, never by device or viewport.** A responsive admin page at 375px is still Surface B. Don't flip the palette when a screen resizes — only when you cross from one product to the other.
+
+| | **Surface A** — individual / employee app | **Surface B** — admin / business SaaS |
+|---|---|---|
+| Who | a person tracking their own footprint | a CSO / sustainability lead managing an org |
+| Primary action | **green** `#22B573` (`--color-primary`, default `:root`) | **dark blue** `#0B618F` (`[data-surface="b"]`) |
+| Green's job | primary actions, success, savings | **savings / positive delta only** (`--color-positive`) — never a generic button |
+| Feel | motivational; gamification OK | measured, credible, data-dense; **no gamification** |
+| Charts | green-led (`--chart-a-*`) | dark-blue-led (`--chart-b-*`) |
+
+**Apply Surface B** by setting `data-surface="b"` on the app root; everything inherits the dark-blue primary. **What keeps the two feeling like one brand:** the four-colour logo is constant on both, green never disappears (it earns a fixed meaning on B), and type / spacing / radius / shadows / icons are identical across both. Dark blue *differentiates* the business surface from the green-dominant eco category, and pairs naturally with the already-dark-blue Surface B chart palette.
+
+> **Dark mode (Surface B).** The dark-blue 500 anchor is too dark on dark surfaces — lift the primary to light-blue 400 (`--brand-light-blue-400`) in dark mode for legibility.
 
 **Type.** Three families.
 - **Geist** (sans) — UI, body, most headings. The workhorse.

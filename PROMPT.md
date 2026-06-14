@@ -10,14 +10,21 @@ tokens; `figma-tokens.json` is the same values in Figma Tokens Studio format for
 Apply the Green Together design system. Follow these rules exactly.
 
 PALETTE (multi-colour, not one dominant hue):
-- Primary action: green #22B573 (hover #1A9961, active #0F5C3A), text on it white.
-- Secondary / data surfaces: dark blue #0B618F.
+- PRIMARY ACTION IS SURFACE-SCOPED — pick by which product you're building:
+  • Admin / business SaaS (the CSO dashboard, data-dense): PRIMARY = dark blue #0B618F
+    (hover #095378, active #084362), text on it white. ← use this for the admin app.
+  • Individual / employee app (motivational): PRIMARY = green #22B573
+    (hover #1A9961, active #0F5C3A), text on it white.
+- Green #22B573 ALSO means savings / positive delta on BOTH surfaces. On the admin surface
+  that is green's ONLY job — never use green for a generic button there.
 - Info + focus: light blue #29ABE2.
 - Accent (warnings, achievements, sparingly): yellow #F4A604.
 - Danger: #E11D48. Neutrals: text #1A2026, secondary text #4A5560, borders #D5DBE1,
   base surface #FFFFFF, tinted surface #F7F9FA.
-- SURFACE RULE: employee/consumer screens are green-led and may use gamification; ADMIN /
-  data screens are dark-blue-led, serious and data-dense — NO gamification, compliance-oriented.
+- SURFACE RULE: the admin / data surface is dark-blue-led, serious, data-dense — NO
+  gamification, compliance-oriented. The employee/consumer surface is green-led and may use
+  gamification. Split by audience/product, NOT by screen size (a phone-width admin page is
+  still the dark-blue admin surface).
 
 TYPE (three families):
 - Geist (sans): UI, body, most headings.

@@ -70,6 +70,11 @@
       "warning": { "value": "{color.brand.yellow.500}", "type": "color" },
       "danger": { "value": "#E11D48", "type": "color" }
     },
+    "semantic": {
+      "primary-surface-a": { "value": "{color.brand.green.500}", "type": "color", "description": "Primary action on Surface A (individual / employee app)." },
+      "primary-surface-b": { "value": "{color.brand.dark-blue.500}", "type": "color", "description": "Primary action on Surface B (admin / business SaaS). NOT green." },
+      "positive": { "value": "{color.brand.green.500}", "type": "color", "description": "Savings / positive delta. Green's only job on Surface B." }
+    },
     "chart": {
       "a-1": { "value": "{color.brand.green.500}", "type": "color" },
       "a-2": { "value": "{color.brand.light-blue.500}", "type": "color" },

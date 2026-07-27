@@ -1,0 +1,32 @@
+{
+  "name": "@greentogether/design-system",
+  "version": "1.0.0",
+  "description": "Green Together design tokens (CSS + Figma) and Tailwind preset — the canonical code form of the DS.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GreenTogetherApp/green-together-design-system.git"
+  },
+  "files": [
+    "code-tokens.css",
+    "figma-tokens.json",
+    "tailwind.cjs",
+    "GUIDELINES.md",
+    "SKILL.md",
+    "PROMPT.md",
+    "VERSION.md"
+  ],
+  "exports": {
+    "./code-tokens.css": "./code-tokens.css",
+    "./tokens.css": "./code-tokens.css",
+    "./figma-tokens.json": "./figma-tokens.json",
+    "./tailwind": "./tailwind.cjs",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.4"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": { "optional": true }
+  }
+}

@@ -1,5 +1,10 @@
 # Version & sync
 
+## Package releases
+| Tag | Date | Notes |
+|---|---|---|
+| **v1.0.0** | 2026-07-26 | First packaged release. Adds `package.json` (`@greentogether/design-system`) + `tailwind.cjs` preset (semantic-name → DS-var bridge via `color-mix()`, surface-aware, opacity-safe). Consume via git-URL dep pinned to `#v1.0.0` — see README Option C. Token *values* unchanged from the 2026-06-13 sync. |
+
 ## This snapshot
 | | |
 |---|---|

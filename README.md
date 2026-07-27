@@ -36,6 +36,25 @@ can actually open it** — not locked to one person's individual plan, and not e
 2. Load fonts + icons (see below).
 3. Point Tailwind/theme at the CSS variables (`--color-primary`, `--radius-lg`, …) instead of hard-coded hex/px.
 
+### Option C — Install as a package + Tailwind preset (recommended for code prototypes/apps)
+The repo is a package (`@greentogether/design-system`). Pin a version so you never drift:
+```jsonc
+// package.json
+"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.0.0"
+```
+```css
+/* app root css — the tokens, incl. the [data-surface] overrides */
+@import '@greentogether/design-system/code-tokens.css';
+```
+```js
+// tailwind.config.cjs — the bridge: maps primary/background/border/... to the DS vars
+module.exports = { presets: [require('@greentogether/design-system/tailwind')], content: [/* ... */] };
+```
+Then use plain semantic classes (`bg-primary`, `text-foreground`, `bg-primary/10`) and set
+`data-surface="a"|"b"` on the root to switch Surface A (Maya) ↔ Surface B (Sam). The preset
+uses `color-mix()` so opacity modifiers work off the *live* token — no hardcoded hex, no drift.
+See the proof: `gt-prototypes/s4/wedge-proof`.
+
 ---
 
 ## The brand at a glance

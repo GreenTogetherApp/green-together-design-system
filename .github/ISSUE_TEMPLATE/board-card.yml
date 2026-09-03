@@ -1,0 +1,33 @@
+name: 🃏 Board card
+description: One unit of work for the Green Together board (Problem · Must show/Must do · Ref · Build with · Watch out)
+title: "<verb-first: what does this card do?>"
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is the main business or user problem we are solving? Value, not a vanity feature.
+    validations:
+      required: true
+  - type: textarea
+    id: mustshowdo
+    attributes:
+      label: Must show / Must do
+      description: What the user should see or do — differentiated by user role if necessary. Complete by Ready for build.
+  - type: input
+    id: ref
+    attributes:
+      label: Ref (source)
+      description: "Link your source — R4 finding, Figma frame, flow map, persona doc. If it doesn't trace, it's a draft."
+    validations:
+      required: true
+  - type: input
+    id: buildwith
+    attributes:
+      label: Build with
+      description: Component if known (Sheet / PrimaryTabs / Card / …) or —
+  - type: textarea
+    id: watchout
+    attributes:
+      label: Watch out
+      description: Out-of-scope items or technical constraints.

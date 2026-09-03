@@ -8,6 +8,7 @@ Authorship lives in the git history. No individuals or customer names, by design
 - A slim, pre-app brand direction: colors, a thin type scale, and some voice notes — with no clear line between what was decided and what was placeholder/AI-generated filler.
 - Ungoverned typography: the guidelines set a display font, but alternates were used in practice, with no reasoning documented anywhere (~16 fonts total).
 - No components.
+- No defined path from design to built product — screens were marked "ready for testing" without being prototypes, and how they reached production was undocumented.
 - Three separate token sets plus hardcoded values across the product repos.
 - No board and no shared visibility into any of it.
 

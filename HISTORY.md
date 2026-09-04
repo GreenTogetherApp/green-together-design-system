@@ -1,6 +1,6 @@
 # Green Together Design System — History & Decisions
 
-A factual record of the system's state, the work done, and what's planned.
+A record of the system's state, the work done, and what's planned.
 Authorship lives in the git history. No individuals or customer names, by design.
 
 ## Starting state (baseline)

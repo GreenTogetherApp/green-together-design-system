@@ -54,13 +54,13 @@
 <body>
 <div class="wrap">
   <aside>
-    <div class="brand"><div class="logo">G</div><div><b>Green Together</b><small>Design System · <span id="ver">v1.0.0</span></small></div></div>
+    <div class="brand"><div class="logo">G</div><div><b>Green Together</b><small>Design System · <span id="ver">v1.1.0</span></small></div></div>
     <a class="repo" href="https://github.com/GreenTogetherApp/green-together-design-system" target="_blank">GitHub repo ↗</a>
     <nav>
       <h4>Get started</h4>
       <a href="#intro">Introduction</a><a href="#install">Install</a><a href="#surfaces">Surfaces (A/B)</a>
       <h4>Foundations</h4>
-      <a href="#colors">Colors</a><a href="#type">Typography</a><a href="#radius">Radius</a><a href="#shadows">Shadows</a><a href="#spacing">Spacing</a>
+      <a href="#colors">Colors</a><a href="#promoted">Promoted sets</a><a href="#type">Typography</a><a href="#radius">Radius</a><a href="#shadows">Shadows</a><a href="#spacing">Spacing</a>
       <h4>Reference</h4>
       <a href="#a11y">Accessibility</a><a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">Changelog ↗</a>
       <h4>Components</h4>
@@ -73,6 +73,12 @@
     <h1 id="intro">The Green Together system</h1>
     <p class="lead">One source of truth for the brand in code. Everything on this page is read live from <code>code-tokens.css</code> — no hand-copied values, so it can't drift.</p>
 
+    <p class="lead"><b>The approved shelf — what ships in code.</b> v1.1.0, last promoted from Figma on 20 Sep 2026.
+    Figma is the studio and holds everything; this page holds only what has been promoted: decided, named and accessible.
+    Everything here is read live from <code>code-tokens.css</code>, so it can't drift from the package.</p>
+    <p class="hint"><b>Not here yet:</b> components (Figma only) · the full spacing / radius / shadow scales · dark mode.
+    Each is a promotion waiting to happen — see <a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">VERSION.md</a> for what's open.</p>
+
     <div class="toggle" role="group" aria-label="Surface">
       <button id="sa" aria-pressed="true">Surface A · employee</button>
       <button id="sb" aria-pressed="false">Surface B · admin</button>
@@ -80,7 +86,7 @@
     <p class="hint">The primary action colour is surface-scoped — flip the toggle and watch <code>--color-primary</code> change.</p>
 
     <h2 id="install">Install</h2>
-    <pre>npm i "@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.0.0"
+    <pre>npm i "@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.1.0"
 
 /* app root */  @import '@greentogether/design-system/code-tokens.css';
 /* tailwind   */ presets: [require('@greentogether/design-system/tailwind')]</pre>
@@ -92,6 +98,13 @@
     <p class="muted">Grouped by role. Each swatch shows the live hex and whether <b>white</b> / <b>ink</b> text passes WCAG AA on it.</p>
     <div id="semantic"></div>
     <div id="ramps"></div>
+
+    <h2 id="promoted">Promoted sets</h2>
+    <p class="muted">Promoted from the Figma studio on 20 Sep 2026. Figma name → CSS var: <code>text/primary</code> → <code>--text-primary</code>.
+    Where a promoted value disagrees with an older shelf token, both ship until the decision is made — the open ones are listed in VERSION.md.</p>
+    <div id="promoted-sets"></div>
+    <h3 style="margin-top:28px">Sky gradients</h3>
+    <div id="gradient-samples" class="grid"></div>
 
     <h2 id="type">Typography</h2>
     <div id="type-samples" class="samples"></div>
@@ -149,6 +162,19 @@ function render(){
     return `<div class="sw"><div class="chip" style="background:${T[k]}"><span>${hex}</span></div>
       <div class="meta"><div class="name">${k}</div>
       <div class="aa">${aa(hex,'#ffffff')} ${aa(hex,INK)}</div></div></div>`;}).join('')+'</div>';
+  // promoted sets (grouped by prefix)
+  const PROMOTED=['text','icon','surface','border','interaction','focus','destructive','overlay'];
+  document.getElementById('promoted-sets').innerHTML=PROMOTED.map(function(p){
+    const keys=Object.keys(T).filter(k=>k.indexOf('--'+p+'-')===0&&isColor(T[k]));
+    if(!keys.length)return '';
+    return '<div class="rlabel">'+p+'</div><div class="grid">'+keys.map(function(k){
+      const hex=toHex(T[k]);
+      return '<div class="sw"><div class="chip" style="background:'+T[k]+'"><span>'+hex+'</span></div>'+
+        '<div class="meta"><div class="name">'+k+'</div>'+
+        '<div class="aa">'+aa(hex,'#ffffff')+' '+aa(hex,INK)+'</div></div></div>';}).join('')+'</div>';}).join('');
+  // gradients
+  document.getElementById('gradient-samples').innerHTML=Object.keys(T).filter(k=>k.indexOf('--gradient-')===0).map(function(k){
+    return '<div class="sw"><div class="chip" style="background:'+T[k]+'"></div><div class="meta"><div class="name">'+k+'</div></div></div>';}).join('');
   // brand ramps
   const ramps={};Object.keys(T).forEach(k=>{const m=k.match(/^(--brand-[a-z-]+?)-(\d+)$/);if(m){(ramps[m[1]]=ramps[m[1]]||[]).push([+m[2],k]);}});
   document.getElementById('ramps').innerHTML=Object.entries(ramps).map(([base,stops])=>{

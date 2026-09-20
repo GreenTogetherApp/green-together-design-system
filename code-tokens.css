@@ -226,6 +226,72 @@
   --dur-fast: 120ms; --dur: 200ms; --dur-slow: 320ms;
 
   --icon-size: 18px;
+
+  /* ─── Promoted from Figma 2026-09-20 (semantic sets) ──
+     Figma name → CSS var: `text/primary` → `--text-primary`.
+     Values resolved through their Figma aliases; the alias path is
+     noted per token so a change upstream is traceable. */
+
+  /* Text */
+  --text-primary:            #1A2026;                 /* general/foreground */
+  --text-secondary:          #737373;                 /* general/muted foreground */
+  --text-inverse:            #FAFAFA;                 /* general/primary foreground */
+  --text-inverse-secondary:  rgba(255,255,255,0.70);  /* white/alpha-70 */
+  --text-disabled:           #9CA3AF;                 /* gray/400 */
+  --text-on-brand:           #FAFAFA;                 /* general/primary foreground */
+
+  /* Icon */
+  --icon-default:      #1A2026;                 /* general/foreground */
+  --icon-muted:        #737373;                 /* general/muted foreground */
+  --icon-inverse:      #FAFAFA;                 /* general/primary foreground */
+  --icon-brand:        #22B573;                 /* general/primary */
+  --icon-destructive:  #DC2626;                 /* general/destructive */
+  --icon-disabled:     #9CA3AF;                 /* gray/400 */
+
+  /* Surface */
+  --surface-level-0:        #FAFAFA;                 /* brand-neutrals/50 */
+  --surface-level-2:        #E5E5E5;                 /* brand-neutrals/200 */
+  --surface-level-3:        #D5DBE1;                 /* brand-neutrals/300 */
+  --surface-inverse:        #111827;                 /* gray/900 */
+  --surface-inverse-glass:  rgba(17,24,39,0.75);     /* gray/900-alpha-75 */
+  --surface-glass:          rgba(255,255,255,0.65);  /* white/alpha-65 */
+  --surface-warm:           #FBF8F3;                 /* warm gray/50 */
+
+  /* Border */
+  --border-level-0:  #FAFAFA;                 /* brand-neutrals/50 */
+  --border-level-1:  #F7F9FA;                 /* brand-neutrals/100 */
+  --border-level-3:  #D5DBE1;                 /* brand-neutrals/300 */
+  --border-level-4:  #8C97A1;                 /* brand-neutrals/400 */
+  --border-level-5:  #737373;                 /* brand-neutrals/500 */
+  --border-inverse:  rgba(255,255,255,0.10);  /* white/alpha-10 */
+
+  /* Interaction */
+  --interaction-ghost:             rgba(255,255,255,0);     /* white/alpha-001 */
+  --interaction-ghost-hover:       rgba(0,0,0,0.05);        /* black/alpha-5 */
+  --interaction-ghost-foreground:  #404040;                 /* brand-neutrals/700 */
+  --interaction-secondary-hover:   #FAFAFA;                 /* brand-neutrals/50 */
+  --interaction-outline-hover:     rgba(0,0,0,0.03);        /* black/alpha-333 */
+  --interaction-outline-active:    rgba(0,0,0,0.05);        /* black/alpha-5 */
+  --interaction-primary-active:    #14784C;                 /* Colors/Green/700 */
+
+  /* Focus */
+  --focus-ring-subtle:  #D5DBE1;                 /* brand-neutrals/300 */
+  --focus-ring-error:   #FCA5A5;                 /* red/300 */
+
+  /* Destructive */
+  --destructive-border:  #EF4444;                 /* red/500 */
+  --destructive-text:    #DC2626;                 /* red/600 */
+  --destructive-subtle:  #FEF2F2;                 /* red/50 */
+
+  /* Overlay */
+  --overlay-backdrop:  rgba(0,0,0,0.60);        /* black/alpha-60 */
+
+  /* Sky gradients — Figma paint styles `Gradient / …`.
+     CSS angles/stops are the corrected geometry for a 402×874 frame;
+     recompute the stop percentages if the aspect ratio changes. */
+  --gradient-day-sky:       linear-gradient(155.3deg, #9CC7FA 14.29%, #C9DDF0 38.57%, #E6E8DF 55.72%, #FDEFD5 85.71%);
+  --gradient-afternoon-sky: linear-gradient(173.29deg, #55A3FF 5.92%, #CCE4FA 44.25%, #FFE4B1 73.76%);
+  --gradient-evening-sky:   linear-gradient(155.3deg, #1E2A3D 14.29%, #5388A7 49%, #8FB89A 81.36%);
 }
 
 /* ─── Surface scope ─────────────────────────────────────────────────────────

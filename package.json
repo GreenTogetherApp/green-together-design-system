@@ -1,7 +1,7 @@
 {
   "name": "@greentogether/design-system",
-  "version": "1.0.0",
-  "description": "Green Together design tokens (CSS + Figma) and Tailwind preset — the canonical code form of the DS.",
+  "version": "1.1.0",
+  "description": "Green Together design tokens (CSS + Figma) and Tailwind preset \u2014 the canonical code form of the DS.",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -27,6 +27,8 @@
     "tailwindcss": ">=3.4"
   },
   "peerDependenciesMeta": {
-    "tailwindcss": { "optional": true }
+    "tailwindcss": {
+      "optional": true
+    }
   }
 }

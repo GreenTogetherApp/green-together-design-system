@@ -73,7 +73,66 @@
     "semantic": {
       "primary-surface-a": { "value": "{color.brand.green.500}", "type": "color", "description": "Primary action on Surface A (individual / employee app)." },
       "primary-surface-b": { "value": "{color.brand.dark-blue.500}", "type": "color", "description": "Primary action on Surface B (admin / business SaaS). NOT green." },
-      "positive": { "value": "{color.brand.green.500}", "type": "color", "description": "Savings / positive delta. Green's only job on Surface B." }
+      "positive": { "value": "{color.brand.green.500}", "type": "color", "description": "Savings / positive delta. Green's only job on Surface B." },
+      "text": {
+        "primary": { "value": "#1A2026", "type": "color", "description": "Figma: general/foreground" },
+        "secondary": { "value": "#737373", "type": "color", "description": "Figma: general/muted foreground" },
+        "inverse": { "value": "#FAFAFA", "type": "color", "description": "Figma: general/primary foreground" },
+        "inverse-secondary": { "value": "rgba(255,255,255,0.70)", "type": "color", "description": "Figma: white/alpha-70" },
+        "disabled": { "value": "#9CA3AF", "type": "color", "description": "Figma: gray/400" },
+        "on-brand": { "value": "#FAFAFA", "type": "color", "description": "Figma: general/primary foreground" }
+      },
+      "icon": {
+        "default": { "value": "#1A2026", "type": "color", "description": "Figma: general/foreground" },
+        "muted": { "value": "#737373", "type": "color", "description": "Figma: general/muted foreground" },
+        "inverse": { "value": "#FAFAFA", "type": "color", "description": "Figma: general/primary foreground" },
+        "brand": { "value": "#22B573", "type": "color", "description": "Figma: general/primary" },
+        "destructive": { "value": "#DC2626", "type": "color", "description": "Figma: general/destructive" },
+        "disabled": { "value": "#9CA3AF", "type": "color", "description": "Figma: gray/400" }
+      },
+      "surface": {
+        "level-0": { "value": "#FAFAFA", "type": "color", "description": "Figma: brand-neutrals/50" },
+        "level-2": { "value": "#E5E5E5", "type": "color", "description": "Figma: brand-neutrals/200" },
+        "level-3": { "value": "#D5DBE1", "type": "color", "description": "Figma: brand-neutrals/300" },
+        "inverse": { "value": "#111827", "type": "color", "description": "Figma: gray/900" },
+        "inverse-glass": { "value": "rgba(17,24,39,0.75)", "type": "color", "description": "Figma: gray/900-alpha-75" },
+        "glass": { "value": "rgba(255,255,255,0.65)", "type": "color", "description": "Figma: white/alpha-65" },
+        "warm": { "value": "#FBF8F3", "type": "color", "description": "Figma: warm gray/50" }
+      },
+      "border": {
+        "level-0": { "value": "#FAFAFA", "type": "color", "description": "Figma: brand-neutrals/50" },
+        "level-1": { "value": "#F7F9FA", "type": "color", "description": "Figma: brand-neutrals/100" },
+        "level-3": { "value": "#D5DBE1", "type": "color", "description": "Figma: brand-neutrals/300" },
+        "level-4": { "value": "#8C97A1", "type": "color", "description": "Figma: brand-neutrals/400" },
+        "level-5": { "value": "#737373", "type": "color", "description": "Figma: brand-neutrals/500" },
+        "inverse": { "value": "rgba(255,255,255,0.10)", "type": "color", "description": "Figma: white/alpha-10" }
+      },
+      "interaction": {
+        "ghost": { "value": "rgba(255,255,255,0)", "type": "color", "description": "Figma: white/alpha-001" },
+        "ghost-hover": { "value": "rgba(0,0,0,0.05)", "type": "color", "description": "Figma: black/alpha-5" },
+        "ghost-foreground": { "value": "#404040", "type": "color", "description": "Figma: brand-neutrals/700" },
+        "secondary-hover": { "value": "#FAFAFA", "type": "color", "description": "Figma: brand-neutrals/50" },
+        "outline-hover": { "value": "rgba(0,0,0,0.03)", "type": "color", "description": "Figma: black/alpha-333" },
+        "outline-active": { "value": "rgba(0,0,0,0.05)", "type": "color", "description": "Figma: black/alpha-5" },
+        "primary-active": { "value": "#14784C", "type": "color", "description": "Figma: Colors/Green/700" }
+      },
+      "focus": {
+        "ring-subtle": { "value": "#D5DBE1", "type": "color", "description": "Figma: brand-neutrals/300" },
+        "ring-error": { "value": "#FCA5A5", "type": "color", "description": "Figma: red/300" }
+      },
+      "destructive": {
+        "border": { "value": "#EF4444", "type": "color", "description": "Figma: red/500" },
+        "text": { "value": "#DC2626", "type": "color", "description": "Figma: red/600" },
+        "subtle": { "value": "#FEF2F2", "type": "color", "description": "Figma: red/50" }
+      },
+      "overlay": {
+        "backdrop": { "value": "rgba(0,0,0,0.60)", "type": "color", "description": "Figma: black/alpha-60" }
+      }
+    },
+    "gradient": {
+      "day-sky": { "value": "linear-gradient(155.3deg, #9CC7FA 14.29%, #C9DDF0 38.57%, #E6E8DF 55.72%, #FDEFD5 85.71%)", "type": "other", "description": "Figma paint style: Gradient / day sky" },
+      "afternoon-sky": { "value": "linear-gradient(173.29deg, #55A3FF 5.92%, #CCE4FA 44.25%, #FFE4B1 73.76%)", "type": "other", "description": "Figma paint style: Gradient / afternoon sky" },
+      "evening-sky": { "value": "linear-gradient(155.3deg, #1E2A3D 14.29%, #5388A7 49%, #8FB89A 81.36%)", "type": "other", "description": "Figma paint style: Gradient / evening sky" }
     },
     "chart": {
       "a-1": { "value": "{color.brand.green.500}", "type": "color" },

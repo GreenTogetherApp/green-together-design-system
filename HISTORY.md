@@ -26,6 +26,9 @@ Authorship lives in the git history. No individuals or customer names, by design
 - **Coded, deployable prototypes** — live shareable URLs, as an added path alongside the Figma workflow.
 - **Design → production pipeline** defined (prototype as blueprint → rebuild).
 - **Removed a team-inaccessible design tool (claude.ai/design) from the workflow** so the system is team-reachable.
+- **Promotion from the studio, running** — the package had drifted three months behind Figma with no live upstream. Defined studio → promote → shelf → consumers, then ran it: the semantic sets (text, icon, surface, border, interaction, focus, destructive, overlay) and the sky gradients now ship in code (v1.1.0). Each token records the Figma path it came from, and value conflicts between the two are logged as open decisions rather than silently overwritten.
+- **Components on the shelf** — the first component promoted from the studio (v1.2.0): the week strip, as copyable token-bound source. State is carried by shape as well as colour, and the unsettled Mon–Fri question is a prop rather than a baked-in answer.
+- **The system enforces its own rules** — CI fails the build when promoted tokens drift between the code and Figma formats, or when component source hardcodes a colour. Both rules were verified by making them fail before being trusted.
 
 ## In progress
 - **DS v2** — green reserved for success; primary moved to an accessible dark green; full semantic role coverage (bg / fg / text / icon / soft / border per family); accessible values; duplicate + label cleanup. Signed off; implementation underway.

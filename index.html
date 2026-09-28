@@ -54,7 +54,7 @@
 <body>
 <div class="wrap">
   <aside>
-    <div class="brand"><div class="logo">G</div><div><b>Green Together</b><small>Design System · <span id="ver">v1.1.0</span></small></div></div>
+    <div class="brand"><div class="logo">G</div><div><b>Green Together</b><small>Design System · <span id="ver">v1.2.0</span></small></div></div>
     <a class="repo" href="https://github.com/GreenTogetherApp/green-together-design-system" target="_blank">GitHub repo ↗</a>
     <nav>
       <h4>Get started</h4>
@@ -64,7 +64,7 @@
       <h4>Reference</h4>
       <a href="#a11y">Accessibility</a><a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">Changelog ↗</a>
       <h4>Components</h4>
-      <a class="soon">Components</a><a class="soon">Patterns</a>
+      <a href="#components">Components</a><a class="soon">Patterns</a>
     </nav>
   </aside>
 
@@ -73,10 +73,10 @@
     <h1 id="intro">The Green Together system</h1>
     <p class="lead">One source of truth for the brand in code. Everything on this page is read live from <code>code-tokens.css</code> — no hand-copied values, so it can't drift.</p>
 
-    <p class="lead"><b>The approved shelf — what ships in code.</b> v1.1.0, last promoted from Figma on 20 Sep 2026.
+    <p class="lead"><b>The approved shelf — what ships in code.</b> v1.2.0, last promoted from Figma on 28 Sep 2026.
     Figma is the studio and holds everything; this page holds only what has been promoted: decided, named and accessible.
     Everything here is read live from <code>code-tokens.css</code>, so it can't drift from the package.</p>
-    <p class="hint"><b>Not here yet:</b> components (Figma only) · the full spacing / radius / shadow scales · dark mode.
+    <p class="hint"><b>Not here yet:</b> most components (one promoted so far) · composed patterns · the full spacing / radius / shadow scales · dark mode.
     Each is a promotion waiting to happen — see <a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">VERSION.md</a> for what's open.</p>
 
     <div class="toggle" role="group" aria-label="Surface">
@@ -86,7 +86,7 @@
     <p class="hint">The primary action colour is surface-scoped — flip the toggle and watch <code>--color-primary</code> change.</p>
 
     <h2 id="install">Install</h2>
-    <pre>npm i "@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.1.0"
+    <pre>npm i "@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.2.0"
 
 /* app root */  @import '@greentogether/design-system/code-tokens.css';
 /* tailwind   */ presets: [require('@greentogether/design-system/tailwind')]</pre>
@@ -119,11 +119,48 @@
     <h2 id="spacing">Spacing</h2>
     <div id="spacing-samples"></div>
 
+    <h2 id="components">Components</h2>
+    <p class="muted">The first component promoted from the studio (issue #9). Distributed as copyable React + Tailwind source at
+    <code>components/week-strip.tsx</code> — the shadcn model. Every colour is a token; CI fails the build on a raw hex.</p>
+
+    <div class="sw" style="max-width:340px;padding:0">
+      <div style="padding:12px 14px;border-radius:var(--radius-lg);border:1px solid var(--border-level-1);background:var(--surface-level-0)">
+        <p style="margin:0 0 6px;font:400 11px/16px var(--font-sans);color:var(--text-secondary)">Week of 21 September</p>
+        <div style="display:flex;justify-content:space-between;gap:4px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="height:24px;width:24px;border-radius:999px;background:var(--color-positive-strong);border:1px solid var(--color-positive-strong)"></span>
+            <span style="font:400 11px/16px var(--font-sans);color:var(--text-primary)">Mon</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="height:24px;width:24px;border-radius:999px;background:var(--color-positive-strong);border:1px solid var(--color-positive-strong)"></span>
+            <span style="font:400 11px/16px var(--font-sans);color:var(--text-primary)">Tue</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="height:24px;width:24px;border-radius:999px;background:var(--surface-level-0);border:2px solid var(--color-positive-strong);box-shadow:inset 0 0 0 2px var(--surface-level-0)"></span>
+            <span style="font:400 11px/16px var(--font-sans);color:var(--text-primary)">Wed</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="height:24px;width:24px;border-radius:999px;background:var(--surface-level-0);border:1px solid var(--border-level-3)"></span>
+            <span style="font:600 11px/16px var(--font-sans);color:var(--text-primary);text-decoration:underline;text-underline-offset:2px">Thu</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <span style="height:24px;width:24px;border-radius:999px;background:var(--surface-level-0);border:1px solid var(--border-level-3)"></span>
+            <span style="font:400 11px/16px var(--font-sans);color:var(--text-secondary)">Fri</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint" style="margin-top:10px"><b>States:</b> filled = logged · ringed = changed from usual · hollow = not logged · underlined + bold = today.
+    State is carried by shape as well as colour, so it survives greyscale and colour-blindness (WCAG 1.4.1). The filled marker uses
+    <code>--color-positive-strong</code> (green 700, 5.27:1 on this surface) because <code>--color-positive</code> (green 500) measures 2.54:1 and fails the 3:1 floor for UI marks.</p>
+    <p class="hint"><b>Days are a prop, not a constant</b> — Mon–Fri is the Surface A default, but a 21-calendar-day challenge can pass seven days without the strip and the challenge card disagreeing about what a week is.</p>
+
     <h2 id="a11y">Accessibility</h2>
     <p class="muted">Colour decisions are checked against WCAG AA (4.5:1 text, 3:1 UI). The AA/AAA chips on every swatch above are computed live from the token value — so an inaccessible pairing is visible on sight, not discovered later.</p>
 
-    <h2>Components &amp; Patterns</h2>
-    <div class="soonbox"><b>Coming.</b> The system is tokens-first today. Components (and composed patterns built from them) land next — see the DS v2 + component-library work.</div>
+    <h2>Patterns</h2>
+    <div class="soonbox"><b>Coming.</b> Composed patterns — location capture (#11) and the carbon-footprint comparison family (#12) — are designed in the studio and not yet promoted. The first component is on the shelf: see <a href="#components">Components</a>.</div>
     <p class="hint" style="margin-top:40px">Draft · reads code-tokens.css live · <span id="stamp"></span></p>
   </main>
 </div>

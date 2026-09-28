@@ -1,7 +1,7 @@
 {
   "name": "@greentogether/design-system",
-  "version": "1.1.0",
-  "description": "Green Together design tokens (CSS + Figma) and Tailwind preset \u2014 the canonical code form of the DS.",
+  "version": "1.2.0",
+  "description": "Green Together design tokens (CSS + Figma), Tailwind preset, and token-bound components \u2014 the canonical code form of the DS.",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -14,14 +14,17 @@
     "GUIDELINES.md",
     "SKILL.md",
     "PROMPT.md",
-    "VERSION.md"
+    "VERSION.md",
+    "components/week-strip.tsx",
+    "scripts/check-guardrails.mjs"
   ],
   "exports": {
     "./code-tokens.css": "./code-tokens.css",
     "./tokens.css": "./code-tokens.css",
     "./figma-tokens.json": "./figma-tokens.json",
     "./tailwind": "./tailwind.cjs",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./components/week-strip": "./components/week-strip.tsx"
   },
   "peerDependencies": {
     "tailwindcss": ">=3.4"
@@ -30,5 +33,8 @@
     "tailwindcss": {
       "optional": true
     }
+  },
+  "scripts": {
+    "check": "node scripts/check-guardrails.mjs"
   }
 }

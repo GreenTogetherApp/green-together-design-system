@@ -1,0 +1,22 @@
+name: Guardrails
+
+# The rules this repo states in prose, enforced so they can't rot:
+#   1. promoted tokens stay in lockstep across code-tokens.css / figma-tokens.json
+#   2. component source binds tokens, never raw hex / rgb()
+# See VERSION.md → "How to promote from Figma".
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  guardrails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Check token lockstep and component tokens
+        run: node scripts/check-guardrails.mjs

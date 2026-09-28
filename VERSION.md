@@ -3,6 +3,7 @@
 ## Package releases
 | Tag | Date | Notes |
 |---|---|---|
+| **v1.2.0** | 2026-09-28 | **First component on the shelf.** Adds `components/week-strip.tsx` (Week strip + Week day marker, promoted from the studio per issue #9) as copyable React + Tailwind source. Extends the Tailwind preset with the v1.1.0 semantic sets — `ink` `icon` `surface` `line` `interaction` `overlay` plus the three sky gradients — so components can bind them by name. Adds `--color-positive-strong` (green 700, 5.27:1 on `--surface-level-0`; green 500 measures 2.54:1 and fails the 3:1 floor for UI marks). Adds CI guardrails: token lockstep and no-raw-colour-in-components. |
 | **v1.1.0** | 2026-09-20 | **First promotion from Figma.** Adds the eight semantic sets built in Figma in August — `text/` `icon/` `surface/` `border/` `interaction/` `focus/` `destructive/` `overlay/` (38 tokens) — plus the three sky gradient paint styles. Values resolved through their Figma aliases; each token records its alias path. Existing `--color-*` / `--gt-*` tokens are untouched, so consumers upgrade without visual change. |
 | **v1.0.0** | 2026-07-26 | First packaged release. Adds `package.json` (`@greentogether/design-system`) + `tailwind.cjs` preset (semantic-name → DS-var bridge via `color-mix()`, surface-aware, opacity-safe). Consume via git-URL dep pinned to `#v1.0.0` — see README Option C. Token *values* unchanged from the 2026-06-13 sync. |
 
@@ -71,6 +72,22 @@ keeps its existing values until each is settled, so nothing changed underfoot.
 | Red family | `destructive/*` = red 500/600 `#EF4444` / `#DC2626` | `--gt-red` / `--color-danger` = rose `#E11D48` | Two reds in one system. Both now ship; one should win. |
 | Muted greys | `text/secondary` + `icon/muted` = neutral `#737373` | `--color-fg-muted` = blue-grey `#4A5560`, `--gt-placeholder` = `#8C97A1` | Three greys doing one job. |
 | `border/level 1` | `#F7F9FA` | same value ships as `--gt-surface-2`, a *surface* | Same colour, two categories. Worth naming once.
+
+## Guardrails (enforced in CI)
+
+`node scripts/check-guardrails.mjs` runs on every pull request and on pushes to
+`main`. It enforces two rules this file used to only assert in prose:
+
+1. **Lockstep** — every promoted token exists in both `code-tokens.css` and
+   `figma-tokens.json` with the same value. Drift, a missing twin, or a typo in
+   either file fails the build, naming the token and both values.
+2. **No raw colour in components** — component source binds tokens; a hex or
+   `rgb()` literal fails the build with the file and line. A component that
+   hardcodes a colour ignores the Surface A/B switch and drifts the moment a
+   token moves.
+
+Aliases in `figma-tokens.json` (values like `{color.brand.green.500}`) are
+designer-facing references, not literals, and are skipped by the comparison.
 
 ## How to promote from Figma (the re-sync, done right)
 1. Read the target set from the Figma file `Tt32SnKvhoMDOB6YUw1QG3`, resolving each

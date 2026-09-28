@@ -283,6 +283,12 @@
   --destructive-text:    #DC2626;                 /* red/600 */
   --destructive-subtle:  #FEF2F2;                 /* red/50 */
 
+  /* Positive — accessible on light surfaces.
+     --color-positive (green 500) measures 2.54:1 on --surface-level-0, which
+     fails the 3:1 floor for UI marks. This is the same green family at 700,
+     measured 5.27:1, for marks and small shapes that must be seen. */
+  --color-positive-strong:  #14784C;                 /* Colors/Green/700 */
+
   /* Overlay */
   --overlay-backdrop:  rgba(0,0,0,0.60);        /* black/alpha-60 */
 

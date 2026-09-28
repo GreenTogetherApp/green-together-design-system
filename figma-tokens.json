@@ -125,6 +125,7 @@
         "text": { "value": "#DC2626", "type": "color", "description": "Figma: red/600" },
         "subtle": { "value": "#FEF2F2", "type": "color", "description": "Figma: red/50" }
       },
+      "positive-strong": { "value": "#14784C", "type": "color", "description": "Figma: Colors/Green/700 — positive marks on light surfaces (5.27:1); green 500 fails at 2.54:1" },
       "overlay": {
         "backdrop": { "value": "rgba(0,0,0,0.60)", "type": "color", "description": "Figma: black/alpha-60" }
       }

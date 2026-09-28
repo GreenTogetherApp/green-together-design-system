@@ -66,6 +66,64 @@ module.exports = {
         info: c('--color-info'),
         card: c('--gt-surface'),
         'card-2': c('--gt-surface-2'),
+
+        // --- promoted from the Figma studio (v1.1.0) ---
+        // Figma group -> Tailwind name:
+        //   text/*        -> ink        (text-ink, text-ink-secondary)
+        //   icon/*        -> icon       (text-icon-muted, fill-icon-brand)
+        //   surface/*     -> surface    (bg-surface-0, bg-surface-inverse)
+        //   border/*      -> line       (border-line-3)
+        //   interaction/* -> interaction(bg-interaction-ghost-hover)
+        //   overlay/*     -> overlay    (bg-overlay-backdrop)
+        ink: {
+          DEFAULT: c('--text-primary'),
+          secondary: c('--text-secondary'),
+          inverse: c('--text-inverse'),
+          'inverse-secondary': c('--text-inverse-secondary'),
+          disabled: c('--text-disabled'),
+          'on-brand': c('--text-on-brand'),
+        },
+        icon: {
+          DEFAULT: c('--icon-default'),
+          muted: c('--icon-muted'),
+          inverse: c('--icon-inverse'),
+          brand: c('--icon-brand'),
+          destructive: c('--icon-destructive'),
+          disabled: c('--icon-disabled'),
+        },
+        surface: {
+          0: c('--surface-level-0'),
+          2: c('--surface-level-2'),
+          3: c('--surface-level-3'),
+          inverse: c('--surface-inverse'),
+          'inverse-glass': c('--surface-inverse-glass'),
+          glass: c('--surface-glass'),
+          warm: c('--surface-warm'),
+        },
+        line: {
+          0: c('--border-level-0'),
+          1: c('--border-level-1'),
+          3: c('--border-level-3'),
+          4: c('--border-level-4'),
+          5: c('--border-level-5'),
+          inverse: c('--border-inverse'),
+        },
+        interaction: {
+          ghost: c('--interaction-ghost'),
+          'ghost-hover': c('--interaction-ghost-hover'),
+          'ghost-foreground': c('--interaction-ghost-foreground'),
+          'secondary-hover': c('--interaction-secondary-hover'),
+          'outline-hover': c('--interaction-outline-hover'),
+          'outline-active': c('--interaction-outline-active'),
+          'primary-active': c('--interaction-primary-active'),
+        },
+        'positive-strong': c('--color-positive-strong'),
+        overlay: c('--overlay-backdrop'),
+      },
+      backgroundImage: {
+        'day-sky': 'var(--gradient-day-sky)',
+        'afternoon-sky': 'var(--gradient-afternoon-sky)',
+        'evening-sky': 'var(--gradient-evening-sky)',
       },
       borderColor: { DEFAULT: 'var(--color-border)' },
       borderRadius: {

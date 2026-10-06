@@ -1,30 +1,32 @@
 # Green Together — Design System
 
-The **single, accessible source of truth** for the Green Together brand in code. Mirrored
-from the design source (claude.ai/design + Figma) into this org repo **so the whole team
-can actually open it** — not locked to one person's individual plan, and not eyeballing Figma.
+The **single, accessible source of truth** for the Green Together brand in code — open to the
+whole team, not locked to one person's plan and not eyeballed from Figma.
 
-> **What's the source of truth?** *Design* happens upstream (claude.ai/design + Figma).
-> **This repo is the canonical code form** — the full guidelines + tokens, re-synced and
-> versioned (`VERSION.md`). Consumers (the prototype, the admin app, anything in Lovable)
-> pin a version and bump on their own schedule. Design-system updates and product updates
-> run on separate cadences.
+**▶ See the system (live):** **https://greentogetherapp.github.io/green-together-design-system/**
+— colours, tokens and type rendered live from this repo. What you see is what ships.
+
+> **Studio → shelf.** *Figma* is the **studio** — where design is explored and decided.
+> **This repo is the approved *shelf*** — only the decided, named, accessible things, in code
+> form (tokens + guidelines, versioned in `VERSION.md`). A **promote** step moves studio → shelf;
+> **apps only consume from the shelf**, so Figma exploration never leaks into production. Design
+> and product bump on separate cadences.
 
 ---
 
 ## See it
 
+- **Live system page:** **https://greentogetherapp.github.io/green-together-design-system/** —
+  the window into the shelf: colours by role with live contrast, the Surface A/B switch, install.
 - **The complete written system:** **[`GUIDELINES.md`](./GUIDELINES.md)** — every rule:
   brand language, voice, palette, type scale, spacing, radius, shadows, motion, iconography.
 - **At-a-glance spec:** **[`SKILL.md`](./SKILL.md)**.
-- **The components, live and in use:** the **Sam admin prototype** —
-  **https://sam-r4-prototype.netlify.app** — is a full app built on this system (buttons,
-  cards, badges, inputs, tabs, dialogs, tables, charts, KPI cards…). It's the best way to
-  *see* the components applied, far more than static swatches.
+- **A full app built on it:** the Sam admin prototype — **https://sam-r4-prototype.netlify.app** —
+  the system applied in a real surface.
 
 ---
 
-## How to apply it (two ways)
+## How to apply it (three ways)
 
 ### Option A — Prompt / paste (fastest, for Lovable)
 1. Copy the block in **[`PROMPT.md`](./PROMPT.md)** into your Lovable prompt as the design direction.
@@ -40,7 +42,7 @@ can actually open it** — not locked to one person's individual plan, and not e
 The repo is a package (`@greentogether/design-system`). Pin a version so you never drift:
 ```jsonc
 // package.json
-"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.0.0"
+"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.2.0"
 ```
 ```css
 /* app root css — the tokens, incl. the [data-surface] overrides */
@@ -53,7 +55,6 @@ module.exports = { presets: [require('@greentogether/design-system/tailwind')], 
 Then use plain semantic classes (`bg-primary`, `text-foreground`, `bg-primary/10`) and set
 `data-surface="a"|"b"` on the root to switch Surface A (Maya) ↔ Surface B (Sam). The preset
 uses `color-mix()` so opacity modifiers work off the *live* token — no hardcoded hex, no drift.
-See the proof: `gt-prototypes/s4/wedge-proof`.
 
 ---
 
@@ -113,27 +114,25 @@ conflated — `code-tokens.css` (the developer/CSS form) vs `figma-tokens.json` 
 | `code-tokens.css` | **developers** | All design tokens as **CSS variables** (CSS / Tailwind / Lovable). |
 | `figma-tokens.json` | **designers** | The **same** tokens in **Figma Tokens Studio** format (import into Figma). |
 | `PROMPT.md` | Lovable / AI | Paste-ready design-system block for prompts. |
-| `VERSION.md` | maintainers | Provenance + the re-sync / cadence model. |
+| `VERSION.md` | maintainers | Changelog + the studio→shelf promote cadence. |
 
 > **`code-tokens.css` and `figma-tokens.json` hold the identical token values** — one for code,
-> one for Figma. Edit neither by hand as a master; both are mirrors re-synced from upstream
-> (see provenance below + `VERSION.md`).
+> one for Figma. They are the **shelf** — filled by promotion, not hand-edited as a master.
 
-**Components** are not vendored here as a competing source — **see them live and in use in the
-prototype** (link above) to avoid a partial/stale copy drifting from the real thing. Fonts and
-icons are consumed via npm (above), so they aren't vendored either. Logos + Phosphor icon SVGs
-live in the claude.ai/design project (tracked in `VERSION.md`).
+**Components** aren't vendored here as a competing source yet — see the live page + the prototype
+above so a partial/stale copy never drifts from the real thing. Fonts and icons are consumed via
+npm (above), so they aren't vendored either.
 
 ---
 
 ## Provenance — where the truth comes from
 
 ```
-Figma  ──(Figma MCP: adjust a component)──▶  claude.ai/design  ──(re-sync)──▶  this repo
- │                                            (spec + merge =                   (the CODE +
- │                                             DESIGN source of truth)           Figma-format mirror)
- └─ known gap: Figma ⇄ claude.ai sync is still manual — flagged for the team.
+Figma (studio)  ──promote: decided · named · accessible──▶  this repo (approved shelf)  ──pin a version──▶  apps
+  design source of truth                 curated, manual                 what actually ships
 ```
 
-Edit **upstream**, then re-sync here — don't hand-edit `code-tokens.css` / `figma-tokens.json`
-as if they were the master. The same provenance note is in the header of `code-tokens.css`.
+Figma is the design source of truth; **this repo is what ships.** Promotion is a **curated, manual
+step** (the promote lane) — never an auto-dump — so undecided/bloat work in Figma can't reach apps.
+Don't hand-edit `code-tokens.css` / `figma-tokens.json` as a master; they're the shelf, filled by
+promotion. Changelog + cadence in `VERSION.md`.

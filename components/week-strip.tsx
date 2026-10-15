@@ -70,6 +70,14 @@ export interface WeekStripProps {
   label?: string;
   className?: string;
   /**
+   * Index of the day that was just logged. That marker plays the logged moment
+   * once (springs from outline to filled, the check draws itself, a ring
+   * releases) and the chip slides in. Set it when the log lands; leave it
+   * unset on load so a page that opens already logged stays still. Haptics
+   * belong to the app (Capacitor), not to this component.
+   */
+  celebrate?: number;
+  /**
    * Avoid in Surface A: per-day logging does not exist, and a tappable day
    * invites someone to tap Thursday expecting to log it (the R5 false
    * affordance). Kept from v1.2 for surfaces where a day genuinely opens something.
@@ -97,29 +105,38 @@ const MARKER_BY_STATE: Record<CoreState, string> = {
 
 const MOTION = "transition-colors duration-200 ease-out motion-reduce:transition-none";
 
-function CheckIcon() {
+function CheckIcon({ draw = false }: { draw?: boolean }) {
   return (
     <svg viewBox="0 0 256 256" className="h-4 w-4" aria-hidden="true">
-      <polyline points="40 144 96 200 224 72" fill="none" stroke="currentColor" strokeWidth="28" strokeLinecap="round" strokeLinejoin="round" />
+      {/* pathLength=1 lets the draw run on a 0–1 dash, whatever the geometry */}
+      <polyline points="40 144 96 200 224 72" fill="none" stroke="currentColor" strokeWidth="28" strokeLinecap="round" strokeLinejoin="round"
+        pathLength={1} strokeDasharray={draw ? 1 : undefined}
+        className={draw ? "animate-gt-draw motion-reduce:animate-none motion-reduce:[stroke-dasharray:none]" : undefined} />
     </svg>
   );
 }
 
-function ArrowsIcon() {
+function ArrowsIcon({ draw = false }: { draw?: boolean }) {
+  // same draw as the check, one stroke at a time
+  const d = draw
+    ? { pathLength: 1, strokeDasharray: 1, className: "animate-gt-draw motion-reduce:animate-none motion-reduce:[stroke-dasharray:none]" }
+    : {};
   return (
     <svg viewBox="0 0 256 256" className="h-4 w-4" aria-hidden="true">
       <g fill="none" stroke="currentColor" strokeWidth="24" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="176 136 216 176 176 216" />
-        <line x1="40" y1="176" x2="216" y2="176" />
-        <polyline points="80 120 40 80 80 40" />
-        <line x1="216" y1="80" x2="40" y2="80" />
+        <polyline points="176 136 216 176 176 216" {...d} />
+        <line x1="40" y1="176" x2="216" y2="176" {...d} />
+        <polyline points="80 120 40 80 80 40" {...d} />
+        <line x1="216" y1="80" x2="40" y2="80" {...d} />
       </g>
     </svg>
   );
 }
 
-export function WeekDayMarker({ day, onClick }: { day: WeekDay; onClick?: () => void }) {
+export function WeekDayMarker({ day, onClick, celebrate = false }: { day: WeekDay; onClick?: () => void; celebrate?: boolean }) {
   const state = normalise(day);
+  /* The logged moment only plays on a day that IS logged now. */
+  const pop = celebrate && (state === "logged" || state === "changed");
   const Tag = onClick ? "button" : "div";
   return (
     <Tag
@@ -138,22 +155,27 @@ export function WeekDayMarker({ day, onClick }: { day: WeekDay; onClick?: () => 
       >
         {day.label}
       </span>
-      <span
-        aria-hidden="true"
-        data-state={state}
-        className={[
-          "flex h-9 w-9 items-center justify-center rounded-full text-sm",
-          MARKER_BY_STATE[state],
-          MOTION,
-        ].join(" ")}
-      >
-        {state === "logged" ? <CheckIcon /> : state === "changed" ? <ArrowsIcon /> : day.date}
+      <span aria-hidden="true" className="relative">
+        {/* the ring released behind the marker: scale + fade, never colour */}
+        {pop && (
+          <span className="absolute inset-0 rounded-full border-2 border-positive-strong animate-gt-ring motion-reduce:hidden" />
+        )}
+        <span
+          data-state={state}
+          className={[
+            "relative flex h-9 w-9 items-center justify-center rounded-full text-sm",
+            MARKER_BY_STATE[state],
+            pop ? "animate-gt-pop motion-reduce:animate-none" : MOTION,
+          ].join(" ")}
+        >
+          {state === "logged" ? <CheckIcon draw={pop} /> : state === "changed" ? <ArrowsIcon draw={pop} /> : day.date}
+        </span>
       </span>
     </Tag>
   );
 }
 
-export function WeekStrip({ days, caption, chip, label, className = "", onDayClick }: WeekStripProps) {
+export function WeekStrip({ days, caption, chip, label, className = "", onDayClick, celebrate }: WeekStripProps) {
   return (
     <div className={["flex flex-col gap-2", className].join(" ")}>
       {(caption || chip) && (
@@ -163,7 +185,7 @@ export function WeekStrip({ days, caption, chip, label, className = "", onDayCli
             <span
               className={[
                 "rounded-full bg-positive-strong px-2 py-0.5 text-[11px] font-medium leading-4 text-ink-inverse",
-                MOTION,
+                celebrate !== undefined ? "animate-gt-slide-in motion-reduce:animate-none" : MOTION,
               ].join(" ")}
             >
               {chip}
@@ -183,6 +205,7 @@ export function WeekStrip({ days, caption, chip, label, className = "", onDayCli
             key={`${day.label}-${i}`}
             day={day}
             onClick={onDayClick ? () => onDayClick(day, i) : undefined}
+            celebrate={celebrate === i}
           />
         ))}
       </div>

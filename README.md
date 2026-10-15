@@ -42,7 +42,7 @@ whole team, not locked to one person's plan and not eyeballed from Figma.
 The repo is a package (`@greentogether/design-system`). Pin a version so you never drift:
 ```jsonc
 // package.json
-"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.2.0"
+"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.3.0"
 ```
 ```css
 /* app root css — the tokens, incl. the [data-surface] overrides */

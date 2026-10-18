@@ -27,6 +27,8 @@
 /** wrap a DS color var so Tailwind opacity modifiers work against it */
 const c = (v) => `color-mix(in srgb, var(${v}) calc(<alpha-value> * 100%), transparent)`;
 
+/* Springs: --ease-spring-pop / --ease-spring-soft live in code-tokens.css. */
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   theme: {
@@ -119,6 +121,20 @@ module.exports = {
         },
         'positive-strong': c('--color-positive-strong'),
         overlay: c('--overlay-backdrop'),
+      },
+      // --- motion (v1.3.0). Transform and opacity only, so the compositor runs
+      // it; consumers pair every one with motion-reduce:animate-none.
+      keyframes: {
+        'gt-pop': { from: { transform: 'scale(0.55)' }, to: { transform: 'scale(1)' } },
+        'gt-ring': { from: { transform: 'scale(1)', opacity: '0.55' }, to: { transform: 'scale(1.75)', opacity: '0' } },
+        'gt-draw': { from: { strokeDashoffset: '1' }, to: { strokeDashoffset: '0' } },
+        'gt-slide-in': { from: { transform: 'translateX(10px) scale(0.9)', opacity: '0' }, to: { transform: 'none', opacity: '1' } },
+      },
+      animation: {
+        'gt-pop': 'gt-pop 790ms var(--ease-spring-pop) both',
+        'gt-ring': 'gt-ring 620ms cubic-bezier(0,0,.2,1) 60ms both',
+        'gt-draw': 'gt-draw 300ms cubic-bezier(.2,.8,.2,1) 170ms both',
+        'gt-slide-in': 'gt-slide-in 670ms var(--ease-spring-soft) 240ms both',
       },
       backgroundImage: {
         'day-sky': 'var(--gradient-day-sky)',

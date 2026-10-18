@@ -301,7 +301,7 @@
   /* Sky gradients — Figma paint styles `Gradient / …`.
      CSS angles/stops are the corrected geometry for a 402×874 frame;
      recompute the stop percentages if the aspect ratio changes. */
-  --gradient-day-sky:       linear-gradient(155.3deg, #9CC7FA 14.29%, #C9DDF0 38.57%, #E6E8DF 55.72%, #FDEFD5 85.71%);
+  --gradient-day-sky:       linear-gradient(155.3deg, #9CC7FA 0%, #9CC7FA 46%, #C9DDF0 86%, #E6E8DF 100%);
   --gradient-afternoon-sky: linear-gradient(173.29deg, #55A3FF 5.92%, #CCE4FA 44.25%, #FFE4B1 73.76%);
   --gradient-evening-sky:   linear-gradient(155.3deg, #1E2A3D 14.29%, #5388A7 49%, #8FB89A 81.36%);
 }

@@ -72,6 +72,9 @@ keeps its existing values until each is settled, so nothing changed underfoot.
 | Red family | `destructive/*` = red 500/600 `#EF4444` / `#DC2626` | `--gt-red` / `--color-danger` = rose `#E11D48` | Two reds in one system. Both now ship; one should win. |
 | Muted greys | `text/secondary` + `icon/muted` = neutral `#737373` | `--color-fg-muted` = blue-grey `#4A5560`, `--gt-placeholder` = `#8C97A1` | Three greys doing one job. |
 | `border/level 1` | `#F7F9FA` | same value ships as `--gt-surface-2`, a *surface* | Same colour, two categories. Worth naming once.
+| Secondary (found 2026-10-17) | `general/secondary` = `#E8F8F0` (pale mint) | `--color-secondary` = brand dark blue `#0B618F` (`--gt-blue-dark`) | The same role is mint in Figma and dark blue in code, so anything drawn with "secondary" (the account-sheet avatar) looks different in each. The S5 Lane 1 frames use the hex `#0B618F` for the avatar as a flagged exception until this is settled. |
+| Muted surface (found 2026-10-17) | `general/muted` = `#E8F8F0` (the same mint) | `--color-bg-muted` = neutral grey `#F5F5F5` (`--gt-bg-warm`) | Muted fills (the program block in the account sheet) read green-tinted in Figma and grey in code. The S5 frames bind raw `gray/100` instead. |
+| Brand dark blue not published (found 2026-10-17) | `Colors/Dark Blue/500` = `#0B618F` exists in the studio file but is not in the published library | `--brand-dark-blue-500` = `#0B618F` ships | Files that use the library can't bind the brand dark blue, so it gets typed as a hex. Publishing it (or aliasing `general/secondary` to it) closes this and the secondary row. |
 
 ## Guardrails (enforced in CI)
 

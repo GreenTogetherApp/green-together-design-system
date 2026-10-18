@@ -131,7 +131,7 @@
       }
     },
     "gradient": {
-      "day-sky": { "value": "linear-gradient(155.3deg, #9CC7FA 14.29%, #C9DDF0 38.57%, #E6E8DF 55.72%, #FDEFD5 85.71%)", "type": "other", "description": "Figma paint style: Gradient / day sky" },
+      "day-sky": { "value": "linear-gradient(155.3deg, #9CC7FA 0%, #9CC7FA 46%, #C9DDF0 86%, #E6E8DF 100%)", "type": "other", "description": "Figma paint style: Gradient / day sky" },
       "afternoon-sky": { "value": "linear-gradient(173.29deg, #55A3FF 5.92%, #CCE4FA 44.25%, #FFE4B1 73.76%)", "type": "other", "description": "Figma paint style: Gradient / afternoon sky" },
       "evening-sky": { "value": "linear-gradient(155.3deg, #1E2A3D 14.29%, #5388A7 49%, #8FB89A 81.36%)", "type": "other", "description": "Figma paint style: Gradient / evening sky" }
     },

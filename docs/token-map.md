@@ -7,23 +7,23 @@
 **DO map and replace these — this is where the running app actually gets its colours:**
 - `green-admin/src/index.css` → the `:root` (light), `.dark`, and `.surface-b` blocks
 - `green-admin/tailwind.config.ts` → the `colors` / `fontFamily` / `borderRadius` bindings (`hsl(var(--x))`)
-- the **same two files in `staginggreentogether`** (they are identical to green-admin's)
+- the **same two files in `staginggreentogether`** — same token *structure*, **not identical**: staging is **already on Geist** (sans/serif/mono + header font) and adds `--secondary-hover` / `--tertiary-hover`
 
 # Token map — green-admin & staginggreentogether → `@greentogether/design-system`
 
 **Source of truth for the migration (#3).** Design-eng half = this file (#24). Eng runs the per-app migration from it.
-Decisions locked 26 Oct 2026. Both apps' local token files are byte-identical, so **one map covers both.**
+Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identical and the live `index.css` / `tailwind.config.ts` share one token structure, so **one map covers both** — with two deltas: **staging already uses Geist** (the font decision is green-admin-only), and staging adds `--secondary-hover` / `--tertiary-hover`.
 
 ## Read this first — two things the #3 card got wrong
 
-1. **`src/utils/designTokens/tokenDefinitions.ts` is a dead copy.** Nothing in app code imports it (only its own exporter does). Its values are stale (primary `#01BB58` vs the live `#22B573`). **Do not map it — retire it** (and `tokenExporter.ts`). The DS `figma-tokens.json` is the Figma bridge now.
+1. **`src/utils/designTokens/tokenDefinitions.ts` is a dead copy.** No app code imports it per GitHub code search (only its own exporter does) — **eng: confirm with a local grep before deleting.** Its values are stale (primary `#01BB58` vs the live `#22B573`). **Do not map it — retire it** (and `tokenExporter.ts`). The DS `figma-tokens.json` is the Figma bridge now.
 2. **The live token layer is `src/index.css`** — `:root` (light), `.dark`, and `.surface-b` — bound by `tailwind.config.ts` as `hsl(var(--x))`. **That is what gets replaced.** Both apps have dark mode (stock shadcn dark), not just staging.
 
 ## Decisions (locked)
 
 | # | Decision | Effect |
 |---|---|---|
-| 1 | **Fonts → Geist.** Body/UI `--font-sans`, headings `--font-headings` (Geist). El Messiri only for the display slot (`--font-headings-serif`). **Open Sans and Inter retired.** | Biggest visible change. |
+| 1 | **Fonts → Geist.** Body/UI `--font-sans`, headings `--font-headings` (Geist). El Messiri only for the display slot (`--font-headings-serif`). **Open Sans and Inter retired.** | **green-admin only** — staging is already on Geist. Biggest visible change *for green-admin*. |
 | 2 | **"Secondary" retired as a colour name.** Name by role: **`accent`** = light-blue `#29ABE2` (`--gt-blue-light` / `--color-info`) · **B primary** = dark-blue `#0B618F` (`[data-surface="b"] --color-primary`) · **`surface-soft`** = mint `#E8F8F0` (= `--gt-green-soft` / `--color-primary-soft`). | Dissolves the Figma/DS/app three-way conflict. |
 | 3 | **Tertiary lilac `#7965FF` retired.** `impact-*` aliases remap (below). | — |
 | 4 | **One neutral focus ring.** Light = `--gt-ink-2 #2E363E`; dark = `--text-inverse #FAFAFA`. (2-tone white-inner/dark-outer acceptable.) Replaces app green ring, Figma grey, DS light-blue. Never matches a primary on any surface/mode. | DS change: `--color-focus-ring` becomes neutral + gains a dark value. |
@@ -120,7 +120,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 
 | Local | → DS | Flag |
 |---|---|---|
-| sans **Open Sans** | `--font-sans` (Geist) | ⚠ decision 1 |
+| sans **Open Sans** (green-admin; staging already Geist) | `--font-sans` (Geist) | ⚠ decision 1 — green-admin only |
 | h1 40 / h2 32 / h3 24 / h4 20 | — | ❌ promote `--h1-size … --h4-size` |
 | body 16 / caption 14 / small 12 | `--p-size` / `--p-small-size` / `--p-mini-size` | ✅ |
 | weights 400 / 500 / 600 | `--p-weight` / `--p-medium-weight` / `--p-bold-weight` | ✅ (700 → gap, minor) |
@@ -166,6 +166,6 @@ Already matches the DS model: primary `#0B618F` ✅, charts dark-blue-led ✅, r
 4. Rename classes per the tables; replace climate-palette usages; delete `tokenDefinitions.ts` + `tokenExporter.ts`.
 5. Run the DS guardrails green (lockstep + no raw colour).
 
-**Visible changes to expect:** fonts → Geist · dark-mode primaries brighter · focus ring neutral · Surface B radius 8 · tertiary lilac gone.
+**Visible changes to expect:** fonts → Geist (green-admin only) · dark-mode primaries brighter · focus ring neutral · Surface B radius 8 · tertiary lilac gone.
 
 **DS promotions that must land first (v2):** dark theme block · `--radius-card` · heading sizes · spacing scale · motion durations · `elevation-5` + dark shadows · `--color-danger-hover` · neutral `--color-focus-ring` · "secondary" → `accent` naming.

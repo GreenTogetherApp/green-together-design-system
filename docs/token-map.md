@@ -1,3 +1,14 @@
+## ⚠️ READ FIRST — which files to touch
+
+**DO NOT map or edit these — they are a dead copy (nothing imports them, values are stale). Delete them as part of the migration:**
+- `green-admin/src/utils/designTokens/tokenDefinitions.ts` (+ `tokenExporter.ts`)
+- `staginggreentogether/src/utils/designTokens/tokenDefinitions.ts` (+ `tokenExporter.ts`)
+
+**DO map and replace these — this is where the running app actually gets its colours:**
+- `green-admin/src/index.css` → the `:root` (light), `.dark`, and `.surface-b` blocks
+- `green-admin/tailwind.config.ts` → the `colors` / `fontFamily` / `borderRadius` bindings (`hsl(var(--x))`)
+- the **same two files in `staginggreentogether`** (they are identical to green-admin's)
+
 # Token map — green-admin & staginggreentogether → `@greentogether/design-system`
 
 **Source of truth for the migration (#3).** Design-eng half = this file (#24). Eng runs the per-app migration from it.

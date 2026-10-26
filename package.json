@@ -11,6 +11,7 @@
     "code-tokens.css",
     "figma-tokens.json",
     "tailwind.cjs",
+    "tailwind-v4.css",
     "GUIDELINES.md",
     "SKILL.md",
     "PROMPT.md",
@@ -23,6 +24,7 @@
     "./tokens.css": "./code-tokens.css",
     "./figma-tokens.json": "./figma-tokens.json",
     "./tailwind": "./tailwind.cjs",
+    "./tailwind-v4.css": "./tailwind-v4.css",
     "./package.json": "./package.json",
     "./components/week-strip": "./components/week-strip.tsx"
   },

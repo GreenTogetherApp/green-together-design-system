@@ -56,6 +56,17 @@ Then use plain semantic classes (`bg-primary`, `text-foreground`, `bg-primary/10
 `data-surface="a"|"b"` on the root to switch Surface A (Maya) ↔ Surface B (Sam). The preset
 uses `color-mix()` so opacity modifiers work off the *live* token — no hardcoded hex, no drift.
 
+**Tailwind v4?** Skip the JS preset and use the CSS-first theme instead (same names, same values):
+```css
+/* app root css — in this order */
+@import 'tailwindcss';
+@import '@greentogether/design-system/code-tokens.css';
+@import '@greentogether/design-system/tailwind-v4.css';
+```
+Tailwind v4 adds the opacity modifiers itself, so `bg-primary/10` still follows the live token and
+the `data-surface` switch. Keep `tailwind.cjs` and `tailwind-v4.css` in step: a name added to one is
+added to the other.
+
 ---
 
 ## The brand at a glance

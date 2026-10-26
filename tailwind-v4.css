@@ -1,0 +1,149 @@
+/* ============================================================================
+ * Green Together — Tailwind v4 theme  (@greentogether/design-system/tailwind-v4.css)
+ * ----------------------------------------------------------------------------
+ * The same mapping as `tailwind.cjs` (the v3 preset), written the Tailwind v4 way:
+ * CSS-first `@theme`, no JS config, no color-mix() wrappers. Tailwind v4 adds
+ * opacity modifiers (bg-primary/30) to theme colours itself, so the DS vars are
+ * referenced directly and the [data-surface="a"|"b"] switch still works at runtime.
+ *
+ * USAGE (consumer's index.css, in this order):
+ *   @import 'tailwindcss';
+ *   @import '@greentogether/design-system/code-tokens.css';
+ *   @import '@greentogether/design-system/tailwind-v4.css';
+ *
+ * `inline` makes every utility read the live DS variable instead of a copy.
+ * Keep this file and `tailwind.cjs` in step: a name added to one is added to the other.
+ * ========================================================================== */
+
+@theme inline {
+  /* --- shadcn semantic names -> GT DS semantic vars --- */
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg);
+  --color-border: var(--color-border);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-focus-ring);
+
+  --color-primary: var(--color-primary); /* surface-scoped in the DS */
+  --color-primary-foreground: var(--color-primary-fg);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-active: var(--color-primary-active);
+  --color-primary-soft: var(--color-primary-soft);
+
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-fg);
+
+  --color-muted: var(--color-bg-muted);
+  --color-muted-foreground: var(--color-fg-muted);
+
+  --color-destructive: var(--color-danger);
+  --color-destructive-foreground: #ffffff;
+
+  /* --- GT-specific semantics (no shadcn equivalent) --- */
+  --color-positive: var(--color-positive);
+  --color-positive-soft: var(--color-positive-soft);
+  --color-positive-strong: var(--color-positive-strong);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-info: var(--color-info);
+  --color-card: var(--gt-surface);
+  --color-card-2: var(--gt-surface-2);
+
+  /* --- promoted from the Figma studio (v1.1.0) ---
+     text/* -> ink, icon/* -> icon, surface/* -> surface, border/* -> line,
+     interaction/* -> interaction, overlay/* -> overlay */
+  --color-ink: var(--text-primary);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-inverse: var(--text-inverse);
+  --color-ink-inverse-secondary: var(--text-inverse-secondary);
+  --color-ink-disabled: var(--text-disabled);
+  --color-ink-on-brand: var(--text-on-brand);
+
+  --color-icon: var(--icon-default);
+  --color-icon-muted: var(--icon-muted);
+  --color-icon-inverse: var(--icon-inverse);
+  --color-icon-brand: var(--icon-brand);
+  --color-icon-destructive: var(--icon-destructive);
+  --color-icon-disabled: var(--icon-disabled);
+
+  --color-surface-0: var(--surface-level-0);
+  --color-surface-2: var(--surface-level-2);
+  --color-surface-3: var(--surface-level-3);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-surface-inverse-glass: var(--surface-inverse-glass);
+  --color-surface-glass: var(--surface-glass);
+  --color-surface-warm: var(--surface-warm);
+
+  --color-line-0: var(--border-level-0);
+  --color-line-1: var(--border-level-1);
+  --color-line-3: var(--border-level-3);
+  --color-line-4: var(--border-level-4);
+  --color-line-5: var(--border-level-5);
+  --color-line-inverse: var(--border-inverse);
+
+  --color-interaction-ghost: var(--interaction-ghost);
+  --color-interaction-ghost-hover: var(--interaction-ghost-hover);
+  --color-interaction-ghost-foreground: var(--interaction-ghost-foreground);
+  --color-interaction-secondary-hover: var(--interaction-secondary-hover);
+  --color-interaction-outline-hover: var(--interaction-outline-hover);
+  --color-interaction-outline-active: var(--interaction-outline-active);
+  --color-interaction-primary-active: var(--interaction-primary-active);
+
+  --color-overlay: var(--overlay-backdrop);
+
+  /* --- radius, shadow, type --- */
+  --radius: var(--radius); /* bare `rounded` */
+  --radius-xs: var(--radius-xs);
+  --radius-lg: var(--radius-lg);
+
+  --shadow: var(--shadow); /* bare `shadow` */
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-focus: var(--shadow-focus);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-headings);
+
+  /* --- motion (v1.3.0): transform and opacity only, so the compositor runs it.
+     Pair every one with motion-reduce:animate-none. --- */
+  --animate-gt-pop: gt-pop 790ms var(--ease-spring-pop) both;
+  --animate-gt-ring: gt-ring 620ms cubic-bezier(0, 0, 0.2, 1) 60ms both;
+  --animate-gt-draw: gt-draw 300ms cubic-bezier(0.2, 0.8, 0.2, 1) 170ms both;
+  --animate-gt-slide-in: gt-slide-in 670ms var(--ease-spring-soft) 240ms both;
+
+  @keyframes gt-pop {
+    from { transform: scale(0.55); }
+    to { transform: scale(1); }
+  }
+  @keyframes gt-ring {
+    from { transform: scale(1); opacity: 0.55; }
+    to { transform: scale(1.75); opacity: 0; }
+  }
+  @keyframes gt-draw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes gt-slide-in {
+    from { transform: translateX(10px) scale(0.9); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+}
+
+/* The three sky gradients as background utilities (bg-day-sky and friends). */
+@utility bg-day-sky { background-image: var(--gradient-day-sky); }
+@utility bg-afternoon-sky { background-image: var(--gradient-afternoon-sky); }
+@utility bg-evening-sky { background-image: var(--gradient-evening-sky); }
+
+/* Default border colour is the DS border, as in the v3 preset (Tailwind v4's own default is currentColor). */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+}

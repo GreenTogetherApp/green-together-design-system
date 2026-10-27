@@ -31,6 +31,8 @@ Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identica
 | 6 | **Radius is surface-scoped**: `--radius-card` = **16px on A, 8px on B** (promoted from green-admin's `--surface-radius-default`). Component scale unchanged (inputs 8 · tabs 10 · modals 24). | Promote to DS. |
 | 7 | **Promote the richer scales to the DS** (surface-invariant): heading sizes, spacing scale, motion durations + easings, `elevation-5`, dark shadow variants. | DS v2 work. |
 | 8 | **Retire:** climate palette (legacy), `tokenDefinitions.ts` + `tokenExporter.ts`. | — |
+| 9 | **Secondary text must pass AA (4.5:1).** Apps' light secondary/muted greys measure 3.0 and 2.5 on white. Secondary text → `--color-fg-muted #4A5560`; `--color-fg-subtle #8C97A1` is placeholder / non-text only. | Visible: secondary text darker in light mode |
+| 10 | **Red = rose `#E11D48` (`--color-danger`).** Figma's `general/destructive` (red-600 `#DC2626`) is repointed to rose, light and dark. | Figma change, no app change |
 
 Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · `❌ gap in DS → promote` · `🗑 retire`
 
@@ -62,7 +64,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--card` / `--card-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--popover` / `--popover-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--muted` `220 14% 96%` | `--color-bg-muted #F5F5F5` | ⚠ minor |
-| `--muted-foreground` `210 10% 59%` | `--color-fg-subtle #8C97A1` | ✅ |
+| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted #4A5560` (7.6:1) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
 | `--accent` `152 68% 96%` (mint tint) | `--color-primary-soft` (**surface-soft**) | ✅ |
 | `--accent-foreground` | `--color-fg` | ↔ |
 | `--border` `220 13% 91%` | `--color-border #D5DBE1` | ⚠ minor |
@@ -91,7 +93,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--progress-active` / `-completed` / `-upcoming` | `--color-primary` / `--color-positive-strong` / `--color-bg-muted` | ❌ no progress tokens in DS — map as shown or promote |
 | `--text-primary` / `-inverse` | `--text-primary` / `--text-inverse` | ✅ (exist in DS) |
 | `--text-secondary` | `--text-secondary` | ⚠ (`#737373` vs app muted-fg) |
-| `--text-muted` | `--color-fg-subtle` | ↔ |
+| `--text-muted` `220 9% 65%` (`#9EA3AE`, 2.5:1 — fails AA) | `--color-fg-muted` | ⚠ DS wins — do not use `--color-fg-subtle` for text |
 | `--surface-app-background` / `-card` | `--color-bg` | ↔ |
 | `--surface-elevated` `0 0% 98%` | `--gt-surface-2` | ↔ |
 | `--surface-divider` | `--color-border` | ↔ |

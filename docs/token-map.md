@@ -31,7 +31,7 @@ Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identica
 | 6 | **Radius is surface-scoped**: `--radius-card` = **16px on A, 8px on B** (promoted from green-admin's `--surface-radius-default`). Component scale unchanged (inputs 8 · tabs 10 · modals 24). | Promote to DS. |
 | 7 | **Promote the richer scales to the DS** (surface-invariant): heading sizes, spacing scale, motion durations + easings, `elevation-5`, dark shadow variants. | DS v2 work. |
 | 8 | **Retire:** climate palette (legacy), `tokenDefinitions.ts` + `tokenExporter.ts`. | — |
-| 9 | **Secondary text must pass AA (4.5:1).** Apps' light secondary/muted greys measure 3.0 and 2.5 on white. Secondary text → `--color-fg-muted #4A5560`; `--color-fg-subtle #8C97A1` is placeholder / non-text only. | Visible: secondary text darker in light mode |
+| 9 | **Greys on light pass AAA (7:1).** Apps' light secondary/muted greys measure 3.0 and 2.5 on white. Secondary text → `--color-fg-muted`, nudged `#4A5560` → `#4A545F` in v1.4.0 so it holds 7:1 on white, `#F7F9FA`, `#FAFAFA`, `#F5F5F5` and mint `#E8F8F0` (`#4A5560` dips to 6.9 on the last two). `--color-fg-subtle #8C97A1` (3.0:1) is never text — borders and non-text only; placeholders use `--color-fg-muted`. | Visible: secondary text darker in light mode |
 | 10 | **Red = rose `#E11D48` (`--color-danger`).** Figma's `general/destructive` (red-600 `#DC2626`) is repointed to rose, light and dark. | Figma change, no app change |
 
 Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · `❌ gap in DS → promote` · `🗑 retire`
@@ -64,7 +64,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--card` / `--card-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--popover` / `--popover-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--muted` `220 14% 96%` | `--color-bg-muted #F5F5F5` | ⚠ minor |
-| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted #4A5560` (7.6:1) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
+| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted` (**AAA**: `#4A545F` in v1.4.0, ≥7:1 on every light surface) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
 | `--accent` `152 68% 96%` (mint tint) | `--color-primary-soft` (**surface-soft**) | ✅ |
 | `--accent-foreground` | `--color-fg` | ↔ |
 | `--border` `220 13% 91%` | `--color-border #D5DBE1` | ⚠ minor |

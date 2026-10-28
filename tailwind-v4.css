@@ -37,6 +37,7 @@
 
   --color-destructive: var(--color-danger);
   --color-destructive-foreground: #ffffff;
+  --color-destructive-hover: var(--color-danger-hover);
 
   /* --- GT-specific semantics (no shadcn equivalent) --- */
   --color-positive: var(--color-positive);
@@ -106,6 +107,7 @@
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
   --shadow-focus: var(--shadow-focus);
 
   --font-sans: var(--font-sans);

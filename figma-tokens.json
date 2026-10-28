@@ -68,7 +68,8 @@
       "success": { "value": "{color.brand.green.500}", "type": "color" },
       "info": { "value": "{color.brand.light-blue.500}", "type": "color" },
       "warning": { "value": "{color.brand.yellow.500}", "type": "color" },
-      "danger": { "value": "#E11D48", "type": "color" }
+      "danger": { "value": "#E11D48", "type": "color" },
+      "danger-hover": { "value": "#BE123C", "type": "color", "description": "rose/700 (v1.4.0)" }
     },
     "semantic": {
       "primary-surface-a": { "value": "{color.brand.green.800}", "type": "color", "description": "Primary action on Surface A (individual / employee app)." },
@@ -213,6 +214,7 @@
     "base": { "value": "0 2px 4px 0 rgba(0,0,0,0.05)", "type": "boxShadow" },
     "md": { "value": "0 4px 8px 0 rgba(0,0,0,0.08)", "type": "boxShadow" },
     "lg": { "value": "0 8px 16px 0 rgba(0,0,0,0.12)", "type": "boxShadow" },
+    "xl": { "value": "0 16px 32px 0 rgba(0,0,0,0.12), 0 8px 16px 0 rgba(0,0,0,0.08)", "type": "boxShadow" },
     "focus": { "value": "0 0 0 3px rgba(46,54,62,0.30)", "type": "boxShadow" }
   },
   "typography": {

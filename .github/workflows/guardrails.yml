@@ -3,6 +3,8 @@ name: Guardrails
 # The rules this repo states in prose, enforced so they can't rot:
 #   1. promoted tokens stay in lockstep across code-tokens.css / figma-tokens.json
 #   2. component source binds tokens, never raw hex / rgb()
+#   3. contrast bars hold
+#   4. code agrees with the committed snapshot of Figma's variables (drift)
 # See VERSION.md → "How to promote from Figma".
 
 on:
@@ -20,3 +22,5 @@ jobs:
           node-version: "20"
       - name: Check token lockstep and component tokens
         run: node scripts/check-guardrails.mjs
+      - name: Check code against the Figma snapshot (drift)
+        run: node scripts/check-drift.mjs

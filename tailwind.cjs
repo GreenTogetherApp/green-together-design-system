@@ -59,6 +59,7 @@ module.exports = {
         destructive: {
           DEFAULT: c('--color-danger'),
           foreground: '#FFFFFF',
+          hover: c('--color-danger-hover'),
         },
         // GT-specific semantics (no shadcn equivalent)
         positive: c('--color-positive'),
@@ -161,6 +162,7 @@ module.exports = {
         DEFAULT: 'var(--shadow)',
         md: 'var(--shadow-md)',
         lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-xl)',
         focus: 'var(--shadow-focus)',
       },
       fontFamily: {

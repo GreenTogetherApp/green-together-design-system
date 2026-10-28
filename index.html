@@ -62,7 +62,7 @@
       <h4>Foundations</h4>
       <a href="#colors">Colors</a><a href="#promoted">Promoted sets</a><a href="#type">Typography</a><a href="#radius">Radius</a><a href="#shadows">Shadows</a><a href="#spacing">Spacing</a>
       <h4>Reference</h4>
-      <a href="#a11y">Accessibility</a><a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">Changelog ↗</a>
+      <a href="#drift">Drift check</a><a href="#a11y">Accessibility</a><a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">Changelog ↗</a>
       <h4>Components</h4>
       <a href="#components">Components</a><a class="soon">Patterns</a>
     </nav>
@@ -132,6 +132,11 @@
 
     <p class="hint" style="margin-top:10px"><b>States (v1.3.0, from the employee app):</b> filled + check = logged · filled + inner ring + arrows = logged, different from usual · green outline + date = today, not logged · dashed outline + date = missed · light outline + date = upcoming. The "Logged" chip is the success confirmation on the caption row. State is carried by shape as well as colour (WCAG 1.4.1). Green fills use <code>--color-positive-strong</code> (green 700, 5.27:1), so the white icons pass; the brand green would not (2.65:1). Icons are inline SVG, so the component still needs nothing beyond React. <code>upcoming</code>, <code>not-logged</code> and <code>isToday</code> from earlier versions still work.</p>
     <p class="hint"><b>Days are a prop, not a constant</b> — Mon–Fri is the Surface A default, but a 21-calendar-day challenge can pass seven days without the strip and the challenge card disagreeing about what a week is.</p>
+
+    <h2 id="drift">Drift check</h2>
+    <p class="muted">Is the code still the same as Figma? A script compares every shared token (colour per surface and theme, brand ramps, radius, charts, type) with a snapshot of Figma's variables and fails the build if they differ. This panel shows the last result.</p>
+    <div id="drift-panel" class="hint">Loading the drift report…</div>
+    <p class="hint">Run it yourself: <code>npm run drift</code>. After a Figma change, refresh <code>figma-snapshot.json</code> and run <code>npm run drift:report</code>. It checks the snapshot, so a Figma edit shows up once the snapshot is refreshed.</p>
 
     <h2 id="a11y">Accessibility</h2>
     <p class="muted">Colour decisions are checked against WCAG AA (4.5:1 text, 3:1 UI). The AA/AAA chips on every swatch above are computed live from the token value — so an inaccessible pairing is visible on sight, not discovered later.</p>
@@ -225,11 +230,17 @@ function render(){
   const fonts=Object.keys(T).filter(k=>/^--font/.test(k));
   document.getElementById('type-samples').innerHTML=fonts.map(k=>
     `<div><span class="mono" style="width:150px;color:#6b6b6b">${k}</span><span style="font-family:${T[k]};font-size:22px">Green Together</span></div>`).join('');
-  document.getElementById('type-note').textContent='Font families are tokenised; a full size scale is thin/undefined (a known gap).';
+  document.getElementById('type-note').textContent='One scale: headings 1 to 4, paragraph, caption, mono, plus number styles. El Messiri is for words at 24px and up; numbers are always Geist.';
 })();
 document.getElementById('sa').onclick=()=>{root.dataset.surface='a';sa.setAttribute('aria-pressed','true');sb.setAttribute('aria-pressed','false');render();};
 document.getElementById('sb').onclick=()=>{root.dataset.surface='b';sb.setAttribute('aria-pressed','true');sa.setAttribute('aria-pressed','false');render();};
 render();
+fetch('drift-report.json').then(r=>r.json()).then(function(d){
+  var el=document.getElementById('drift-panel');
+  var ok=d.drifted===0;
+  var rows=(d.rows||[]).map(function(r){return '<tr><td><code>'+r.key+'</code></td><td>'+r.code+'</td><td>'+r.figmaValue+'</td><td>'+(r.known?'<span class="note">known</span> '+r.known:'<b style="color:#b42318">drifted</b>')+'</td></tr>';}).join('');
+  el.innerHTML='<p style="margin:0 0 10px"><b style="background:'+(ok?'#e7f6ec':'#fde8e8')+';color:'+(ok?'#137a3a':'#b42318')+';padding:3px 9px;border-radius:999px">'+(ok?'In step':'Drifted: '+d.drifted)+'</b> &nbsp; '+d.compared+' tokens compared with the Figma snapshot of '+d.snapshot+'. '+d.known+' known difference'+(d.known===1?'':'s')+' carried on purpose.</p>'+(rows?'<table style="border-collapse:collapse;font-size:12.5px;width:100%"><thead><tr style="text-align:left"><th>Token</th><th>Code</th><th>Figma</th><th>Why</th></tr></thead><tbody>'+rows+'</tbody></table>':'');
+}).catch(function(){document.getElementById('drift-panel').textContent='The drift report loads on the live page (it cannot be read from a local file).';});
 </script>
 </body>
 </html>

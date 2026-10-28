@@ -176,4 +176,4 @@ Already matches the DS model: primary `#0B618F` ✅, charts dark-blue-led ✅, r
 
 **Visible changes to expect:** fonts → Geist (green-admin only) · dark-mode primaries brighter · focus ring neutral · Surface B radius 8 · tertiary lilac gone.
 
-**DS promotions that had to land first (v2).** Landed in v1.4.0: dark theme block · `--radius-card` · heading sizes and serif rules · neutral `--color-focus-ring` · "secondary" retired (now neutral). Still to promote: motion durations · `elevation-5` + dark shadows · `--color-danger-hover`.
+**DS promotions that had to land first (v2).** Landed in v1.4.0: dark theme block · `--radius-card` · heading sizes and serif rules · neutral `--color-focus-ring` · "secondary" retired (now neutral). Also landed: motion durations and easings (`--dur-instant`, `--dur-slower`, `--ease-standard`, `--ease-exit`), `--shadow-xl` with dark-mode shadows (app `--elevation-1..5` → `--shadow-xs/sm/md/lg/xl`), and `--color-danger-hover`. Nothing from the v2 list is left to promote.

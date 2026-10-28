@@ -38,7 +38,7 @@ module.exports = {
         background: c('--color-bg'),
         foreground: c('--color-fg'),
         border: c('--color-border'),
-        input: c('--color-border'),
+        input: c('--border-level-5'), // control borders are 3:1 or better
         ring: c('--color-focus-ring'),
 
         primary: {

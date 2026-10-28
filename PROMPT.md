@@ -19,7 +19,7 @@ PALETTE (multi-colour, not one dominant hue):
   that is green's ONLY job — never use green for a generic button there.
 - Info: light blue #29ABE2. Focus is one neutral ring (ink), never a brand colour.
 - Accent (warnings, achievements, sparingly): yellow #F4A604.
-- Danger: #E11D48. Neutrals: text #1A2026, secondary text #4A5560, borders #D5DBE1,
+- Danger: #E11D48. Neutrals: text #1A2026, secondary text #4A545F, borders #D5DBE1,
   base surface #FFFFFF, tinted surface #F7F9FA.
 - SURFACE RULE: the admin / data surface is dark-blue-led, serious, data-dense — NO
   gamification, compliance-oriented. The employee/consumer surface is green-led and may use
@@ -36,7 +36,7 @@ TYPE (three families):
 
 LAYOUT & SHAPE:
 - 8px spacing system (4px only inside dense controls).
-- Radius: inputs/buttons 8px, tabs 10px, cards 16px, modals 24px, pills/avatars full.
+- Radius: inputs/buttons 8px, tabs 10px, cards 16px (8px on the admin surface), modals 24px, pills/avatars full.
 - Cards: white, 1px #D5DBE1 border, 16px radius, subtle shadow.
 - Focus: 3px neutral ring (#2E363E at ~30%; near-white in dark mode), never yellow, green or blue.
 - Dark theme: data-theme="dark"; primaries lift to green 400 (A) / light blue 400 (B).

@@ -65,8 +65,8 @@
 
   /* ─── Brand colors (back-compat aliases) ───────────── */
   --gt-green:        var(--brand-green-500);
-  --gt-green-deep:   var(--brand-green-800);  /* primary-active */
-  --gt-green-fresh:  var(--brand-green-600);  /* primary-hover */
+  --gt-green-deep:   var(--brand-green-800);  /* legacy alias; primary-active is now green 950 */
+  --gt-green-fresh:  var(--brand-green-600);  /* legacy alias; primary-hover is now green 900 */
   --gt-green-soft:   var(--brand-green-50);
 
   --gt-blue-dark:    var(--brand-dark-blue-500);
@@ -125,7 +125,7 @@
   /* ─── Neutrals (true brand) ────────────────────────── */
   --gt-ink:          #1A2026;  /* primary text */
   --gt-ink-2:        #2E363E;  /* alt text */
-  --gt-text-2:       #4A545F;  /* secondary text — AAA (7:1) on every light surface */
+  --gt-text-2:       #4A545F;  /* secondary text — AAA (7:1) on white and the page/card surfaces; 6:1+ on tinted fills (mint, Surface B soft blue, surface-level-2) */
   --gt-placeholder:  #8C97A1;  /* decoration / non-text only — 2.98:1, NOT for text or control borders */
   --gt-line:         #D5DBE1;  /* borders */
   --gt-surface-2:    #F7F9FA;  /* tinted surface (cards, disabled bg) */
@@ -329,6 +329,27 @@
   --gradient-evening-sky:   linear-gradient(155.3deg, #1E2A3D 14.29%, #5388A7 49%, #8FB89A 81.36%);
 }
 
+/* ─── Re-resolve derived tokens inside any theme or surface scope ────────────
+   A var() chain resolves where it is DECLARED. Without this rule, a
+   <div data-theme="dark"> or <div data-surface="b"> inside a page would inherit
+   the light values of --color-bg, --color-fg and friends computed at :root.
+   Declaring the derived tokens again on every scope element makes them resolve
+   against that scope's own --gt-* values. Keep this list equal to the derived
+   block in :root. */
+[data-theme], [data-surface] {
+  --color-bg:            var(--gt-surface);
+  --color-bg-subtle:     var(--gt-surface-2);
+  --color-bg-muted:      var(--gt-bg-warm);
+  --color-fg:            var(--gt-ink);
+  --color-fg-muted:      var(--gt-text-2);
+  --color-fg-subtle:     var(--gt-placeholder);
+  --color-border:        var(--gt-line);
+  --color-border-strong: var(--gt-ink-2);
+  --color-secondary:     var(--color-bg-muted);
+  --color-secondary-fg:  var(--color-fg);
+  --color-focus-ring:    var(--gt-ink-2);
+}
+
 /* ─── Surface scope ─────────────────────────────────────────────────────────
    The brand runs TWO surfaces. The split is by audience/product, NEVER by
    device or viewport — a responsive admin page at 375px is still Surface B.
@@ -367,6 +388,9 @@
   --color-primary-active: var(--brand-green-950);
   --color-primary-fg:     #FFFFFF;
   --color-primary-soft:   var(--gt-green-soft);
+  --interaction-primary-hover:  #0A4329;                  /* Colors/Green/900 */
+  --interaction-primary-active: #052618;                  /* Colors/Green/950 */
+  --icon-brand:                 #0F5C3A;                  /* general/primary on Surface A */
   --radius-card:          var(--radius-lg);
   --h2-serif-family:      var(--font-headings-serif);
   --h3-serif-family:      var(--font-headings-serif);
@@ -377,7 +401,8 @@
    data-surface: dark swaps the neutrals and lifts each surface's primary to a
    lighter stop (A green 400, B light blue 400) so it stays readable on dark.
    Values come from the Figma "Surface A dark" / "Surface B dark" modes. */
-[data-theme="dark"] {
+[data-theme="dark"],
+[data-theme="dark"] [data-surface] {
   --gt-ink:          #FAFAFA;
   --gt-ink-2:        #D5DBE1;
   --gt-text-2:       #8C97A1;
@@ -402,6 +427,8 @@
   --shadow-md:  0 4px 8px 0 rgba(0,0,0,0.28), 0 2px 4px 0 rgba(0,0,0,0.16);
   --shadow-lg:  0 8px 16px 0 rgba(0,0,0,0.32), 0 4px 8px 0 rgba(0,0,0,0.20);
   --shadow-xl:  0 16px 32px 0 rgba(0,0,0,0.36), 0 8px 16px 0 rgba(0,0,0,0.24);
+  --color-positive-soft:  var(--brand-green-950);
+  --color-positive-strong:#3CC178;                 /* 3:1+ on dark (green 700 is 2.99:1) */
   --color-disabled-bg:    #171717;
   --color-disabled-border:#737373;
   --color-disabled-fg:    #737373;
@@ -445,7 +472,9 @@
   --destructive-subtle: #4C0519;
 }
 
-[data-theme="dark"][data-surface="b"] {
+[data-theme="dark"][data-surface="b"],
+[data-theme="dark"] [data-surface="b"],
+[data-surface="b"] [data-theme="dark"] {
   --color-primary:        var(--brand-light-blue-400);    /* #45B5E5 */
   --color-primary-hover:  var(--brand-light-blue-300);
   --color-primary-active: var(--brand-light-blue-500);

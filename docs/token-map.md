@@ -24,7 +24,7 @@ Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identica
 | # | Decision | Effect |
 |---|---|---|
 | 1 | **Fonts → Geist.** Body/UI `--font-sans`, headings `--font-headings` (Geist). El Messiri only for the display slot (`--font-headings-serif`). **Open Sans and Inter retired.** | **green-admin only** — staging is already on Geist. Biggest visible change *for green-admin*. |
-| 2 | **"Secondary" retired as a colour name.** Name by role: **`accent`** = light-blue `#29ABE2` (`--gt-blue-light` / `--color-info`) · **B primary** = dark-blue `#0B618F` (`[data-surface="b"] --color-primary`) · **`surface-soft`** = mint `#E8F8F0` (= `--gt-green-soft` / `--color-primary-soft`). | Dissolves the Figma/DS/app three-way conflict. |
+| 2 | **"Secondary" retired as a colour name.** Name by role: **`accent`** = light-blue `#29ABE2` (`--gt-blue-light` / `--color-info`) · **B primary** = dark-blue (`[data-surface="b"] --color-primary`; 500 `#0B618F` when decided, **600 `#095378` since v1.4.0**, see decision 14) · **`surface-soft`** = mint `#E8F8F0` (= `--gt-green-soft` / `--color-primary-soft`). | Dissolves the Figma/DS/app three-way conflict. |
 | 3 | **Tertiary lilac `#7965FF` retired.** `impact-*` aliases remap (below). | — |
 | 4 | **One neutral focus ring.** Light = `--gt-ink-2 #2E363E`; dark = `--text-inverse #FAFAFA`. (2-tone white-inner/dark-outer acceptable.) Replaces app green ring, Figma grey, DS light-blue. Never matches a primary on any surface/mode. | DS change: `--color-focus-ring` becomes neutral + gains a dark value. |
 | 5 | **Dark-mode primaries LIFT lighter** (from the primary-colour test): A `--brand-green-400 #3CC178`, B `--brand-light-blue-400 #45B5E5`. The app currently goes *darker* in dark mode (`152 68% 38%`) — **that flips to brighter on migration. Expected, not a bug.** | Visible in dark mode. |
@@ -70,7 +70,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--card` / `--card-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--popover` / `--popover-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--muted` `220 14% 96%` | `--color-bg-muted #F5F5F5` | ⚠ minor |
-| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted` (**AAA**: `#4A545F` in v1.4.0, ≥7:1 on every light surface) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
+| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted` (**AAA**: `#4A545F` in v1.4.0, 7:1 on white and the page and card surfaces, 6:1+ on tinted fills) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
 | `--accent` `152 68% 96%` (mint tint) | `--color-primary-soft` (**surface-soft**) | ✅ |
 | `--accent-foreground` | `--color-fg` | ↔ |
 | `--border` `220 13% 91%` | `--color-border #D5DBE1` | ⚠ minor |
@@ -164,7 +164,7 @@ The DS now ships a `[data-theme="dark"]` block, composable with `[data-surface]`
 
 ## Surface B (`.surface-b`) ↔ `[data-surface="b"]`
 
-Already matches the DS model: primary `#0B618F` ✅, charts dark-blue-led ✅, radius 8 (→ `--radius-card`), cards 1px border/no shadow, **header font Inter → Geist** (decision 1), icons grey.
+Already matches the DS model: primary dark blue ✅ (the DS uses 600 `#095378`, decision 14), charts dark-blue-led ✅, radius 8 (→ `--radius-card`), cards 1px border/no shadow, **header font Inter → Geist** (decision 1), icons grey.
 
 ## Migration order (eng, per app)
 

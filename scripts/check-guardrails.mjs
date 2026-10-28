@@ -138,23 +138,28 @@ for (const file of componentFiles) {
 
 /* ── Rule 3: contrast bars hold ─────────────────────────────────────────── */
 
-// Pull the declarations of one selector block (first match) into a Map.
-function block(selector) {
-  const start = css.indexOf(`${selector} {`);
-  if (start === -1) return new Map();
-  const end = css.indexOf("\n}", start);
-  const m = new Map();
-  for (const line of css.slice(start, end).split("\n")) {
-    const d = line.match(/^\s*--([a-z0-9-]+):\s*([^;]+);/);
-    if (d) m.set(d[1], d[2].trim());
-  }
-  return m;
+// Merge the declarations of every rule whose selector LIST contains `selector`
+// (so a rule written as `a, b { ... }` counts for both). Several declarations
+// per line are fine. Comments are stripped first.
+const stripped = css.replace(/\/\*[\s\S]*?\*\//g, "");
+const rules = [];
+for (const m of stripped.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+  rules.push({ selectors: m[1].split(",").map((x) => x.trim().replace(/\s+/g, " ")), body: m[2] });
 }
+function block(selector) {
+  const out = new Map();
+  for (const r of rules) {
+    if (!r.selectors.includes(selector)) continue;
+    for (const d of r.body.matchAll(/--([a-z0-9-]+)\s*:\s*([^;]+);/g)) out.set(d[1], d[2].trim());
+  }
+  return out;
+}
+const DARK = '[data-theme="dark"]', DARK_B = '[data-theme="dark"][data-surface="b"]', B = '[data-surface="b"]';
 const scopes = {
   a: [block(":root")],
-  b: [block(":root"), block('[data-surface="b"]')],
-  "a-dark": [block(":root"), block('[data-theme="dark"]')],
-  "b-dark": [block(":root"), block('[data-surface="b"]'), block('[data-theme="dark"]'), block('[data-theme="dark"][data-surface="b"]')],
+  b: [block(":root"), block("[data-surface]"), block(B)],
+  "a-dark": [block(":root"), block("[data-theme]"), block(DARK)],
+  "b-dark": [block(":root"), block("[data-theme]"), block("[data-surface]"), block(B), block(DARK), block(DARK_B)],
 };
 function resolve(scope, name, depth = 0) {
   let v;
@@ -189,6 +194,10 @@ for (const sc of ["a", "b"]) need(sc, "color-primary-fg", "color-primary", 7, "p
 for (const bg of ["color-bg", "color-bg-subtle", "color-bg-muted", "color-primary-soft", "surface-level-0"]) {
   need("a", "color-fg-muted", bg, 7, "secondary text");
 }
+// tinted fills (pressed surface, Surface B soft blue) hold 6:1; documented, not 7:1
+need("a", "color-fg-muted", "surface-level-2", 6, "secondary text on a tinted fill");
+need("b", "color-fg-muted", "color-primary-soft", 6, "secondary text on Surface B soft blue");
+need("b", "color-fg-muted", "color-bg", 7, "secondary text on Surface B white");
 need("a", "text-secondary", "color-bg", 7, "secondary text token");
 need("a", "border-level-5", "color-bg", 3, "control border");
 need("a", "color-danger", "color-bg", 4.5, "danger on white");

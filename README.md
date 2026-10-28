@@ -90,7 +90,7 @@ admin/business surface**. Light-blue is info/focus throughout; yellow is a spari
 > The four-colour logo, type, spacing, radius and icons are identical on both — that's the brand thread. Full detail in [`GUIDELINES.md`](./GUIDELINES.md) → *Surfaces*.
 
 **Type** — Geist (UI/body) · El Messiri (only the 64px display + 24px section title) · Geist Mono (data).
-**Spacing** 8px base. **Radius** inputs 8 · tabs 10 · cards 16 · modals 24. **Focus** 3px neutral ring.
+**Spacing** 8px base. **Radius** inputs 8 · tabs 10 · cards 16 (8 on Surface B) · modals 24. **Focus** 3px neutral ring.
 **Icons** Phosphor, Regular. **No emoji**, no unicode glyphs as icons, no Lucide.
 Full detail in `GUIDELINES.md`.
 

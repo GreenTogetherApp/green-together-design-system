@@ -31,7 +31,7 @@ user-invocable: true
 - Dark theme: `data-theme="dark"` (composes with `data-surface`); primaries lift to green 400 (A) and light blue 400 (B).
 - Warning / accent: **`#F4A604`** yellow.
 - Danger: **`#E11D48`** red.
-- Ink `#1A2026`, text-2 `#4A5560`, placeholder `#8C97A1`, line `#D5DBE1`, surface-2 `#F7F9FA`.
+- Ink `#1A2026`, text-2 `#4A545F`, placeholder `#8C97A1`, line `#D5DBE1`, surface-2 `#F7F9FA`.
 
 **The type stack** (Google Fonts, OFL)
 - **Geist** (sans) — body, UI, most headings.
@@ -42,7 +42,7 @@ user-invocable: true
 
 **Spacing**: 8-pixel mini-unit. Steps: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96.
 
-**Corners**: inputs/buttons 8px, tabs 10px, cards 16px, modals 24px.
+**Corners**: inputs/buttons 8px, tabs 10px, cards 16px (8px on Surface B), modals 24px.
 
 **Shadows**: card uses `--shadow-sm`; modals use `--shadow-lg`; focus ring is a 3px neutral ring at 30% opacity — never yellow, green or blue.
 

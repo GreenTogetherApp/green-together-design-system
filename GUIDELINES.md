@@ -132,7 +132,7 @@ The split is by **audience and product, never by device or viewport.** A respons
 
 **Cards.** White, `1px solid var(--color-border)`, `border-radius: var(--radius-card)` (16px on Surface A, 8px on Surface B), `--shadow-sm`. Modals step up to `--radius-xl` (24px) + `--shadow-lg`.
 
-**Corner radii.** Inputs/buttons 8px (`--radius`) · tabs 10px (`--radius-md`) · cards 16px (`--radius-lg`) · modals/hero 24px (`--radius-xl`) · avatars/pills full.
+**Corner radii.** Inputs/buttons 8px (`--radius`) · tabs 10px (`--radius-md`) · cards `--radius-card` (16px on Surface A, 8px on B) · modals/hero 24px (`--radius-xl`) · avatars/pills full.
 
 **Shadows.** `--shadow-xs` resting buttons/inputs · `--shadow-sm` cards · `--shadow-lg` modals. Focus = **3px neutral ring** (`--shadow-focus`) at 30%, ink on light and near-white on dark — never yellow, never green, never blue. No inner shadows.
 

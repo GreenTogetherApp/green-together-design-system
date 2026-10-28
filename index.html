@@ -76,7 +76,7 @@
     <p class="lead"><b>The approved shelf — what ships in code.</b> v1.4.0 (28 Oct 2026: Figma and code back in step, dark theme, one type scale). Last promoted from Figma on 28 Oct 2026.
     Figma is the studio and holds everything; this page holds only what has been promoted: decided, named and accessible.
     Everything here is read live from <code>code-tokens.css</code>, so it can't drift from the package.</p>
-    <p class="hint"><b>Not here yet:</b> most components (one promoted so far) · composed patterns · the full spacing / radius / shadow scales · dark mode.
+    <p class="hint"><b>Not here yet:</b> most components (one promoted so far) · composed patterns · dark-mode charts. (Dark mode, the radius scale and the shadow scale shipped in v1.4.0.)
     Each is a promotion waiting to happen — see <a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">VERSION.md</a> for what's open.</p>
 
     <div class="toggle" role="group" aria-label="Surface">
@@ -235,12 +235,13 @@ function render(){
 document.getElementById('sa').onclick=()=>{root.dataset.surface='a';sa.setAttribute('aria-pressed','true');sb.setAttribute('aria-pressed','false');render();};
 document.getElementById('sb').onclick=()=>{root.dataset.surface='b';sb.setAttribute('aria-pressed','true');sa.setAttribute('aria-pressed','false');render();};
 render();
+function esc(x){return String(x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 fetch('drift-report.json').then(r=>r.json()).then(function(d){
   var el=document.getElementById('drift-panel');
   var ok=d.drifted===0;
-  var rows=(d.rows||[]).map(function(r){return '<tr><td><code>'+r.key+'</code></td><td>'+r.code+'</td><td>'+r.figmaValue+'</td><td>'+(r.known?'<span class="note">known</span> '+r.known:'<b style="color:#b42318">drifted</b>')+'</td></tr>';}).join('');
-  el.innerHTML='<p style="margin:0 0 10px"><b style="background:'+(ok?'#e7f6ec':'#fde8e8')+';color:'+(ok?'#137a3a':'#b42318')+';padding:3px 9px;border-radius:999px">'+(ok?'In step':'Drifted: '+d.drifted)+'</b> &nbsp; '+d.compared+' tokens compared with the Figma snapshot of '+d.snapshot+'. '+d.known+' known difference'+(d.known===1?'':'s')+' carried on purpose.</p>'+(rows?'<table style="border-collapse:collapse;font-size:12.5px;width:100%"><thead><tr style="text-align:left"><th>Token</th><th>Code</th><th>Figma</th><th>Why</th></tr></thead><tbody>'+rows+'</tbody></table>':'');
-}).catch(function(){document.getElementById('drift-panel').textContent='The drift report loads on the live page (it cannot be read from a local file).';});
+  var rows=(d.rows||[]).map(function(r){return '<tr><td><code>'+esc(r.key)+'</code></td><td>'+esc(r.code)+'</td><td>'+esc(r.figmaValue)+'</td><td>'+(r.known?'<span class="note">known</span> '+esc(r.known):'<b style="color:#b42318">drifted</b>')+'</td></tr>';}).join('');
+  el.innerHTML='<p style="margin:0 0 10px"><b style="background:'+(ok?'#e7f6ec':'#fde8e8')+';color:'+(ok?'#137a3a':'#b42318')+';padding:3px 9px;border-radius:999px">'+(ok?'In step':'Drifted: '+d.drifted)+'</b> &nbsp; '+d.compared+' tokens compared with the Figma snapshot of '+esc(d.snapshot)+'. '+d.known+' known difference'+(d.known===1?'':'s')+' carried on purpose.</p>'+(rows?'<table style="border-collapse:collapse;font-size:12.5px;width:100%"><thead><tr style="text-align:left"><th>Token</th><th>Code</th><th>Figma</th><th>Why</th></tr></thead><tbody>'+rows+'</tbody></table>':'');
+}).catch(function(e){document.getElementById('drift-panel').textContent=(location.protocol==='file:')?'The drift report loads on the live page (it cannot be read from a local file).':'Could not show the drift report: '+e.message;});
 </script>
 </body>
 </html>

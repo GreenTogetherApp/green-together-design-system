@@ -21,35 +21,42 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 const css = readFileSync("code-tokens.css", "utf8");
 const snap = JSON.parse(readFileSync("figma-snapshot.json", "utf8"));
 
-/* Differences we have looked at and are carrying on purpose. Each has a reason. */
+/* Differences we have looked at and are carrying on purpose. Each has a reason and the exact values it covers: if either value changes, it stops being
+   known and fails again. */
 export const KNOWN = [
-  { key: "[a] color-border", reason: "Figma general/border is neutral/200 #E5E5E5; the shelf border is --gt-line #D5DBE1 (border-level-3). Open decision: which one is the default card border." },
-  { key: "[b] color-border", reason: "Same open decision as Surface A: Figma #E5E5E5 vs shelf #D5DBE1." },
-  { key: "[a] color-primary-fg", reason: "Figma label on a primary is #FAFAFA, code uses #FFFFFF. Both pass AAA (7.7:1 and 8.0:1)." },
-  { key: "[b] color-primary-fg", reason: "Same as Surface A: #FAFAFA in Figma, #FFFFFF in code." },
-  { key: "[a-dark] color-secondary-fg", reason: "Figma secondary label in dark is #F7F9FA, code inherits --color-fg #FAFAFA. Visually the same." },
-  { key: "[b-dark] color-secondary-fg", reason: "Same as Surface A dark." },
-  { key: "[a] chart-a-5", reason: "Figma chart 5 (light) is Green 700 #14784C; code chart-a-5 is #116841. Open decision." },
+  { key: "[a] color-border", code: "#D5DBE1", figma: "#E5E5E5", reason: "Figma general/border is neutral/200 #E5E5E5; the shelf border is --gt-line #D5DBE1 (border-level-3). Open decision: which one is the default card border." },
+  { key: "[b] color-border", code: "#D5DBE1", figma: "#E5E5E5", reason: "Same open decision as Surface A: Figma #E5E5E5 vs shelf #D5DBE1." },
+  { key: "[a] color-primary-fg", code: "#FFFFFF", figma: "#FAFAFA", reason: "Figma label on a primary is #FAFAFA, code uses #FFFFFF. Both pass AAA (7.7:1 and 8.0:1)." },
+  { key: "[b] color-primary-fg", code: "#FFFFFF", figma: "#FAFAFA", reason: "Same as Surface A: #FAFAFA in Figma, #FFFFFF in code." },
+  { key: "[a-dark] color-secondary-fg", code: "#FAFAFA", figma: "#F7F9FA", reason: "Figma secondary label in dark is #F7F9FA, code inherits --color-fg #FAFAFA. Visually the same." },
+  { key: "[b-dark] color-secondary-fg", code: "#FAFAFA", figma: "#F7F9FA", reason: "Same as Surface A dark." },
+  { key: "[a] chart-a-5", code: "#116841", figma: "#14784C", reason: "Figma chart 5 (light) is Green 700 #14784C; code chart-a-5 is #116841. Open decision." },
 ];
 
 /* ── read the CSS into scopes ───────────────────────────────────────────── */
 
-function block(selector) {
-  const start = css.indexOf(`${selector} {`);
-  if (start === -1) return new Map();
-  const end = css.indexOf("\n}", start);
-  const m = new Map();
-  for (const line of css.slice(start, end).split("\n")) {
-    const d = line.match(/^\s*--([a-z0-9-]+):\s*([^;]+);/);
-    if (d) m.set(d[1], d[2].trim());
-  }
-  return m;
+// Merge the declarations of every rule whose selector LIST contains `selector`
+// (so a rule written as `a, b { ... }` counts for both). Several declarations
+// per line are fine. Comments are stripped first.
+const stripped = css.replace(/\/\*[\s\S]*?\*\//g, "");
+const rules = [];
+for (const m of stripped.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+  rules.push({ selectors: m[1].split(",").map((x) => x.trim().replace(/\s+/g, " ")), body: m[2] });
 }
+function block(selector) {
+  const out = new Map();
+  for (const r of rules) {
+    if (!r.selectors.includes(selector)) continue;
+    for (const d of r.body.matchAll(/--([a-z0-9-]+)\s*:\s*([^;]+);/g)) out.set(d[1], d[2].trim());
+  }
+  return out;
+}
+const DARK = '[data-theme="dark"]', DARK_B = '[data-theme="dark"][data-surface="b"]', B = '[data-surface="b"]';
 const scopes = {
   a: [block(":root")],
-  b: [block(":root"), block('[data-surface="b"]')],
-  "a-dark": [block(":root"), block('[data-theme="dark"]')],
-  "b-dark": [block(":root"), block('[data-surface="b"]'), block('[data-theme="dark"]'), block('[data-theme="dark"][data-surface="b"]')],
+  b: [block(":root"), block("[data-surface]"), block(B)],
+  "a-dark": [block(":root"), block("[data-theme]"), block(DARK)],
+  "b-dark": [block(":root"), block("[data-theme]"), block("[data-surface]"), block(B), block(DARK), block(DARK_B)],
 };
 function resolve(scope, name, depth = 0) {
   let v;
@@ -83,12 +90,11 @@ const rows = []; // for the demo / report
 
 function check(scope, cssName, figmaName, figmaValue) {
   const cssRaw = resolve(scope, cssName);
-  if (cssRaw === undefined) return; // not a token the code carries in this scope
   compared++;
-  const a = norm(cssRaw), b = norm(figmaValue);
-  if (a === b) return;
   const key = `[${scope}] ${cssName}`;
-  const known = KNOWN.find((k) => k.key === key);
+  const a = cssRaw === undefined ? "(missing in code)" : norm(cssRaw), b = norm(figmaValue);
+  if (cssRaw !== undefined && a === b) return;
+  const known = KNOWN.find((k) => k.key === key && norm(k.code) === a && norm(k.figma) === b);
   const row = { key, figma: figmaName, code: a, figmaValue: b, known: known?.reason ?? null };
   rows.push(row);
   (known ? knownHit : failures).push(row);
@@ -174,14 +180,16 @@ if (process.argv.includes("--json")) {
 if (process.argv.includes("--write")) {
   writeFileSync("drift-report.json", reportText);
   console.log(`wrote drift-report.json (${compared} compared, ${failures.length} drifted, ${knownHit.length} known)`);
-} else if (existsSync("drift-report.json") && readFileSync("drift-report.json", "utf8") !== reportText) {
-  console.error("✗ drift-report.json is out of date. Run: npm run drift:report");
-  process.exit(1);
+  process.exit(failures.length ? 1 : 0);
 }
 if (failures.length) {
   console.error(`✗ drift: ${failures.length} token(s) differ between code and the Figma snapshot (${snap.exportedAt})\n`);
   for (const f of failures) console.error(`  ${f.key}: code ${f.code} vs Figma ${f.figmaValue}  (${f.figma})`);
   console.error(`\nFix the code or Figma and refresh figma-snapshot.json, or record a reasoned KNOWN entry.`);
+  process.exit(1);
+}
+if (existsSync("drift-report.json") && readFileSync("drift-report.json", "utf8") !== reportText) {
+  console.error("✗ drift-report.json is out of date. Run: npm run drift:report");
   process.exit(1);
 }
 console.log(`✓ no drift — ${compared} tokens compared against the Figma snapshot (${snap.exportedAt}); ${knownHit.length} known difference(s) carried`);

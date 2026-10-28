@@ -87,18 +87,21 @@ The split is by **audience and product, never by device or viewport.** A respons
 | | **Surface A** — individual / employee app | **Surface B** — admin / business SaaS |
 |---|---|---|
 | Who | a person tracking their own footprint | a CSO / sustainability lead managing an org |
-| Primary action | **green** `#22B573` (`--color-primary`, default `:root`) | **dark blue** `#0B618F` (`[data-surface="b"]`) |
+| Primary action | **green 800** `#0F5C3A` (`--color-primary`, default `:root`) | **dark blue 600** `#095378` (`[data-surface="b"]`) |
 | Green's job | primary actions, success, savings | **savings / positive delta only** (`--color-positive`) — never a generic button |
 | Feel | motivational; gamification OK | measured, credible, data-dense; **no gamification** |
 | Charts | green-led (`--chart-a-*`) | dark-blue-led (`--chart-b-*`) |
 
 **Apply Surface B** by setting `data-surface="b"` on the app root; everything inherits the dark-blue primary. **What keeps the two feeling like one brand:** the four-colour logo is constant on both, green never disappears (it earns a fixed meaning on B), and type / spacing / radius / shadows / icons are identical across both. Dark blue *differentiates* the business surface from the green-dominant eco category, and pairs naturally with the already-dark-blue Surface B chart palette.
 
-> **Dark mode (Surface B).** The dark-blue 500 anchor is too dark on dark surfaces — lift the primary to light-blue 400 (`--brand-light-blue-400`) in dark mode for legibility.
+> **Dark theme.** Set `data-theme="dark"` on the app root. It composes with `data-surface`. Dark primaries lift to a lighter stop so they stay readable: Surface A green 400 (`#3CC178`), Surface B light blue 400 (`#45B5E5`). The brand anchors (green 500, dark blue 500) are too dark on dark surfaces.
+
+> **Accessibility bars the system keeps.** Text on light surfaces is AAA (7:1), including secondary text (`--color-fg-muted`). Control borders (inputs, checkboxes, switches, outline buttons) are 3:1 or better: use `--border-level-5`, never `--gt-placeholder` or `--border-level-4`. Dark-mode secondary text is 4.5:1. `npm run check` fails if a token change breaks a bar.
 
 **Type.** Three families.
 - **Geist** (sans) — UI, body, most headings. The workhorse.
-- **El Messiri** (serif, humanist) — reserved for **heading 00** (64px display) and **heading 3** (24px section title). The "this matters" moments; everywhere else stays Geist.
+- **El Messiri** (serif, humanist) — for **words** in Display (heading 00) and the serif variants of headings 1 to 3 (24px and up): a greeting, a hero, an empty state or onboarding title, or the header of a section or card. It adds personality on top of technical Geist content. **Never** below 24px, never for data or numbers, never mixed with Geist inside one heading. Each of heading 1 to 3 has a Geist and an El Messiri version. **Surface B** (dense admin screens) keeps El Messiri for Display and heading 1; heading 2 and 3 serif fall back to Geist.
+- **Numbers are always Geist**, at any size. Big hero numbers and stats use `number-lg` (64/72) and `number-md` (40/48).
 - **Geist Mono** — data, code, numeric snippets.
 
 **Canonical scale:**
@@ -108,7 +111,8 @@ The split is by **audience and product, never by device or viewport.** A respons
 | heading 00 | El Messiri | 600 | 64 / 72 | -1.5 |
 | heading 1  | Geist      | 600 | 48 / 48 | -1.5 |
 | heading 2  | Geist      | 600 | 30 / 30 | -1   |
-| heading 3  | El Messiri | 600 | 24 / 28.8 | -1 |
+| heading 3  | Geist      | 600 | 24 / 28.8 | -1 |
+| heading 1 / 2 / 3 serif | El Messiri | 600 | 48 / 30 / 24 (same line heights) | -1.5 / -1 / -1 |
 | heading 4  | Geist      | 600 | 20 / 24 | 0    |
 | paragraph large | Geist | 400/500/600 | 18 / 27 | 0 |
 | paragraph       | Geist | 400/500/600 | 16 / 24 | 0 |
@@ -116,6 +120,7 @@ The split is by **audience and product, never by device or viewport.** A respons
 | paragraph mini  | Geist | 400/500/600 | 12 / 16 | 0 |
 | caption         | Geist | 400 (UPPER) | 12 / 21 | 1.5 |
 | monospaced      | Geist Mono | 400 | 16 / 24 | 0 |
+| number large / medium | Geist | 600 | 64 / 72 · 40 / 48 | -1.5 · -1 |
 
 **Spacing.** 8-pixel mini-unit. Half-unit (4px) only inside dense controls. Page rhythm in multiples of 8.
 
@@ -125,13 +130,13 @@ The split is by **audience and product, never by device or viewport.** A respons
 
 **Borders & lines.** 1px `--gt-line` (`#D5DBE1`) for cards/inputs. 1px `--color-border-strong` (`#1A2026`) only in pricing/feature tables. No left-border-only accent cards.
 
-**Cards.** White, `1px solid var(--color-border)`, `border-radius: 16px` (`--radius-lg`), `--shadow-sm`. Modals step up to `--radius-xl` (24px) + `--shadow-lg`.
+**Cards.** White, `1px solid var(--color-border)`, `border-radius: var(--radius-card)` (16px on Surface A, 8px on Surface B), `--shadow-sm`. Modals step up to `--radius-xl` (24px) + `--shadow-lg`.
 
-**Corner radii.** Inputs/buttons 8px (`--radius`) · tabs 10px (`--radius-md`) · cards 16px (`--radius-lg`) · modals/hero 24px (`--radius-xl`) · avatars/pills full.
+**Corner radii.** Inputs/buttons 8px (`--radius`) · tabs 10px (`--radius-md`) · cards `--radius-card` (16px on Surface A, 8px on B) · modals/hero 24px (`--radius-xl`) · avatars/pills full.
 
-**Shadows.** `--shadow-xs` resting buttons/inputs · `--shadow-sm` cards · `--shadow-lg` modals. Focus = **3px light-blue ring** (`--shadow-focus`) at 30% — never yellow. No inner shadows.
+**Shadows.** `--shadow-xs` resting buttons/inputs · `--shadow-sm` cards · `--shadow-lg` modals. Focus = **3px neutral ring** (`--shadow-focus`) at 30%, ink on light and near-white on dark — never yellow, never green, never blue. No inner shadows.
 
-**Hover / press.** Green button hover → `--gt-green-fresh` (`#1C9961`), active → `--gt-green-deep` (`#116841`). Ghost/secondary hover → `rgba(0,0,0,0.05)`. Icon-button press → scale 0.96. Links underline on hover, never at rest. Transitions 120–200ms `cubic-bezier(.2,.8,.2,1)` — no bounce.
+**Hover / press.** Primary button hover → `--color-primary-hover` (A: green 900, B: dark blue 700), active → `--color-primary-active` (A: green 950, B: dark blue 800). Ghost/secondary hover → `rgba(0,0,0,0.05)`. Icon-button press → scale 0.96. Links underline on hover, never at rest. Transitions 120–200ms `cubic-bezier(.2,.8,.2,1)` — no bounce.
 
 **Transparency / blur.** Sparingly. Sticky headers may `backdrop-filter: blur(12px)` over `rgba(255,255,255,0.8)`. Modal scrim `rgba(26,32,38,0.40)`. No frosted-glass cards.
 

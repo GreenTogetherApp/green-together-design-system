@@ -3,7 +3,7 @@
 ## Package releases
 | Tag | Date | Notes |
 |---|---|---|
-| **v1.4.0** | unreleased | **Tailwind v4 theme.** Adds `tailwind-v4.css`: the same names and values as the `tailwind.cjs` preset, written as a CSS-first `@theme` so Tailwind v4 apps need no JS config and no `color-mix()` wrappers. The v3 preset stays for apps still on Tailwind 3 (green-admin, staging). No token values change. |
+| **v1.4.0** | 2026-10-28 | **Figma and code agree again.** One release for the studio→shelf port-back (all 8 open conflicts settled) and the Tailwind v4 theme. **Colour:** Surface A primary is green 800 `#0F5C3A` (AAA, 8.0:1 with white; hover 900, active 950); Surface B primary is dark blue 600 `#095378` (hover 700, active 800). Secondary text `--color-fg-muted` is `#4A545F` (7:1 on white and the page and card surfaces; 6:1+ on tinted fills such as mint, Surface B soft blue and `--surface-level-2`). Rose `#E11D48` is the one red. The focus ring is one neutral (`--gt-ink-2`, light; `#FAFAFA`, dark). `--color-secondary` is now neutral grey (mint is no longer a default fill). Control borders use `--border-level-5` `#737373` (4.74:1). **Dark theme:** `[data-theme="dark"]` composes with `[data-surface]`; dark primaries lift to green 400 (A) and light blue 400 (B). **Radius:** `--radius-card` is 16 on A, 8 on B; Tailwind gains `sm`, `md`, `xl`, `full`, `card`. **Type:** heading 3 is Geist; `h1/h2/h3-serif` add El Messiri for 24px and up, words only (Surface B uses Geist for 2 and 3); `number-lg` / `number-md` are Geist; numbers are never serif. **Guardrails:** a contrast rule now fails the build if a bar slips, and a drift check compares the code with a committed snapshot of Figma's variables (`npm run drift`; the demo page has a Drift panel). **Also promoted:** `--dur-instant` / `--dur-slower`, `--ease-standard` / `--ease-exit`, `--shadow-xl` with stronger dark-mode shadows, and `--color-danger-hover`. **Breaking for consumers:** `--focus-ring-subtle` is renamed `--focus-ring`; green buttons get darker; Tailwind `rounded-sm`, `rounded-md` and `rounded-xl` now mean 6, 10 and 24 (the DS scale); Tailwind `border-input` now uses `--border-level-5` (visible control borders, 3:1+) instead of the pale default border. **Scoping:** `data-theme` and `data-surface` can now sit on any element (not only the root), nest, and combine across elements. Tailwind v4 theme (`tailwind-v4.css`) unchanged in shape. |
 | **v1.3.0** | 2026-10-15 | **Week strip adopts the employee app's five day states** (Julie's `CommuteWeekStrip`), drawn with design-system tokens: `logged` (filled + check), `changed` (filled + inner ring + arrows), `today` (green outline + date), `missed` (dashed outline + date), `future` (light outline + date). Green fills move to `--color-positive-strong` so the white icons pass contrast. Adds an optional `date`, an optional `chip` (the green "Logged" confirmation) and a list `label`. Columns follow the number of days. Icons are inline SVG (no new dependency). `upcoming`, `not-logged`, `isToday` and `onDayClick` from earlier versions still work. Figma library update pending. |
 | **v1.2.0** | 2026-09-28 | **First component on the shelf.** Adds `components/week-strip.tsx` (Week strip + Week day marker, promoted from the studio per issue #9) as copyable React + Tailwind source. Extends the Tailwind preset with the v1.1.0 semantic sets — `ink` `icon` `surface` `line` `interaction` `overlay` plus the three sky gradients — so components can bind them by name. Adds `--color-positive-strong` (green 700, 5.27:1 on `--surface-level-0`; green 500 measures 2.54:1 and fails the 3:1 floor for UI marks). Adds CI guardrails: token lockstep and no-raw-colour-in-components. |
 | **v1.1.0** | 2026-09-20 | **First promotion from Figma.** Adds the eight semantic sets built in Figma in August — `text/` `icon/` `surface/` `border/` `interaction/` `focus/` `destructive/` `overlay/` (38 tokens) — plus the three sky gradient paint styles. Values resolved through their Figma aliases; each token records its alias path. Existing `--color-*` / `--gt-*` tokens are untouched, so consumers upgrade without visual change. |
@@ -12,16 +12,15 @@
 ## This snapshot
 | | |
 |---|---|
-| **Last promotion** | 2026-09-20, from the Figma studio file `Tt32SnKvhoMDOB6YUw1QG3` — the eight semantic sets + three sky gradients |
+| **Last promotion** | 2026-10-28, from the Figma studio file `Tt32SnKvhoMDOB6YUw1QG3` — values re-synced for colour, radius, type and dark theme (first promotion was 2026-09-20: eight semantic sets + three sky gradients) |
 | **Base token values** | 2026-06-13 sync (colours, type, spacing, radius, shadows, motion) — unchanged by the 2026-09-20 promotion |
 | **Contains** | `code-tokens.css` (CSS variables, for code) **and** `figma-tokens.json` (the same values in Tokens Studio format, for designers) |
 
-> **Not on the shelf yet:** components (they live in Figma only), the full spacing / radius /
-> shadow scales (Figma holds far more than the lean set here — a deliberate decision that has
-> not been revisited), and dark mode (Figma's `semantic colors` has a `shadcn-dark` mode; the
-> shelf ships light only). Each is a promotion waiting to happen, not an oversight.
+> **Not on the shelf yet:** components (they live in Figma only), the full spacing / shadow
+> scales, and dark-mode shadows. Each is a promotion waiting to happen, not an oversight.
+> Dark mode itself shipped in v1.4.0.
 
-### ⚠️ Surface-scoped primary — settled here, still open in Figma (2026-06-13, re-checked 2026-09-20)
+### Surface-scoped primary — settled in both places (2026-06-13; Figma caught up 2026-10-28)
 
 The team approved **dark blue `#0B618F` as the primary action colour on Surface B** (the
 admin / business SaaS), with green reserved for savings / positive delta. This repo
@@ -29,10 +28,9 @@ implements it: `--color-primary` is surface-scoped (`:root` = green = Surface A;
 `[data-surface="b"]` = dark blue), plus `--color-positive` (green) and the *Surfaces*
 section in `GUIDELINES.md`.
 
-**Figma does not carry the surface split** — its `general/primary` is green, full stop.
-Until the studio models both surfaces, **this repo's surface-scoped model is the reference**
-for anything that ships. (The earlier version of this note asked for a correction in
-claude.ai/design; that tool is out of the workflow, so the ask now belongs in Figma.)
+**Figma now carries the split too.** The `semantic colors` collection has four modes:
+Surface A light, Surface A dark, Surface B light and Surface B dark. In v1.4.0 the Surface B
+primary moved to dark blue 600 (AAA); Surface A moved to green 800.
 
 ## The cadence model (why this exists)
 
@@ -62,21 +60,21 @@ breaks product work.
 > (see HISTORY.md), which left this repo with no live upstream and no promotion between
 > 13 June and 20 September. The chain above replaces it.
 
-## Open conflicts — Figma and the shelf disagree (found during the 2026-09-20 promotion)
+## Conflicts — all settled in v1.4.0 (found during the 2026-09-20 promotion)
 
-These are **not** bugs in either place; they are decisions nobody has made yet. The shelf
-keeps its existing values until each is settled, so nothing changed underfoot.
+Each of these was a decision nobody had made. They were decided on 2026-10-26 to 2026-10-28
+and written into both Figma and the shelf. Kept here as the record.
 
-| What | Figma says | The shelf says | Why it matters |
-|---|---|---|---|
-| Primary hover | `interaction/primary hover` = `#404040` (a grey, inherited from the Obra/shadcn kit) | `--color-primary-hover` = green 600 `#1A9961` | Figma's value contradicts GT's green primary, and sits next to `interaction/primary active`, which *is* green. Looks like a kit leftover — likely fix upstream, not here. **Not promoted.** |
-| Focus ring | `focus/ring` = `#D5DBE1` (grey) | `--color-focus-ring` = light blue `#29ABE2`, and `--shadow-focus` is a light-blue ring | Two different focus stories. Promoted as `--focus-ring-subtle` so the names don't collide while the decision is open. |
-| Red family | `destructive/*` = red 500/600 `#EF4444` / `#DC2626` | `--gt-red` / `--color-danger` = rose `#E11D48` | Two reds in one system. Both now ship; one should win. |
-| Muted greys | `text/secondary` + `icon/muted` = neutral `#737373` | `--color-fg-muted` = blue-grey `#4A5560`, `--gt-placeholder` = `#8C97A1` | Three greys doing one job. |
-| `border/level 1` | `#F7F9FA` | same value ships as `--gt-surface-2`, a *surface* | Same colour, two categories. Worth naming once.
-| Secondary (found 2026-10-17) | `general/secondary` = `#E8F8F0` (pale mint) | `--color-secondary` = brand dark blue `#0B618F` (`--gt-blue-dark`) | The same role is mint in Figma and dark blue in code, so anything drawn with "secondary" (the account-sheet avatar) looks different in each. The S5 Lane 1 frames use the hex `#0B618F` for the avatar as a flagged exception until this is settled. |
-| Muted surface (found 2026-10-17) | `general/muted` = `#E8F8F0` (the same mint) | `--color-bg-muted` = neutral grey `#F5F5F5` (`--gt-bg-warm`) | Muted fills (the program block in the account sheet) read green-tinted in Figma and grey in code. The S5 frames bind raw `gray/100` instead. |
-| Brand dark blue not published (found 2026-10-17) | `Colors/Dark Blue/500` = `#0B618F` exists in the studio file but is not in the published library | `--brand-dark-blue-500` = `#0B618F` ships | Files that use the library can't bind the brand dark blue, so it gets typed as a hex. Publishing it (or aliasing `general/secondary` to it) closes this and the secondary row. |
+| What | Settled as |
+|---|---|
+| Primary hover | Figma's grey hover is gone. Hover is a darker green (A: green 900, B: dark blue 700). |
+| Focus ring | One neutral ring everywhere: `--gt-ink-2` (light), `#FAFAFA` (dark). |
+| Red family | Rose `#E11D48`. Figma's red-500/600 repointed to rose. |
+| Muted greys | `--color-fg-muted` `#4A545F` (AAA). `--gt-placeholder` `#8C97A1` is decoration only; control borders use `--border-level-5`. |
+| `border/level 1` | Left as a border token; `--gt-surface-2` stays the tinted surface. Same colour, two jobs, documented. |
+| Secondary | Retired as a colour name. `--color-secondary` is neutral grey with ink text, as in Figma. Dark blue is the Surface B primary only. |
+| Muted surface | Neutral grey `#F5F5F5` in both. Mint is the deliberate `--color-primary-soft` tint, not a default fill. |
+| Brand dark blue not published | Published in the Figma library. |
 
 ## Guardrails (enforced in CI)
 
@@ -102,7 +100,7 @@ designer-facing references, not literals, and are skipped by the comparison.
    `sidebar/`) stay in the studio.
 3. Write the promoted tokens into **`code-tokens.css`** and **`figma-tokens.json`** together —
    they are two formats of one set and must stay equal.
-4. Record the Figma alias path per token, and log any value conflict in *Open conflicts*
+4. Record the Figma alias path per token, and log any value conflict in a *Conflicts* table
    above rather than silently overwriting a shelf decision.
 5. Bump the version, tag a release, note what moved.
 6. Consumers update their pin when ready.

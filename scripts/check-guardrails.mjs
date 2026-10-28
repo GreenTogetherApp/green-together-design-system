@@ -2,7 +2,7 @@
 /* ============================================================================
  * Green Together DS — guardrails
  * ----------------------------------------------------------------------------
- * Two rules the repo already states in prose, now enforced so they can't rot:
+ * Rules the repo already states in prose, now enforced so they can't rot:
  *
  *   1. LOCKSTEP — every token promoted from the Figma studio exists in BOTH
  *      code-tokens.css and figma-tokens.json, with the same value. VERSION.md
@@ -12,6 +12,10 @@
  *   2. NO RAW COLOUR IN COMPONENTS — component source binds tokens, never hex
  *      or rgb() literals. A component that hardcodes a colour is a component
  *      that ignores the surface switch and drifts the moment a token changes.
+ *
+ *   3. CONTRAST — the accessibility bars the system promises, measured from the
+ *      real token values: AAA (7:1) for text on light, 3:1 for control borders,
+ *      4.5:1 for secondary text on dark. A token change that breaks a bar fails.
  *
  * Run: node scripts/check-guardrails.mjs
  * Exit 0 = clean, 1 = violations (printed with file and line).
@@ -131,9 +135,82 @@ for (const file of componentFiles) {
     });
 }
 
+
+/* ── Rule 3: contrast bars hold ─────────────────────────────────────────── */
+
+// Merge the declarations of every rule whose selector LIST contains `selector`
+// (so a rule written as `a, b { ... }` counts for both). Several declarations
+// per line are fine. Comments are stripped first.
+const stripped = css.replace(/\/\*[\s\S]*?\*\//g, "");
+const rules = [];
+for (const m of stripped.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+  rules.push({ selectors: m[1].split(",").map((x) => x.trim().replace(/\s+/g, " ")), body: m[2] });
+}
+function block(selector) {
+  const out = new Map();
+  for (const r of rules) {
+    if (!r.selectors.includes(selector)) continue;
+    for (const d of r.body.matchAll(/--([a-z0-9-]+)\s*:\s*([^;]+);/g)) out.set(d[1], d[2].trim());
+  }
+  return out;
+}
+const DARK = '[data-theme="dark"]', DARK_B = '[data-theme="dark"][data-surface="b"]', B = '[data-surface="b"]';
+const scopes = {
+  a: [block(":root")],
+  b: [block(":root"), block("[data-surface]"), block(B)],
+  "a-dark": [block(":root"), block("[data-theme]"), block(DARK)],
+  "b-dark": [block(":root"), block("[data-theme]"), block("[data-surface]"), block(B), block(DARK), block(DARK_B)],
+};
+function resolve(scope, name, depth = 0) {
+  let v;
+  for (const layer of scopes[scope]) if (layer.has(name)) v = layer.get(name);
+  if (v === undefined || depth > 8) return undefined;
+  const ref = v.match(/^var\(--([a-z0-9-]+)\)$/);
+  return ref ? resolve(scope, ref[1], depth + 1) : v;
+}
+function rgb(hex) {
+  const h = hex.replace("#", "");
+  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+}
+function luminance(hex) {
+  const [r, g, b] = rgb(hex).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function ratio(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+function need(scope, fg, bg, min, why) {
+  const f = resolve(scope, fg), b = resolve(scope, bg);
+  if (!/^#[0-9a-f]{6}$/i.test(f ?? "") || !/^#[0-9a-f]{6}$/i.test(b ?? "")) {
+    failures.push(`contrast: [${scope}] --${fg} on --${bg} could not be resolved to hex (${f} / ${b})`);
+    return;
+  }
+  const r = ratio(f, b);
+  if (r < min) failures.push(`contrast: [${scope}] ${why} — --${fg} ${f} on --${bg} ${b} is ${r.toFixed(2)}:1, needs ${min}:1`);
+}
+// light surfaces: primary label AAA, secondary text AAA on every light surface
+for (const sc of ["a", "b"]) need(sc, "color-primary-fg", "color-primary", 7, "primary label");
+for (const bg of ["color-bg", "color-bg-subtle", "color-bg-muted", "color-primary-soft", "surface-level-0"]) {
+  need("a", "color-fg-muted", bg, 7, "secondary text");
+}
+// tinted fills (pressed surface, Surface B soft blue) hold 6:1; documented, not 7:1
+need("a", "color-fg-muted", "surface-level-2", 6, "secondary text on a tinted fill");
+need("b", "color-fg-muted", "color-primary-soft", 6, "secondary text on Surface B soft blue");
+need("b", "color-fg-muted", "color-bg", 7, "secondary text on Surface B white");
+need("a", "text-secondary", "color-bg", 7, "secondary text token");
+need("a", "border-level-5", "color-bg", 3, "control border");
+need("a", "color-danger", "color-bg", 4.5, "danger on white");
+// dark: primary label AAA, secondary text 4.5
+for (const sc of ["a-dark", "b-dark"]) {
+  need(sc, "color-primary-fg", "color-primary", 7, "dark primary label");
+  need(sc, "color-fg-muted", "color-bg", 4.5, "dark secondary text");
+  need(sc, "color-fg", "color-bg", 7, "dark body text");
+}
+
 /* ── Report ─────────────────────────────────────────────────────────────── */
 
-const checked = `${cssVars.size} promoted tokens · ${componentFiles.length} component file(s)`;
+const checked = `${cssVars.size} promoted tokens · ${componentFiles.length} component file(s) · contrast bars`;
 if (failures.length) {
   console.error(`✗ guardrails failed (${checked})\n`);
   for (const f of failures) console.error(`  ${f}`);

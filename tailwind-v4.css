@@ -20,7 +20,7 @@
   --color-background: var(--color-bg);
   --color-foreground: var(--color-fg);
   --color-border: var(--color-border);
-  --color-input: var(--color-border);
+  --color-input: var(--border-level-5); /* control borders are 3:1 or better */
   --color-ring: var(--color-focus-ring);
 
   --color-primary: var(--color-primary); /* surface-scoped in the DS */
@@ -37,6 +37,7 @@
 
   --color-destructive: var(--color-danger);
   --color-destructive-foreground: #ffffff;
+  --color-destructive-hover: var(--color-danger-hover);
 
   /* --- GT-specific semantics (no shadcn equivalent) --- */
   --color-positive: var(--color-positive);
@@ -86,6 +87,7 @@
   --color-interaction-secondary-hover: var(--interaction-secondary-hover);
   --color-interaction-outline-hover: var(--interaction-outline-hover);
   --color-interaction-outline-active: var(--interaction-outline-active);
+  --color-interaction-primary-hover: var(--interaction-primary-hover);
   --color-interaction-primary-active: var(--interaction-primary-active);
 
   --color-overlay: var(--overlay-backdrop);
@@ -93,19 +95,26 @@
   /* --- radius, shadow, type --- */
   --radius: var(--radius); /* bare `rounded` */
   --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+  --radius-card: var(--radius-card); /* 16 on Surface A, 8 on Surface B */
 
   --shadow: var(--shadow); /* bare `shadow` */
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
   --shadow-focus: var(--shadow-focus);
 
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
   --font-heading: var(--font-headings);
+  --font-heading-serif: var(--font-headings-serif);
 
   /* --- motion (v1.3.0): transform and opacity only, so the compositor runs it.
      Pair every one with motion-reduce:animate-none. --- */

@@ -24,7 +24,7 @@ Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identica
 | # | Decision | Effect |
 |---|---|---|
 | 1 | **Fonts → Geist.** Body/UI `--font-sans`, headings `--font-headings` (Geist). El Messiri only for the display slot (`--font-headings-serif`). **Open Sans and Inter retired.** | **green-admin only** — staging is already on Geist. Biggest visible change *for green-admin*. |
-| 2 | **"Secondary" retired as a colour name.** Name by role: **`accent`** = light-blue `#29ABE2` (`--gt-blue-light` / `--color-info`) · **B primary** = dark-blue `#0B618F` (`[data-surface="b"] --color-primary`) · **`surface-soft`** = mint `#E8F8F0` (= `--gt-green-soft` / `--color-primary-soft`). | Dissolves the Figma/DS/app three-way conflict. |
+| 2 | **"Secondary" retired as a colour name.** Name by role: **`accent`** = light-blue `#29ABE2` (`--gt-blue-light` / `--color-info`) · **B primary** = dark-blue (`[data-surface="b"] --color-primary`; 500 `#0B618F` when decided, **600 `#095378` since v1.4.0**, see decision 14) · **`surface-soft`** = mint `#E8F8F0` (= `--gt-green-soft` / `--color-primary-soft`). | Dissolves the Figma/DS/app three-way conflict. |
 | 3 | **Tertiary lilac `#7965FF` retired.** `impact-*` aliases remap (below). | — |
 | 4 | **One neutral focus ring.** Light = `--gt-ink-2 #2E363E`; dark = `--text-inverse #FAFAFA`. (2-tone white-inner/dark-outer acceptable.) Replaces app green ring, Figma grey, DS light-blue. Never matches a primary on any surface/mode. | DS change: `--color-focus-ring` becomes neutral + gains a dark value. |
 | 5 | **Dark-mode primaries LIFT lighter** (from the primary-colour test): A `--brand-green-400 #3CC178`, B `--brand-light-blue-400 #45B5E5`. The app currently goes *darker* in dark mode (`152 68% 38%`) — **that flips to brighter on migration. Expected, not a bug.** | Visible in dark mode. |
@@ -33,6 +33,12 @@ Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identica
 | 8 | **Retire:** climate palette (legacy), `tokenDefinitions.ts` + `tokenExporter.ts`. | — |
 | 9 | **Greys on light pass AAA (7:1).** Apps' light secondary/muted greys measure 3.0 and 2.5 on white. Secondary text → `--color-fg-muted`, nudged `#4A5560` → `#4A545F` in v1.4.0 so it holds 7:1 on white, `#F7F9FA`, `#FAFAFA`, `#F5F5F5` and mint `#E8F8F0` (`#4A5560` dips to 6.9 on the last two). `--color-fg-subtle #8C97A1` (3.0:1) is never text — borders and non-text only; placeholders use `--color-fg-muted`. | Visible: secondary text darker in light mode |
 | 10 | **Red = rose `#E11D48` (`--color-danger`).** Figma's `general/destructive` (red-600 `#DC2626`) is repointed to rose, light and dark. | Figma change, no app change |
+| 11 | **Primary on Surface A = green 800 `#0F5C3A` (AAA, 7.7:1 with the `#FAFAFA` label).** Hover green 900, pressed green 950. Dark mode stays green 400 `#3CC178`. Figma's Button already ships this (27 Oct). | DS change in v1.4.0: `--color-primary` / `-hover` / `-active`. Visible: every green button is darker. |
+| 12 | **Mint is not a default fill.** Figma's `general/secondary` and `general/accent` move from mint `#E8F8F0` to neutral `#F5F5F5` (`--color-bg-muted`), their labels to ink, `interaction/secondary hover` to `#E5E5E5`. Mint survives only as the deliberate `surface-soft` tint. `--color-secondary` (dark blue) is retired. | Figma change done 27 Oct. Visible: secondary buttons, Badge secondary and selected tabs turn grey. |
+| 13 | **Radius names follow the DS scale.** `radius-xs` 4 · `-sm` 6 · `radius` 8 · `-md` 10 · `-lg` 16 · `-xl` 24 · `-full`. Figma's shadcn names (`rounded-lg` 8, `rounded-xl` 12) are renamed `legacy/*` and every component corner is rebound by pixel value. Off-scale radii (12, 18, 2, 3, 5, 999) were moved to the nearest role. Button has one shape: no `Roundness=Round`. | Figma change done 27 Oct. No app change. |
+| 14 | **Surface B primary is dark blue 600 `#095378`, not 500.** AAA with white (8.0:1; 500 measured 6.5:1). Hover 700, active 800. Dark: light blue 400 `#45B5E5`. | DS change shipped in v1.4.0 (`[data-surface="b"]`). |
+| 15 | **Type: one scale, El Messiri for words at 24px and up.** Heading 3 is Geist; `h1/h2/h3-serif` are the El Messiri versions; Surface B swaps 2 and 3 serif to Geist. Numbers are always Geist (`number-lg`, `number-md`). | Shipped in v1.4.0. Figma modes Surface A / Surface B carry it. |
+| 16 | **Control borders are `--border-level-5` `#737373`** (4.74:1). `--gt-placeholder` and `--border-level-4` (2.98:1) are decoration only. | Shipped in v1.4.0 as guidance; contrast guardrail enforces the bars. |
 
 Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · `❌ gap in DS → promote` · `🗑 retire`
 
@@ -40,7 +46,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 
 | Local | Value | → DS | Flag |
 |---|---|---|---|
-| `--primary` | `152 68% 42%` ≈ `#22B573` | `--color-primary` | ✅ (DS green-trim later moves A primary to 700 — a DS change) |
+| `--primary` | `152 68% 42%` ≈ `#22B573` | `--color-primary` | ✅ (decision 11: A primary moves to green 800 — a DS change) |
 | `--primary-foreground` | white | `--color-primary-fg` | ✅ |
 | `--primary-light` | `152 68% 55%` | `--brand-green-400` | ↔ |
 | `--primary-hover` | `152 68% 30%` | `--color-primary-hover` (green 600) | ⚠ |
@@ -64,7 +70,7 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--card` / `--card-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--popover` / `--popover-foreground` | `--color-bg` / `--color-fg` | ↔ |
 | `--muted` `220 14% 96%` | `--color-bg-muted #F5F5F5` | ⚠ minor |
-| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted` (**AAA**: `#4A545F` in v1.4.0, ≥7:1 on every light surface) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
+| `--muted-foreground` `210 10% 59%` (`#8C96A1`, **3.0:1 on white — fails AA**) | `--color-fg-muted` (**AAA**: `#4A545F` in v1.4.0, 7:1 on white and the page and card surfaces, 6:1+ on tinted fills) | ⚠ DS wins — secondary text gets darker on purpose. `--color-fg-subtle` is for placeholders and non-text only |
 | `--accent` `152 68% 96%` (mint tint) | `--color-primary-soft` (**surface-soft**) | ✅ |
 | `--accent-foreground` | `--color-fg` | ↔ |
 | `--border` `220 13% 91%` | `--color-border #D5DBE1` | ⚠ minor |
@@ -141,9 +147,9 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--motion-duration-instant/fast/normal/slow/slower` (50–400ms) | — | ❌ promote |
 | `--motion-easing-standard/enter/exit/spring` | `--ease` / `--ease-spring-soft` (approx) | ↔ ⚠ promote names |
 
-## Dark mode (`.dark`) — ❌ DS gap → promote
+## Dark mode (`.dark`) — ✅ shipped in v1.4.0 as `[data-theme="dark"]`
 
-DS has no dark tokens; Figma has a `shadcn-dark` mode (the same stock origin as the app's). Promote it as a `[data-theme="dark"]` block, composable with `[data-surface]`, with the decided primaries layered on:
+The DS now ships a `[data-theme="dark"]` block, composable with `[data-surface]`, built from the Figma `Surface A dark` / `Surface B dark` modes with the decided primaries layered on. The app values below map to it:
 
 | Local `.dark` | Value | → DS dark |
 |---|---|---|
@@ -158,7 +164,7 @@ DS has no dark tokens; Figma has a `shadcn-dark` mode (the same stock origin as 
 
 ## Surface B (`.surface-b`) ↔ `[data-surface="b"]`
 
-Already matches the DS model: primary `#0B618F` ✅, charts dark-blue-led ✅, radius 8 (→ `--radius-card`), cards 1px border/no shadow, **header font Inter → Geist** (decision 1), icons grey.
+Already matches the DS model: primary dark blue ✅ (the DS uses 600 `#095378`, decision 14), charts dark-blue-led ✅, radius 8 (→ `--radius-card`), cards 1px border/no shadow, **header font Inter → Geist** (decision 1), icons grey.
 
 ## Migration order (eng, per app)
 
@@ -170,4 +176,4 @@ Already matches the DS model: primary `#0B618F` ✅, charts dark-blue-led ✅, r
 
 **Visible changes to expect:** fonts → Geist (green-admin only) · dark-mode primaries brighter · focus ring neutral · Surface B radius 8 · tertiary lilac gone.
 
-**DS promotions that must land first (v2):** dark theme block · `--radius-card` · heading sizes · spacing scale · motion durations · `elevation-5` + dark shadows · `--color-danger-hover` · neutral `--color-focus-ring` · "secondary" → `accent` naming.
+**DS promotions that had to land first (v2).** Landed in v1.4.0: dark theme block · `--radius-card` · heading sizes and serif rules · neutral `--color-focus-ring` · "secondary" retired (now neutral). Also landed: motion durations and easings (`--dur-instant`, `--dur-slower`, `--ease-standard`, `--ease-exit`), `--shadow-xl` with dark-mode shadows (app `--elevation-1..5` → `--shadow-xs/sm/md/lg/xl`), and `--color-danger-hover`. Nothing from the v2 list is left to promote.

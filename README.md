@@ -42,7 +42,7 @@ whole team, not locked to one person's plan and not eyeballed from Figma.
 The repo is a package (`@greentogether/design-system`). Pin a version so you never drift:
 ```jsonc
 // package.json
-"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.3.0"
+"@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.4.0"
 ```
 ```css
 /* app root css — the tokens, incl. the [data-surface] overrides */
@@ -77,7 +77,7 @@ admin/business surface**. Light-blue is info/focus throughout; yellow is a spari
 
 | | Hex | Token |
 |---|---|---|
-| Green | `#22B573` | `--gt-green` — Surface A primary; *savings / positive delta* everywhere |
+| Green | `#22B573` | `--gt-green` — brand anchor, *savings / positive delta*. Surface A primary is green 800 `#0F5C3A` (AAA) |
 | Dark blue | `#0B618F` | `--gt-blue-dark` — Surface B primary |
 | Light blue (info / focus) | `#29ABE2` | `--gt-blue-light` |
 | Yellow (accent) | `#F4A604` | `--gt-yellow` |
@@ -90,7 +90,7 @@ admin/business surface**. Light-blue is info/focus throughout; yellow is a spari
 > The four-colour logo, type, spacing, radius and icons are identical on both — that's the brand thread. Full detail in [`GUIDELINES.md`](./GUIDELINES.md) → *Surfaces*.
 
 **Type** — Geist (UI/body) · El Messiri (only the 64px display + 24px section title) · Geist Mono (data).
-**Spacing** 8px base. **Radius** inputs 8 · tabs 10 · cards 16 · modals 24. **Focus** 3px light-blue ring.
+**Spacing** 8px base. **Radius** inputs 8 · tabs 10 · cards 16 (8 on Surface B) · modals 24. **Focus** 3px neutral ring.
 **Icons** Phosphor, Regular. **No emoji**, no unicode glyphs as icons, no Lucide.
 Full detail in `GUIDELINES.md`.
 

@@ -54,7 +54,7 @@
 <body>
 <div class="wrap">
   <aside>
-    <div class="brand"><div class="logo">G</div><div><b>Green Together</b><small>Design System · <span id="ver">v1.3.0</span></small></div></div>
+    <div class="brand"><div class="logo">G</div><div><b>Green Together</b><small>Design System · <span id="ver">v1.4.0</span></small></div></div>
     <a class="repo" href="https://github.com/GreenTogetherApp/green-together-design-system" target="_blank">GitHub repo ↗</a>
     <nav>
       <h4>Get started</h4>
@@ -62,7 +62,7 @@
       <h4>Foundations</h4>
       <a href="#colors">Colors</a><a href="#promoted">Promoted sets</a><a href="#type">Typography</a><a href="#radius">Radius</a><a href="#shadows">Shadows</a><a href="#spacing">Spacing</a>
       <h4>Reference</h4>
-      <a href="#a11y">Accessibility</a><a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">Changelog ↗</a>
+      <a href="#drift">Drift check</a><a href="#a11y">Accessibility</a><a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">Changelog ↗</a>
       <h4>Components</h4>
       <a href="#components">Components</a><a class="soon">Patterns</a>
     </nav>
@@ -73,10 +73,10 @@
     <h1 id="intro">The Green Together system</h1>
     <p class="lead">One source of truth for the brand in code. Everything on this page is read live from <code>code-tokens.css</code> — no hand-copied values, so it can't drift.</p>
 
-    <p class="lead"><b>The approved shelf — what ships in code.</b> v1.3.0 (15 Oct 2026: week strip matched to the build). Last promoted from Figma on 28 Sep 2026.
+    <p class="lead"><b>The approved shelf — what ships in code.</b> v1.4.0 (28 Oct 2026: Figma and code back in step, dark theme, one type scale). Last promoted from Figma on 28 Oct 2026.
     Figma is the studio and holds everything; this page holds only what has been promoted: decided, named and accessible.
     Everything here is read live from <code>code-tokens.css</code>, so it can't drift from the package.</p>
-    <p class="hint"><b>Not here yet:</b> most components (one promoted so far) · composed patterns · the full spacing / radius / shadow scales · dark mode.
+    <p class="hint"><b>Not here yet:</b> most components (one promoted so far) · composed patterns · dark-mode charts. (Dark mode, the radius scale and the shadow scale shipped in v1.4.0.)
     Each is a promotion waiting to happen — see <a href="https://github.com/GreenTogetherApp/green-together-design-system/blob/main/VERSION.md" target="_blank">VERSION.md</a> for what's open.</p>
 
     <div class="toggle" role="group" aria-label="Surface">
@@ -86,7 +86,7 @@
     <p class="hint">The primary action colour is surface-scoped — flip the toggle and watch <code>--color-primary</code> change.</p>
 
     <h2 id="install">Install</h2>
-    <pre>npm i "@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.3.0"
+    <pre>npm i "@greentogether/design-system": "github:GreenTogetherApp/green-together-design-system#v1.4.0"
 
 /* app root */  @import '@greentogether/design-system/code-tokens.css';
 /* tailwind   */ presets: [require('@greentogether/design-system/tailwind')]</pre>
@@ -132,6 +132,11 @@
 
     <p class="hint" style="margin-top:10px"><b>States (v1.3.0, from the employee app):</b> filled + check = logged · filled + inner ring + arrows = logged, different from usual · green outline + date = today, not logged · dashed outline + date = missed · light outline + date = upcoming. The "Logged" chip is the success confirmation on the caption row. State is carried by shape as well as colour (WCAG 1.4.1). Green fills use <code>--color-positive-strong</code> (green 700, 5.27:1), so the white icons pass; the brand green would not (2.65:1). Icons are inline SVG, so the component still needs nothing beyond React. <code>upcoming</code>, <code>not-logged</code> and <code>isToday</code> from earlier versions still work.</p>
     <p class="hint"><b>Days are a prop, not a constant</b> — Mon–Fri is the Surface A default, but a 21-calendar-day challenge can pass seven days without the strip and the challenge card disagreeing about what a week is.</p>
+
+    <h2 id="drift">Drift check</h2>
+    <p class="muted">Is the code still the same as Figma? A script compares every shared token (colour per surface and theme, brand ramps, radius, charts, type) with a snapshot of Figma's variables and fails the build if they differ. This panel shows the last result.</p>
+    <div id="drift-panel" class="hint">Loading the drift report…</div>
+    <p class="hint">Run it yourself: <code>npm run drift</code>. After a Figma change, refresh <code>figma-snapshot.json</code> and run <code>npm run drift:report</code>. It checks the snapshot, so a Figma edit shows up once the snapshot is refreshed.</p>
 
     <h2 id="a11y">Accessibility</h2>
     <p class="muted">Colour decisions are checked against WCAG AA (4.5:1 text, 3:1 UI). The AA/AAA chips on every swatch above are computed live from the token value — so an inaccessible pairing is visible on sight, not discovered later.</p>
@@ -225,11 +230,18 @@ function render(){
   const fonts=Object.keys(T).filter(k=>/^--font/.test(k));
   document.getElementById('type-samples').innerHTML=fonts.map(k=>
     `<div><span class="mono" style="width:150px;color:#6b6b6b">${k}</span><span style="font-family:${T[k]};font-size:22px">Green Together</span></div>`).join('');
-  document.getElementById('type-note').textContent='Font families are tokenised; a full size scale is thin/undefined (a known gap).';
+  document.getElementById('type-note').textContent='One scale: headings 1 to 4, paragraph, caption, mono, plus number styles. El Messiri is for words at 24px and up; numbers are always Geist.';
 })();
 document.getElementById('sa').onclick=()=>{root.dataset.surface='a';sa.setAttribute('aria-pressed','true');sb.setAttribute('aria-pressed','false');render();};
 document.getElementById('sb').onclick=()=>{root.dataset.surface='b';sb.setAttribute('aria-pressed','true');sa.setAttribute('aria-pressed','false');render();};
 render();
+function esc(x){return String(x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+fetch('drift-report.json').then(r=>r.json()).then(function(d){
+  var el=document.getElementById('drift-panel');
+  var ok=d.drifted===0;
+  var rows=(d.rows||[]).map(function(r){return '<tr><td><code>'+esc(r.key)+'</code></td><td>'+esc(r.code)+'</td><td>'+esc(r.figmaValue)+'</td><td>'+(r.known?'<span class="note">known</span> '+esc(r.known):'<b style="color:#b42318">drifted</b>')+'</td></tr>';}).join('');
+  el.innerHTML='<p style="margin:0 0 10px"><b style="background:'+(ok?'#e7f6ec':'#fde8e8')+';color:'+(ok?'#137a3a':'#b42318')+';padding:3px 9px;border-radius:999px">'+(ok?'In step':'Drifted: '+d.drifted)+'</b> &nbsp; '+d.compared+' tokens compared with the Figma snapshot of '+esc(d.snapshot)+'. '+d.known+' known difference'+(d.known===1?'':'s')+' carried on purpose.</p>'+(rows?'<table style="border-collapse:collapse;font-size:12.5px;width:100%"><thead><tr style="text-align:left"><th>Token</th><th>Code</th><th>Figma</th><th>Why</th></tr></thead><tbody>'+rows+'</tbody></table>':'');
+}).catch(function(e){document.getElementById('drift-panel').textContent=(location.protocol==='file:')?'The drift report loads on the live page (it cannot be read from a local file).':'Could not show the drift report: '+e.message;});
 </script>
 </body>
 </html>

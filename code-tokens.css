@@ -65,8 +65,8 @@
 
   /* ─── Brand colors (back-compat aliases) ───────────── */
   --gt-green:        var(--brand-green-500);
-  --gt-green-deep:   var(--brand-green-800);  /* primary-active */
-  --gt-green-fresh:  var(--brand-green-600);  /* primary-hover */
+  --gt-green-deep:   var(--brand-green-800);  /* legacy alias; primary-active is now green 950 */
+  --gt-green-fresh:  var(--brand-green-600);  /* legacy alias; primary-hover is now green 900 */
   --gt-green-soft:   var(--brand-green-50);
 
   --gt-blue-dark:    var(--brand-dark-blue-500);
@@ -125,8 +125,8 @@
   /* ─── Neutrals (true brand) ────────────────────────── */
   --gt-ink:          #1A2026;  /* primary text */
   --gt-ink-2:        #2E363E;  /* alt text */
-  --gt-text-2:       #4A5560;  /* secondary text */
-  --gt-placeholder:  #8C97A1;  /* placeholder/muted */
+  --gt-text-2:       #4A545F;  /* secondary text — AAA (7:1) on white and the page/card surfaces; 6:1+ on tinted fills (mint, Surface B soft blue, surface-level-2) */
+  --gt-placeholder:  #8C97A1;  /* decoration / non-text only — 2.98:1, NOT for text or control borders */
   --gt-line:         #D5DBE1;  /* borders */
   --gt-surface-2:    #F7F9FA;  /* tinted surface (cards, disabled bg) */
   --gt-surface:      #FFFFFF;  /* base surface */
@@ -145,14 +145,19 @@
   /* Primary action is SURFACE-SCOPED — see the [data-surface] blocks below.
      Default (:root) = Surface A (green). Surface B (admin / business SaaS)
      overrides primary to dark-blue and repurposes green to mean savings only. */
-  --color-primary:             var(--gt-green);        /* Surface A default */
-  --color-primary-hover:       var(--gt-green-fresh);
-  --color-primary-active:      var(--gt-green-deep);
+  /* v1.4.0: Surface A primary is green 800 (AAA, 8.0:1 with white). Brand green
+     500 (--gt-green) stays for logos, charts and positive marks, not for fills
+     that carry text. */
+  --color-primary:             var(--brand-green-800);  /* Surface A default */
+  --color-primary-hover:       var(--brand-green-900);
+  --color-primary-active:      var(--brand-green-950);
   --color-primary-fg:          #FFFFFF;
-  --color-primary-soft:        var(--gt-green-soft);
+  --color-primary-soft:        var(--gt-green-soft);    /* the deliberate mint tint */
 
-  --color-secondary:           var(--gt-blue-dark);
-  --color-secondary-fg:        #FFFFFF;
+  /* "Secondary" is retired as a colour NAME (v1.4.0). It now matches Figma's
+     general/secondary: neutral grey with ink text. Mint is not a default fill. */
+  --color-secondary:           var(--color-bg-muted);
+  --color-secondary-fg:        var(--color-fg);
 
   /* Positive / savings semantic — green on BOTH surfaces (on Surface B this is
      green's *only* job: a saving or a positive delta, never a generic action). */
@@ -163,8 +168,9 @@
   --color-info:                var(--gt-blue-light);
   --color-warning:             var(--gt-yellow);
   --color-danger:              var(--gt-red);
+  --color-danger-hover:        #BE123C;            /* rose/700 */
 
-  --color-focus-ring:          var(--gt-blue-light);
+  --color-focus-ring:          var(--gt-ink-2);   /* one neutral ring (v1.4.0); never matches a primary */
 
   /* Disabled */
   --color-disabled-bg:         #F7F9FA;
@@ -187,10 +193,22 @@
   --h1-weight:    600; --h1-size:  48px; --h1-lh:  48px;   --h1-tracking:  -1.5px;
   --h2-family:    var(--font-headings);
   --h2-weight:    600; --h2-size:  30px; --h2-lh:  30px;   --h2-tracking:  -1px;
-  --h3-family:    var(--font-headings-serif);
+  --h3-family:    var(--font-headings);
   --h3-weight:    600; --h3-size:  24px; --h3-lh:  28.8px; --h3-tracking:  -1px;
   --h4-family:    var(--font-headings);
   --h4-weight:    600; --h4-size:  20px; --h4-lh:  24px;   --h4-tracking:  0;
+
+  /* Serif (El Messiri) variants — v1.4.0.
+     RULES: words only · 24px and up · never data or numbers · never mixed with
+     Geist inside one heading · everything under 24px is Geist.
+     Surface B overrides the 2 and 3 variants to Geist (see [data-surface="b"]). */
+  --h1-serif-family: var(--font-headings-serif);
+  --h2-serif-family: var(--font-headings-serif);
+  --h3-serif-family: var(--font-headings-serif);
+
+  /* Numbers are always Geist. Big hero numbers and stats use these. */
+  --number-lg-size: 64px; --number-lg-lh: 72px; --number-lg-tracking: -1.5px; --number-lg-weight: 600;
+  --number-md-size: 40px; --number-md-lh: 48px; --number-md-tracking: -1px;   --number-md-weight: 600;
 
   /* ─── Paragraph scale ──────────────────────────────── */
   --p-large-size:  18px;  --p-large-lh: 27px;
@@ -203,6 +221,7 @@
 
   /* ─── Caption / mono ───────────────────────────────── */
   --caption-size: 12px; --caption-lh: 21px; --caption-tracking: 1.5px; --caption-weight: 400;
+  --caption-regular-tracking: 0px;
   --mono-size: 16px; --mono-lh: 24px; --mono-tracking: 0; --mono-weight: 400;
 
   /* ─── Spacing — 8px mini-unit ─────────────────────── */
@@ -212,6 +231,7 @@
   /* ─── Radius ───────────────────────────────────────── */
   --radius-xs: 4px; --radius-sm: 6px; --radius: 8px; --radius-md: 10px;
   --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
+  --radius-card: var(--radius-lg);   /* surface-scoped: 16 on Surface A, 8 on Surface B */
 
   /* ─── Shadows ──────────────────────────────────────── */
   --shadow-xs:  0 1px 2px 0 rgba(0,0,0,0.05);
@@ -219,7 +239,8 @@
   --shadow:     0 2px 4px 0 rgba(0,0,0,0.05);
   --shadow-md:  0 4px 8px 0 rgba(0,0,0,0.08);
   --shadow-lg:  0 8px 16px 0 rgba(0,0,0,0.12);
-  --shadow-focus: 0 0 0 3px rgba(41,171,226,0.30); /* light-blue focus ring */
+  --shadow-xl:  0 16px 32px 0 rgba(0,0,0,0.12), 0 8px 16px 0 rgba(0,0,0,0.08);
+  --shadow-focus: 0 0 0 3px rgba(46,54,62,0.30); /* neutral focus ring (v1.4.0) */
 
   /* ─── Motion ───────────────────────────────────────── */
   --ease: cubic-bezier(.2,.8,.2,1); --ease-out: cubic-bezier(0,0,.2,1);
@@ -229,7 +250,8 @@
      A browser without linear() drops the animation and shows the end state. */
   --ease-spring-pop: linear(0, 0.039, 0.1383, 0.2738, 0.4254, 0.5775, 0.7186, 0.8414, 0.9419, 1.0188, 1.0729, 1.1067, 1.1231, 1.1259, 1.1186, 1.1046, 1.0867, 1.0674, 1.0484, 1.0311, 1.0163, 1.0044, 0.9955, 0.9894, 0.9858, 0.9842, 0.9842, 0.9854, 0.9874, 0.9897, 0.9921, 0.9945, 0.9966, 0.9984, 0.9998, 1.0008, 1.0015, 1.0019, 1.002, 1.002, 1);
   --ease-spring-soft: linear(0, 0.0197, 0.0703, 0.1408, 0.2228, 0.3099, 0.3973, 0.4817, 0.5608, 0.6332, 0.6982, 0.7554, 0.8051, 0.8476, 0.8833, 0.913, 0.9372, 0.9568, 0.9722, 0.9842, 0.9932, 0.9999, 1.0046, 1.0078, 1.0098, 1.0108, 1.0111, 1.0109, 1.0104, 1.0096, 1.0087, 1.0077, 1.0068, 1.0058, 1.0049, 1.0041, 1.0034, 1.0028, 1.0022, 1.0017, 1);
-  --dur-fast: 120ms; --dur: 200ms; --dur-slow: 320ms;
+  --dur-instant: 50ms; --dur-fast: 120ms; --dur: 200ms; --dur-slow: 320ms; --dur-slower: 400ms;
+  --ease-standard: cubic-bezier(0.4,0,0.2,1); --ease-exit: cubic-bezier(0.4,0,1,1);   /* --ease-out is the enter curve */
 
   --icon-size: 18px;
 
@@ -240,7 +262,7 @@
 
   /* Text */
   --text-primary:            #1A2026;                 /* general/foreground */
-  --text-secondary:          #737373;                 /* general/muted foreground */
+  --text-secondary:          #4A545F;                 /* general/muted foreground → Colors/Gray/600 (AAA) */
   --text-inverse:            #FAFAFA;                 /* general/primary foreground */
   --text-inverse-secondary:  rgba(255,255,255,0.70);  /* white/alpha-70 */
   --text-disabled:           #9CA3AF;                 /* gray/400 */
@@ -248,10 +270,10 @@
 
   /* Icon */
   --icon-default:      #1A2026;                 /* general/foreground */
-  --icon-muted:        #737373;                 /* general/muted foreground */
+  --icon-muted:        #4A545F;                 /* general/muted foreground → Colors/Gray/600 (AAA) */
   --icon-inverse:      #FAFAFA;                 /* general/primary foreground */
-  --icon-brand:        #22B573;                 /* general/primary */
-  --icon-destructive:  #DC2626;                 /* general/destructive */
+  --icon-brand:        #0F5C3A;                 /* general/primary → Colors/Green/800 */
+  --icon-destructive:  #E11D48;                 /* general/destructive → rose/600 */
   --icon-disabled:     #9CA3AF;                 /* gray/400 */
 
   /* Surface */
@@ -267,27 +289,28 @@
   --border-level-0:  #FAFAFA;                 /* brand-neutrals/50 */
   --border-level-1:  #F7F9FA;                 /* brand-neutrals/100 */
   --border-level-3:  #D5DBE1;                 /* brand-neutrals/300 */
-  --border-level-4:  #8C97A1;                 /* brand-neutrals/400 */
-  --border-level-5:  #737373;                 /* brand-neutrals/500 */
+  --border-level-4:  #8C97A1;                 /* brand-neutrals/400 — 2.98:1, decoration only */
+  --border-level-5:  #737373;                 /* brand-neutrals/500 — CONTROL borders (4.74:1) */
   --border-inverse:  rgba(255,255,255,0.10);  /* white/alpha-10 */
 
   /* Interaction */
   --interaction-ghost:             rgba(255,255,255,0);     /* white/alpha-001 */
   --interaction-ghost-hover:       rgba(0,0,0,0.05);        /* black/alpha-5 */
   --interaction-ghost-foreground:  #404040;                 /* brand-neutrals/700 */
-  --interaction-secondary-hover:   #FAFAFA;                 /* brand-neutrals/50 */
+  --interaction-secondary-hover:   #E5E5E5;                 /* neutral/200 */
   --interaction-outline-hover:     rgba(0,0,0,0.03);        /* black/alpha-333 */
   --interaction-outline-active:    rgba(0,0,0,0.05);        /* black/alpha-5 */
-  --interaction-primary-active:    #14784C;                 /* Colors/Green/700 */
+  --interaction-primary-hover:     #0A4329;                 /* Colors/Green/900 */
+  --interaction-primary-active:    #052618;                 /* Colors/Green/950 */
 
   /* Focus */
-  --focus-ring-subtle:  #D5DBE1;                 /* brand-neutrals/300 */
-  --focus-ring-error:   #FCA5A5;                 /* red/300 */
+  --focus-ring:         #2E363E;                 /* Colors/Gray/800 — the one neutral ring */
+  --focus-ring-error:   #FDA4AF;                 /* rose/300 */
 
   /* Destructive */
-  --destructive-border:  #EF4444;                 /* red/500 */
-  --destructive-text:    #DC2626;                 /* red/600 */
-  --destructive-subtle:  #FEF2F2;                 /* red/50 */
+  --destructive-border:  #F43F5E;                 /* rose/500 */
+  --destructive-text:    #E11D48;                 /* rose/600 */
+  --destructive-subtle:  #FFF1F2;                 /* rose/50 */
 
   /* Positive — accessible on light surfaces.
      --color-positive (green 500) measures 2.54:1 on --surface-level-0, which
@@ -306,6 +329,27 @@
   --gradient-evening-sky:   linear-gradient(155.3deg, #1E2A3D 14.29%, #5388A7 49%, #8FB89A 81.36%);
 }
 
+/* ─── Re-resolve derived tokens inside any theme or surface scope ────────────
+   A var() chain resolves where it is DECLARED. Without this rule, a
+   <div data-theme="dark"> or <div data-surface="b"> inside a page would inherit
+   the light values of --color-bg, --color-fg and friends computed at :root.
+   Declaring the derived tokens again on every scope element makes them resolve
+   against that scope's own --gt-* values. Keep this list equal to the derived
+   block in :root. */
+[data-theme], [data-surface] {
+  --color-bg:            var(--gt-surface);
+  --color-bg-subtle:     var(--gt-surface-2);
+  --color-bg-muted:      var(--gt-bg-warm);
+  --color-fg:            var(--gt-ink);
+  --color-fg-muted:      var(--gt-text-2);
+  --color-fg-subtle:     var(--gt-placeholder);
+  --color-border:        var(--gt-line);
+  --color-border-strong: var(--gt-ink-2);
+  --color-secondary:     var(--color-bg-muted);
+  --color-secondary-fg:  var(--color-fg);
+  --color-focus-ring:    var(--gt-ink-2);
+}
+
 /* ─── Surface scope ─────────────────────────────────────────────────────────
    The brand runs TWO surfaces. The split is by audience/product, NEVER by
    device or viewport — a responsive admin page at 375px is still Surface B.
@@ -320,22 +364,124 @@
    the top-level app wrapper). Everything below inherits it. The constant brand
    thread across both: the four-colour logo, type, spacing, radius, icons. */
 [data-surface="b"] {
-  --color-primary:        var(--gt-blue-dark);            /* #0B618F */
-  --color-primary-hover:  var(--brand-dark-blue-600);     /* #095378 */
-  --color-primary-active: var(--brand-dark-blue-700);     /* #084362 */
+  /* v1.4.0: dark blue 600 (AAA, 8.0:1 with white); 500 #0B618F measured 6.5:1. */
+  --color-primary:        var(--brand-dark-blue-600);     /* #095378 */
+  --color-primary-hover:  var(--brand-dark-blue-700);     /* #084362 */
+  --color-primary-active: var(--brand-dark-blue-800);     /* #06334A */
   --color-primary-fg:     #FFFFFF;
   --color-primary-soft:   var(--brand-dark-blue-50);      /* #E6F2F8 */
   /* --color-positive stays green — savings / positive delta only. */
+  --interaction-primary-hover:  #084362;                  /* Colors/Dark Blue/700 */
+  --interaction-primary-active: #06334A;                  /* Colors/Dark Blue/800 */
+  --icon-brand:                 #095378;                  /* general/primary on Surface B */
+  --radius-card:          var(--radius);                  /* cards are 8 on Surface B */
+  /* Dense screens: serif only for Display and the page title (Heading 1). */
+  --h2-serif-family:      var(--font-headings);
+  --h3-serif-family:      var(--font-headings);
 }
 
 /* Explicit opt-in to Surface A (same as :root) — handy when a single document
    hosts both surfaces and you need to scope a region back to green. */
 [data-surface="a"] {
-  --color-primary:        var(--gt-green);
-  --color-primary-hover:  var(--gt-green-fresh);
-  --color-primary-active: var(--gt-green-deep);
+  --color-primary:        var(--brand-green-800);
+  --color-primary-hover:  var(--brand-green-900);
+  --color-primary-active: var(--brand-green-950);
   --color-primary-fg:     #FFFFFF;
   --color-primary-soft:   var(--gt-green-soft);
+  --interaction-primary-hover:  #0A4329;                  /* Colors/Green/900 */
+  --interaction-primary-active: #052618;                  /* Colors/Green/950 */
+  --icon-brand:                 #0F5C3A;                  /* general/primary on Surface A */
+  --radius-card:          var(--radius-lg);
+  --h2-serif-family:      var(--font-headings-serif);
+  --h3-serif-family:      var(--font-headings-serif);
+}
+
+/* ─── Dark theme (v1.4.0) ────────────────────────────────────────────────────
+   Opt in with data-theme="dark" on the app root. It composes with
+   data-surface: dark swaps the neutrals and lifts each surface's primary to a
+   lighter stop (A green 400, B light blue 400) so it stays readable on dark.
+   Values come from the Figma "Surface A dark" / "Surface B dark" modes. */
+[data-theme="dark"],
+[data-theme="dark"] [data-surface] {
+  --gt-ink:          #FAFAFA;
+  --gt-ink-2:        #D5DBE1;
+  --gt-text-2:       #8C97A1;
+  --gt-placeholder:  #737373;
+  --gt-line:         #404040;
+  --gt-surface-2:    #171717;
+  --gt-surface:      #1A2026;
+  --gt-bg-warm:      #171717;
+
+  --color-primary:        var(--brand-green-400);
+  --color-primary-hover:  var(--brand-green-300);
+  --color-primary-active: var(--brand-green-500);
+  --color-primary-fg:     #1A2026;
+  --color-primary-soft:   var(--brand-green-950);
+  --color-secondary:      var(--surface-level-2);
+  --color-focus-ring:     #FAFAFA;
+  --shadow-focus:         0 0 0 3px rgba(250,250,250,0.30);
+  /* Shadows are stronger on dark surfaces. */
+  --shadow-xs:  0 1px 2px 0 rgba(0,0,0,0.20);
+  --shadow-sm:  0 2px 4px 0 rgba(0,0,0,0.24), 0 1px 2px 0 rgba(0,0,0,0.16);
+  --shadow:     0 2px 4px 0 rgba(0,0,0,0.20);
+  --shadow-md:  0 4px 8px 0 rgba(0,0,0,0.28), 0 2px 4px 0 rgba(0,0,0,0.16);
+  --shadow-lg:  0 8px 16px 0 rgba(0,0,0,0.32), 0 4px 8px 0 rgba(0,0,0,0.20);
+  --shadow-xl:  0 16px 32px 0 rgba(0,0,0,0.36), 0 8px 16px 0 rgba(0,0,0,0.24);
+  --color-positive-soft:  var(--brand-green-950);
+  --color-positive-strong:#3CC178;                 /* 3:1+ on dark (green 700 is 2.99:1) */
+  --color-disabled-bg:    #171717;
+  --color-disabled-border:#737373;
+  --color-disabled-fg:    #737373;
+
+  --text-primary:            #FAFAFA;
+  --text-secondary:          #8C97A1;
+  --text-inverse:            #1A2026;
+  --text-inverse-secondary:  rgba(0,0,0,0.70);
+  --text-on-brand:           #1A2026;
+
+  --icon-default:      #FAFAFA;
+  --icon-muted:        #8C97A1;
+  --icon-inverse:      #1A2026;
+  --icon-brand:        #3CC178;
+
+  --surface-level-0:        #1A2026;
+  --surface-level-2:        #262626;
+  --surface-level-3:        #404040;
+  --surface-inverse:        #F7F9FA;
+  --surface-inverse-glass:  rgba(255,255,255,0.70);
+  --surface-glass:          rgba(255,255,255,0.10);
+  --surface-warm:           #171717;
+
+  --border-level-0:  #1A2026;
+  --border-level-1:  #171717;
+  --border-level-3:  #404040;
+  --border-inverse:  rgba(255,255,255,0.05);
+
+  --interaction-ghost-hover:       rgba(255,255,255,0.10);
+  --interaction-ghost-foreground:  #E5E5E5;
+  --interaction-secondary-hover:   #171717;
+  --interaction-outline-hover:     rgba(255,255,255,0.10);
+  --interaction-outline-active:    rgba(255,255,255,0.15);
+  --interaction-primary-hover:     #5FD08F;
+  --interaction-primary-active:    #22B573;
+
+  --focus-ring:         #FAFAFA;
+  --focus-ring-error:   #FB7185;
+  --destructive-border: #F43F5E;
+  --destructive-text:   #FB7185;
+  --destructive-subtle: #4C0519;
+}
+
+[data-theme="dark"][data-surface="b"],
+[data-theme="dark"] [data-surface="b"],
+[data-surface="b"] [data-theme="dark"] {
+  --color-primary:        var(--brand-light-blue-400);    /* #45B5E5 */
+  --color-primary-hover:  var(--brand-light-blue-300);
+  --color-primary-active: var(--brand-light-blue-500);
+  --color-primary-soft:   var(--brand-dark-blue-950);
+  --icon-brand:           #45B5E5;
+  --interaction-primary-hover:  #6BC1E8;
+  --interaction-primary-active: #29ABE2;
 }
 
 /* ─── Typographic helper classes (additive; opt-in) ────── */
@@ -347,10 +493,19 @@
 .h1 { font-family: var(--h1-family); font-weight: var(--h1-weight); font-size: var(--h1-size); line-height: var(--h1-lh); letter-spacing: var(--h1-tracking); margin: 0; }
 .h2 { font-family: var(--h2-family); font-weight: var(--h2-weight); font-size: var(--h2-size); line-height: var(--h2-lh); letter-spacing: var(--h2-tracking); margin: 0; }
 .h3 { font-family: var(--h3-family); font-weight: var(--h3-weight); font-size: var(--h3-size); line-height: var(--h3-lh); letter-spacing: var(--h3-tracking); margin: 0; }
+/* Serif variants (words only, 24px and up). Surface B swaps 2 and 3 to Geist. */
+.h1-serif { font-family: var(--h1-serif-family); font-weight: var(--h1-weight); font-size: var(--h1-size); line-height: var(--h1-lh); letter-spacing: var(--h1-tracking); margin: 0; }
+.h2-serif { font-family: var(--h2-serif-family); font-weight: var(--h2-weight); font-size: var(--h2-size); line-height: var(--h2-lh); letter-spacing: var(--h2-tracking); margin: 0; }
+.h3-serif { font-family: var(--h3-serif-family); font-weight: var(--h3-weight); font-size: var(--h3-size); line-height: var(--h3-lh); letter-spacing: var(--h3-tracking); margin: 0; }
 .h4 { font-family: var(--h4-family); font-weight: var(--h4-weight); font-size: var(--h4-size); line-height: var(--h4-lh); letter-spacing: var(--h4-tracking); margin: 0; }
+
+/* Numbers are always Geist. */
+.number-lg { font-family: var(--font-sans); font-weight: var(--number-lg-weight); font-size: var(--number-lg-size); line-height: var(--number-lg-lh); letter-spacing: var(--number-lg-tracking); margin: 0; }
+.number-md { font-family: var(--font-sans); font-weight: var(--number-md-weight); font-size: var(--number-md-size); line-height: var(--number-md-lh); letter-spacing: var(--number-md-tracking); margin: 0; }
 
 .caption {
   font: var(--caption-weight) var(--caption-size)/var(--caption-lh) var(--font-body);
   letter-spacing: var(--caption-tracking); text-transform: uppercase;
 }
+.caption-regular { font: var(--caption-weight) var(--caption-size)/var(--caption-lh) var(--font-body); letter-spacing: var(--caption-regular-tracking); }
 .mono { font: var(--mono-weight) var(--mono-size)/var(--mono-lh) var(--font-mono); }

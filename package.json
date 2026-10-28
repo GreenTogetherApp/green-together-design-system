@@ -1,6 +1,6 @@
 {
   "name": "@greentogether/design-system",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Green Together design tokens (CSS + Figma), Tailwind preset, and token-bound components \u2014 the canonical code form of the DS.",
   "license": "UNLICENSED",
   "repository": {
@@ -17,7 +17,10 @@
     "PROMPT.md",
     "VERSION.md",
     "components/week-strip.tsx",
-    "scripts/check-guardrails.mjs"
+    "scripts/check-guardrails.mjs",
+    "figma-snapshot.json",
+    "drift-report.json",
+    "scripts/check-drift.mjs"
   ],
   "exports": {
     "./code-tokens.css": "./code-tokens.css",
@@ -37,6 +40,8 @@
     }
   },
   "scripts": {
-    "check": "node scripts/check-guardrails.mjs"
+    "check": "node scripts/check-guardrails.mjs && node scripts/check-drift.mjs",
+    "drift": "node scripts/check-drift.mjs",
+    "drift:report": "node scripts/check-drift.mjs --write"
   }
 }

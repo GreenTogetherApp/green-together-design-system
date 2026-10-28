@@ -1,6 +1,6 @@
 {
   "name": "@greentogether/design-system",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Green Together design tokens (CSS + Figma), Tailwind preset, and token-bound components \u2014 the canonical code form of the DS.",
   "license": "UNLICENSED",
   "repository": {

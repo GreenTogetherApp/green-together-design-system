@@ -36,6 +36,9 @@ Decisions locked 26 Oct 2026. Both apps' `tokenDefinitions.ts` are byte-identica
 | 11 | **Primary on Surface A = green 800 `#0F5C3A` (AAA, 7.7:1 with the `#FAFAFA` label).** Hover green 900, pressed green 950. Dark mode stays green 400 `#3CC178`. Figma's Button already ships this (27 Oct). | DS change in v1.4.0: `--color-primary` / `-hover` / `-active`. Visible: every green button is darker. |
 | 12 | **Mint is not a default fill.** Figma's `general/secondary` and `general/accent` move from mint `#E8F8F0` to neutral `#F5F5F5` (`--color-bg-muted`), their labels to ink, `interaction/secondary hover` to `#E5E5E5`. Mint survives only as the deliberate `surface-soft` tint. `--color-secondary` (dark blue) is retired. | Figma change done 27 Oct. Visible: secondary buttons, Badge secondary and selected tabs turn grey. |
 | 13 | **Radius names follow the DS scale.** `radius-xs` 4 · `-sm` 6 · `radius` 8 · `-md` 10 · `-lg` 16 · `-xl` 24 · `-full`. Figma's shadcn names (`rounded-lg` 8, `rounded-xl` 12) are renamed `legacy/*` and every component corner is rebound by pixel value. Off-scale radii (12, 18, 2, 3, 5, 999) were moved to the nearest role. Button has one shape: no `Roundness=Round`. | Figma change done 27 Oct. No app change. |
+| 14 | **Surface B primary is dark blue 600 `#095378`, not 500.** AAA with white (8.0:1; 500 measured 6.5:1). Hover 700, active 800. Dark: light blue 400 `#45B5E5`. | DS change shipped in v1.4.0 (`[data-surface="b"]`). |
+| 15 | **Type: one scale, El Messiri for words at 24px and up.** Heading 3 is Geist; `h1/h2/h3-serif` are the El Messiri versions; Surface B swaps 2 and 3 serif to Geist. Numbers are always Geist (`number-lg`, `number-md`). | Shipped in v1.4.0. Figma modes Surface A / Surface B carry it. |
+| 16 | **Control borders are `--border-level-5` `#737373`** (4.74:1). `--gt-placeholder` and `--border-level-4` (2.98:1) are decoration only. | Shipped in v1.4.0 as guidance; contrast guardrail enforces the bars. |
 
 Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · `❌ gap in DS → promote` · `🗑 retire`
 
@@ -144,9 +147,9 @@ Flags used below: `✅ exact` · `↔ rename` · `⚠ value drift (DS wins)` · 
 | `--motion-duration-instant/fast/normal/slow/slower` (50–400ms) | — | ❌ promote |
 | `--motion-easing-standard/enter/exit/spring` | `--ease` / `--ease-spring-soft` (approx) | ↔ ⚠ promote names |
 
-## Dark mode (`.dark`) — ❌ DS gap → promote
+## Dark mode (`.dark`) — ✅ shipped in v1.4.0 as `[data-theme="dark"]`
 
-DS has no dark tokens; Figma has a `shadcn-dark` mode (the same stock origin as the app's). Promote it as a `[data-theme="dark"]` block, composable with `[data-surface]`, with the decided primaries layered on:
+The DS now ships a `[data-theme="dark"]` block, composable with `[data-surface]`, built from the Figma `Surface A dark` / `Surface B dark` modes with the decided primaries layered on. The app values below map to it:
 
 | Local `.dark` | Value | → DS dark |
 |---|---|---|

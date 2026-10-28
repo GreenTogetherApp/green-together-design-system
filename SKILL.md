@@ -24,17 +24,18 @@ user-invocable: true
 
 **The palette**
 - **Primary action is surface-scoped** (split by audience/product, *not* by device):
-  - *Surface A* (individual / employee app): **`#22B573`** green (hover `#1A9961`, active `#0F5C3A`). `:root` default.
-  - *Surface B* (admin / business SaaS — e.g. the CSO dashboard): **`#0B618F`** dark blue (hover `#095378`, active `#084362`). Set `data-surface="b"` on the root.
+  - *Surface A* (individual / employee app): **green 800 `#0F5C3A`** (hover `#0A4329`, active `#052618`; AAA with white). `:root` default. Brand green `#22B573` stays for logos, charts and marks.
+  - *Surface B* (admin / business SaaS — e.g. the CSO dashboard): **dark blue 600 `#095378`** (hover `#084362`, active `#06334A`; AAA with white). Set `data-surface="b"` on the root.
 - Success / **savings / positive delta**: **`#22B573`** green. On Surface B this is green's *only* job — never a generic action button.
-- Info / focus: **`#29ABE2`** light blue.
+- Info: **`#29ABE2`** light blue. Focus is one neutral ring, never a brand colour.
+- Dark theme: `data-theme="dark"` (composes with `data-surface`); primaries lift to green 400 (A) and light blue 400 (B).
 - Warning / accent: **`#F4A604`** yellow.
 - Danger: **`#E11D48`** red.
 - Ink `#1A2026`, text-2 `#4A5560`, placeholder `#8C97A1`, line `#D5DBE1`, surface-2 `#F7F9FA`.
 
 **The type stack** (Google Fonts, OFL)
 - **Geist** (sans) — body, UI, most headings.
-- **El Messiri** (serif) — reserved for *heading 00* (64px display) and *heading 3* (24px section title). Not used anywhere else.
+- **El Messiri** (serif) — words only, 24px and up: Display and the serif variants of headings 1 to 3. Never data or numbers, never mixed with Geist in one heading. Surface B uses it for Display and heading 1 only. Numbers are always Geist.
 - **Geist Mono** — data, code.
 
 **Iconography**: Phosphor, Regular weight only. In code use `@phosphor-icons/react`. **Do not introduce Lucide. No emoji. No unicode glyphs as icons.**
@@ -43,7 +44,7 @@ user-invocable: true
 
 **Corners**: inputs/buttons 8px, tabs 10px, cards 16px, modals 24px.
 
-**Shadows**: card uses `--shadow-sm`; modals use `--shadow-lg`; focus ring is a 3px light-blue ring at 30% opacity — never yellow.
+**Shadows**: card uses `--shadow-sm`; modals use `--shadow-lg`; focus ring is a 3px neutral ring at 30% opacity — never yellow, green or blue.
 
 **Motion**: fades and slides only. Easing `cubic-bezier(.2,.8,.2,1)`. 120 / 200 / 320 ms.
 

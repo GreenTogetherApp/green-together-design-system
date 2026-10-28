@@ -117,6 +117,7 @@ module.exports = {
           'secondary-hover': c('--interaction-secondary-hover'),
           'outline-hover': c('--interaction-outline-hover'),
           'outline-active': c('--interaction-outline-active'),
+          'primary-hover': c('--interaction-primary-hover'),
           'primary-active': c('--interaction-primary-active'),
         },
         'positive-strong': c('--color-positive-strong'),
@@ -142,10 +143,17 @@ module.exports = {
         'evening-sky': 'var(--gradient-evening-sky)',
       },
       borderColor: { DEFAULT: 'var(--color-border)' },
+      // v1.4.0: the full DS scale, named exactly like the CSS tokens. NOTE: these
+      // override Tailwind's own md / xl / lg values with the DS ones.
       borderRadius: {
         xs: 'var(--radius-xs)',
+        sm: 'var(--radius-sm)',
         DEFAULT: 'var(--radius)',
+        md: 'var(--radius-md)',
         lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        full: 'var(--radius-full)',
+        card: 'var(--radius-card)', // 16 on Surface A, 8 on Surface B
       },
       boxShadow: {
         xs: 'var(--shadow-xs)',
@@ -160,6 +168,7 @@ module.exports = {
         serif: 'var(--font-serif)',
         mono: 'var(--font-mono)',
         heading: 'var(--font-headings)',
+        'heading-serif': 'var(--font-headings-serif)',
       },
     },
   },

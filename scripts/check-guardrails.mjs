@@ -2,7 +2,7 @@
 /* ============================================================================
  * Green Together DS — guardrails
  * ----------------------------------------------------------------------------
- * Two rules the repo already states in prose, now enforced so they can't rot:
+ * Rules the repo already states in prose, now enforced so they can't rot:
  *
  *   1. LOCKSTEP — every token promoted from the Figma studio exists in BOTH
  *      code-tokens.css and figma-tokens.json, with the same value. VERSION.md
@@ -12,6 +12,10 @@
  *   2. NO RAW COLOUR IN COMPONENTS — component source binds tokens, never hex
  *      or rgb() literals. A component that hardcodes a colour is a component
  *      that ignores the surface switch and drifts the moment a token changes.
+ *
+ *   3. CONTRAST — the accessibility bars the system promises, measured from the
+ *      real token values: AAA (7:1) for text on light, 3:1 for control borders,
+ *      4.5:1 for secondary text on dark. A token change that breaks a bar fails.
  *
  * Run: node scripts/check-guardrails.mjs
  * Exit 0 = clean, 1 = violations (printed with file and line).
@@ -131,9 +135,73 @@ for (const file of componentFiles) {
     });
 }
 
+
+/* ── Rule 3: contrast bars hold ─────────────────────────────────────────── */
+
+// Pull the declarations of one selector block (first match) into a Map.
+function block(selector) {
+  const start = css.indexOf(`${selector} {`);
+  if (start === -1) return new Map();
+  const end = css.indexOf("\n}", start);
+  const m = new Map();
+  for (const line of css.slice(start, end).split("\n")) {
+    const d = line.match(/^\s*--([a-z0-9-]+):\s*([^;]+);/);
+    if (d) m.set(d[1], d[2].trim());
+  }
+  return m;
+}
+const scopes = {
+  a: [block(":root")],
+  b: [block(":root"), block('[data-surface="b"]')],
+  "a-dark": [block(":root"), block('[data-theme="dark"]')],
+  "b-dark": [block(":root"), block('[data-surface="b"]'), block('[data-theme="dark"]'), block('[data-theme="dark"][data-surface="b"]')],
+};
+function resolve(scope, name, depth = 0) {
+  let v;
+  for (const layer of scopes[scope]) if (layer.has(name)) v = layer.get(name);
+  if (v === undefined || depth > 8) return undefined;
+  const ref = v.match(/^var\(--([a-z0-9-]+)\)$/);
+  return ref ? resolve(scope, ref[1], depth + 1) : v;
+}
+function rgb(hex) {
+  const h = hex.replace("#", "");
+  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+}
+function luminance(hex) {
+  const [r, g, b] = rgb(hex).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function ratio(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+function need(scope, fg, bg, min, why) {
+  const f = resolve(scope, fg), b = resolve(scope, bg);
+  if (!/^#[0-9a-f]{6}$/i.test(f ?? "") || !/^#[0-9a-f]{6}$/i.test(b ?? "")) {
+    failures.push(`contrast: [${scope}] --${fg} on --${bg} could not be resolved to hex (${f} / ${b})`);
+    return;
+  }
+  const r = ratio(f, b);
+  if (r < min) failures.push(`contrast: [${scope}] ${why} — --${fg} ${f} on --${bg} ${b} is ${r.toFixed(2)}:1, needs ${min}:1`);
+}
+// light surfaces: primary label AAA, secondary text AAA on every light surface
+for (const sc of ["a", "b"]) need(sc, "color-primary-fg", "color-primary", 7, "primary label");
+for (const bg of ["color-bg", "color-bg-subtle", "color-bg-muted", "color-primary-soft", "surface-level-0"]) {
+  need("a", "color-fg-muted", bg, 7, "secondary text");
+}
+need("a", "text-secondary", "color-bg", 7, "secondary text token");
+need("a", "border-level-5", "color-bg", 3, "control border");
+need("a", "color-danger", "color-bg", 4.5, "danger on white");
+// dark: primary label AAA, secondary text 4.5
+for (const sc of ["a-dark", "b-dark"]) {
+  need(sc, "color-primary-fg", "color-primary", 7, "dark primary label");
+  need(sc, "color-fg-muted", "color-bg", 4.5, "dark secondary text");
+  need(sc, "color-fg", "color-bg", 7, "dark body text");
+}
+
 /* ── Report ─────────────────────────────────────────────────────────────── */
 
-const checked = `${cssVars.size} promoted tokens · ${componentFiles.length} component file(s)`;
+const checked = `${cssVars.size} promoted tokens · ${componentFiles.length} component file(s) · contrast bars`;
 if (failures.length) {
   console.error(`✗ guardrails failed (${checked})\n`);
   for (const f of failures) console.error(`  ${f}`);

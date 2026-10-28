@@ -49,3 +49,12 @@ Authorship lives in the git history. No individuals or customer names, by design
 3. **Component library matured** — used by prototypes and products.
 4. **Observable + self-guarding** — demo page live; WCAG checks run automatically in CI so accessibility can't regress.
 5. **Atmosphere concept next fidelity prototype** — the brand differentiator texture.
+
+## v1.4.0 — Figma and code back in step
+- Ran the studio→shelf port-back: every open conflict between the Figma library and the shelf was settled, written into Figma and into the code package together.
+- Colour: AAA primaries on both surfaces, one rose red, one neutral focus ring, secondary text at 7:1, mint no longer a default fill, control borders visible at 3:1 or better.
+- Dark theme added, composable with the two surfaces. Surface A and B exist as modes in the Figma library.
+- Radius now follows one scale with matching names in design and code; card radius is surface-scoped.
+- One type scale. El Messiri is allowed for words at 24px and up; numbers are always Geist; the admin surface uses it more sparingly.
+- Removed leftovers: a second icon set, kit-only variants (Round shapes), Obra banners and labels, a dark-background button variant.
+- Added a contrast guardrail so the accessibility bars are checked on every change.

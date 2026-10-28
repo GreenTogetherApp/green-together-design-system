@@ -11,13 +11,13 @@ Apply the Green Together design system. Follow these rules exactly.
 
 PALETTE (multi-colour, not one dominant hue):
 - PRIMARY ACTION IS SURFACE-SCOPED — pick by which product you're building:
-  • Admin / business SaaS (the CSO dashboard, data-dense): PRIMARY = dark blue #0B618F
-    (hover #095378, active #084362), text on it white. ← use this for the admin app.
-  • Individual / employee app (motivational): PRIMARY = green #22B573
-    (hover #1A9961, active #0F5C3A), text on it white.
+  • Admin / business SaaS (the CSO dashboard, data-dense): PRIMARY = dark blue 600 #095378
+    (hover #084362, active #06334A), text on it white (AAA). ← use this for the admin app.
+  • Individual / employee app (motivational): PRIMARY = green 800 #0F5C3A
+    (hover #0A4329, active #052618), text on it white (AAA). Brand green #22B573 is for logos, charts, marks.
 - Green #22B573 ALSO means savings / positive delta on BOTH surfaces. On the admin surface
   that is green's ONLY job — never use green for a generic button there.
-- Info + focus: light blue #29ABE2.
+- Info: light blue #29ABE2. Focus is one neutral ring (ink), never a brand colour.
 - Accent (warnings, achievements, sparingly): yellow #F4A604.
 - Danger: #E11D48. Neutrals: text #1A2026, secondary text #4A5560, borders #D5DBE1,
   base surface #FFFFFF, tinted surface #F7F9FA.
@@ -38,7 +38,9 @@ LAYOUT & SHAPE:
 - 8px spacing system (4px only inside dense controls).
 - Radius: inputs/buttons 8px, tabs 10px, cards 16px, modals 24px, pills/avatars full.
 - Cards: white, 1px #D5DBE1 border, 16px radius, subtle shadow.
-- Focus: 3px light-blue ring (#29ABE2 at ~30%), never yellow.
+- Focus: 3px neutral ring (#2E363E at ~30%; near-white in dark mode), never yellow, green or blue.
+- Dark theme: data-theme="dark"; primaries lift to green 400 (A) / light blue 400 (B).
+- Type: Geist everywhere. El Messiri only for words at 24px and up (Display, heading 1-3 serif variants), never data or numbers. Numbers are always Geist.
 - Backgrounds are white / warm off-white — no gradient walls.
 
 ICONS: Phosphor icons, Regular weight only. No emoji in product UI. No unicode glyphs as

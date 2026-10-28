@@ -57,7 +57,7 @@
     "neutral": {
       "ink": { "value": "#1A2026", "type": "color" },
       "ink-2": { "value": "#2E363E", "type": "color" },
-      "text-2": { "value": "#4A5560", "type": "color" },
+      "text-2": { "value": "#4A545F", "type": "color" },
       "placeholder": { "value": "#8C97A1", "type": "color" },
       "line": { "value": "#D5DBE1", "type": "color" },
       "surface-2": { "value": "#F7F9FA", "type": "color" },
@@ -71,12 +71,12 @@
       "danger": { "value": "#E11D48", "type": "color" }
     },
     "semantic": {
-      "primary-surface-a": { "value": "{color.brand.green.500}", "type": "color", "description": "Primary action on Surface A (individual / employee app)." },
-      "primary-surface-b": { "value": "{color.brand.dark-blue.500}", "type": "color", "description": "Primary action on Surface B (admin / business SaaS). NOT green." },
+      "primary-surface-a": { "value": "{color.brand.green.800}", "type": "color", "description": "Primary action on Surface A (individual / employee app)." },
+      "primary-surface-b": { "value": "{color.brand.dark-blue.600}", "type": "color", "description": "Primary action on Surface B (admin / business SaaS). NOT green." },
       "positive": { "value": "{color.brand.green.500}", "type": "color", "description": "Savings / positive delta. Green's only job on Surface B." },
       "text": {
         "primary": { "value": "#1A2026", "type": "color", "description": "Figma: general/foreground" },
-        "secondary": { "value": "#737373", "type": "color", "description": "Figma: general/muted foreground" },
+        "secondary": { "value": "#4A545F", "type": "color", "description": "Figma: general/muted foreground → Colors/Gray/600 (AAA)" },
         "inverse": { "value": "#FAFAFA", "type": "color", "description": "Figma: general/primary foreground" },
         "inverse-secondary": { "value": "rgba(255,255,255,0.70)", "type": "color", "description": "Figma: white/alpha-70" },
         "disabled": { "value": "#9CA3AF", "type": "color", "description": "Figma: gray/400" },
@@ -84,10 +84,10 @@
       },
       "icon": {
         "default": { "value": "#1A2026", "type": "color", "description": "Figma: general/foreground" },
-        "muted": { "value": "#737373", "type": "color", "description": "Figma: general/muted foreground" },
+        "muted": { "value": "#4A545F", "type": "color", "description": "Figma: general/muted foreground" },
         "inverse": { "value": "#FAFAFA", "type": "color", "description": "Figma: general/primary foreground" },
-        "brand": { "value": "#22B573", "type": "color", "description": "Figma: general/primary" },
-        "destructive": { "value": "#DC2626", "type": "color", "description": "Figma: general/destructive" },
+        "brand": { "value": "#0F5C3A", "type": "color", "description": "Figma: general/primary (Colors/Green/800)" },
+        "destructive": { "value": "#E11D48", "type": "color", "description": "Figma: general/destructive (rose/600)" },
         "disabled": { "value": "#9CA3AF", "type": "color", "description": "Figma: gray/400" }
       },
       "surface": {
@@ -111,24 +111,39 @@
         "ghost": { "value": "rgba(255,255,255,0)", "type": "color", "description": "Figma: white/alpha-001" },
         "ghost-hover": { "value": "rgba(0,0,0,0.05)", "type": "color", "description": "Figma: black/alpha-5" },
         "ghost-foreground": { "value": "#404040", "type": "color", "description": "Figma: brand-neutrals/700" },
-        "secondary-hover": { "value": "#FAFAFA", "type": "color", "description": "Figma: brand-neutrals/50" },
+        "secondary-hover": { "value": "#E5E5E5", "type": "color", "description": "Figma: neutral/200" },
         "outline-hover": { "value": "rgba(0,0,0,0.03)", "type": "color", "description": "Figma: black/alpha-333" },
         "outline-active": { "value": "rgba(0,0,0,0.05)", "type": "color", "description": "Figma: black/alpha-5" },
-        "primary-active": { "value": "#14784C", "type": "color", "description": "Figma: Colors/Green/700" }
+        "primary-hover": { "value": "#0A4329", "type": "color", "description": "Figma: Colors/Green/900 (v1.4.0)" },
+        "primary-active": { "value": "#052618", "type": "color", "description": "Figma: Colors/Green/950" }
       },
       "focus": {
-        "ring-subtle": { "value": "#D5DBE1", "type": "color", "description": "Figma: brand-neutrals/300" },
-        "ring-error": { "value": "#FCA5A5", "type": "color", "description": "Figma: red/300" }
+        "ring": { "value": "#2E363E", "type": "color", "description": "Figma: Colors/Gray/800 — the one neutral focus ring" },
+        "ring-error": { "value": "#FDA4AF", "type": "color", "description": "Figma: rose/300" }
       },
       "destructive": {
-        "border": { "value": "#EF4444", "type": "color", "description": "Figma: red/500" },
-        "text": { "value": "#DC2626", "type": "color", "description": "Figma: red/600" },
-        "subtle": { "value": "#FEF2F2", "type": "color", "description": "Figma: red/50" }
+        "border": { "value": "#F43F5E", "type": "color", "description": "Figma: rose/500" },
+        "text": { "value": "#E11D48", "type": "color", "description": "Figma: rose/600" },
+        "subtle": { "value": "#FFF1F2", "type": "color", "description": "Figma: rose/50" }
       },
       "positive-strong": { "value": "#14784C", "type": "color", "description": "Figma: Colors/Green/700 — positive marks on light surfaces (5.27:1); green 500 fails at 2.54:1" },
       "overlay": {
         "backdrop": { "value": "rgba(0,0,0,0.60)", "type": "color", "description": "Figma: black/alpha-60" }
       }
+    },
+    "dark": {
+      "ink": { "value": "#FAFAFA", "type": "color", "description": "dark --gt-ink" },
+      "ink-2": { "value": "#D5DBE1", "type": "color", "description": "dark --gt-ink-2" },
+      "text-2": { "value": "#8C97A1", "type": "color", "description": "dark --gt-text-2" },
+      "placeholder": { "value": "#737373", "type": "color", "description": "dark --gt-placeholder" },
+      "line": { "value": "#404040", "type": "color", "description": "dark --gt-line" },
+      "surface": { "value": "#1A2026", "type": "color", "description": "dark --gt-surface (page)" },
+      "surface-2": { "value": "#171717", "type": "color", "description": "dark --gt-surface-2 (cards)" },
+      "bg-warm": { "value": "#171717", "type": "color", "description": "dark --gt-bg-warm" },
+      "primary-surface-a": { "value": "{color.brand.green.400}", "type": "color", "description": "Surface A dark primary" },
+      "primary-surface-b": { "value": "{color.brand.light-blue.400}", "type": "color", "description": "Surface B dark primary" },
+      "primary-fg": { "value": "#1A2026", "type": "color", "description": "text on a dark-mode primary" },
+      "focus-ring": { "value": "#FAFAFA", "type": "color", "description": "dark focus ring" }
     },
     "gradient": {
       "day-sky": { "value": "linear-gradient(155.3deg, #9CC7FA 0%, #9CC7FA 46%, #C9DDF0 86%, #E6E8DF 100%)", "type": "other", "description": "Figma paint style: Gradient / day sky" },
@@ -188,7 +203,9 @@
     "md": { "value": 10, "type": "dimension" },
     "lg": { "value": 16, "type": "dimension" },
     "xl": { "value": 24, "type": "dimension" },
-    "full": { "value": 9999, "type": "dimension" }
+    "full": { "value": 9999, "type": "dimension" },
+    "card-surface-a": { "value": 16, "type": "dimension" },
+    "card-surface-b": { "value": 8, "type": "dimension" }
   },
   "shadow": {
     "xs": { "value": "0 1px 2px 0 rgba(0,0,0,0.05)", "type": "boxShadow" },
@@ -196,7 +213,7 @@
     "base": { "value": "0 2px 4px 0 rgba(0,0,0,0.05)", "type": "boxShadow" },
     "md": { "value": "0 4px 8px 0 rgba(0,0,0,0.08)", "type": "boxShadow" },
     "lg": { "value": "0 8px 16px 0 rgba(0,0,0,0.12)", "type": "boxShadow" },
-    "focus": { "value": "0 0 0 3px rgba(41,171,226,0.30)", "type": "boxShadow" }
+    "focus": { "value": "0 0 0 3px rgba(46,54,62,0.30)", "type": "boxShadow" }
   },
   "typography": {
     "family": {
@@ -233,6 +250,27 @@
         "letterSpacing": { "value": -1, "type": "dimension" }
       },
       "h3": {
+        "fontFamily": { "value": "Geist", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 24, "type": "dimension" },
+        "lineHeight": { "value": 28.8, "type": "dimension" },
+        "letterSpacing": { "value": -1, "type": "dimension" }
+      },
+      "h1-serif": {
+        "fontFamily": { "value": "El Messiri", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 48, "type": "dimension" },
+        "lineHeight": { "value": 48, "type": "dimension" },
+        "letterSpacing": { "value": -1.5, "type": "dimension" }
+      },
+      "h2-serif": {
+        "fontFamily": { "value": "El Messiri", "type": "fontFamily" },
+        "fontWeight": { "value": 600, "type": "fontWeight" },
+        "fontSize": { "value": 30, "type": "dimension" },
+        "lineHeight": { "value": 30, "type": "dimension" },
+        "letterSpacing": { "value": -1, "type": "dimension" }
+      },
+      "h3-serif": {
         "fontFamily": { "value": "El Messiri", "type": "fontFamily" },
         "fontWeight": { "value": 600, "type": "fontWeight" },
         "fontSize": { "value": 24, "type": "dimension" },
@@ -246,6 +284,10 @@
         "lineHeight": { "value": 24, "type": "dimension" },
         "letterSpacing": { "value": 0, "type": "dimension" }
       }
+    },
+    "number": {
+      "lg": { "fontFamily": { "value": "Geist", "type": "fontFamily" }, "fontWeight": { "value": 600, "type": "fontWeight" }, "fontSize": { "value": 64, "type": "dimension" }, "lineHeight": { "value": 72, "type": "dimension" }, "letterSpacing": { "value": -1.5, "type": "dimension" } },
+      "md": { "fontFamily": { "value": "Geist", "type": "fontFamily" }, "fontWeight": { "value": 600, "type": "fontWeight" }, "fontSize": { "value": 40, "type": "dimension" }, "lineHeight": { "value": 48, "type": "dimension" }, "letterSpacing": { "value": -1, "type": "dimension" } }
     },
     "paragraph": {
       "large": { "fontSize": { "value": 18, "type": "dimension" }, "lineHeight": { "value": 27, "type": "dimension" } },

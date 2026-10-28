@@ -86,6 +86,7 @@
   --color-interaction-secondary-hover: var(--interaction-secondary-hover);
   --color-interaction-outline-hover: var(--interaction-outline-hover);
   --color-interaction-outline-active: var(--interaction-outline-active);
+  --color-interaction-primary-hover: var(--interaction-primary-hover);
   --color-interaction-primary-active: var(--interaction-primary-active);
 
   --color-overlay: var(--overlay-backdrop);
@@ -93,7 +94,12 @@
   /* --- radius, shadow, type --- */
   --radius: var(--radius); /* bare `rounded` */
   --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+  --radius-card: var(--radius-card); /* 16 on Surface A, 8 on Surface B */
 
   --shadow: var(--shadow); /* bare `shadow` */
   --shadow-xs: var(--shadow-xs);
@@ -106,6 +112,7 @@
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
   --font-heading: var(--font-headings);
+  --font-heading-serif: var(--font-headings-serif);
 
   /* --- motion (v1.3.0): transform and opacity only, so the compositor runs it.
      Pair every one with motion-reduce:animate-none. --- */

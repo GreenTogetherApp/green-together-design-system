@@ -35,8 +35,8 @@
   .toggle{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:18px 0}
   .toggle button{border:0;background:var(--panel);padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink2)}
   .toggle button[aria-pressed=true]{background:var(--color-primary);color:var(--color-primary-fg)}
-  /* utility row: repo link left, colour mode switch right (compact, labelled) */
-  .util{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
+  /* utility row: colour mode switch first, then the repo link (compact, labelled) */
+  .util{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin:14px 0 18px}
   .util .repo{margin:0}
   .mode{display:inline-flex;gap:2px;padding:2px;border-radius:999px;background:var(--color-bg-muted);border:1px solid var(--line)}
   .mode button{min-height:28px;padding:0 11px;border:0;border-radius:999px;background:transparent;color:var(--ink2);font-family:inherit;font-weight:600;font-size:12px;line-height:1;cursor:pointer}
@@ -65,8 +65,8 @@
 <div class="wrap">
   <aside>
     <div class="brand"><svg class="logo" viewBox="14 12 36 40" role="img" aria-label="Green Together" xmlns="http://www.w3.org/2000/svg"><path d="M42.3827 48.6639H38.0059C38.0059 43.2664 42.3971 38.8745 47.7952 38.8745V43.2514C44.8109 43.2514 42.3827 45.6795 42.3827 48.6639Z" fill="#0B618F"/><path d="M34.1967 48.664H29.8198C29.8198 41.1658 23.7198 35.0658 16.2217 35.0658V30.689C26.1329 30.689 34.1967 38.7527 34.1967 48.664Z" fill="#22B573"/><path d="M26.0111 48.6639H21.6342C21.6342 45.6795 19.2061 43.2514 16.2217 43.2514V38.8745C21.6198 38.8745 26.0111 43.2658 26.0111 48.6639Z" fill="#22B573"/><path d="M42.9754 15.3364C42.9754 21.3839 38.0555 26.3039 32.0079 26.3039C25.9604 26.3039 21.0404 21.3839 21.0404 15.3364H16.6636C16.6636 23.7971 23.5467 30.6802 32.0073 30.6802C40.4679 30.6802 47.3511 23.7971 47.3511 15.3364H42.9742H42.9754Z" fill="#29ABE2"/><path d="M35.0825 15.3364C35.0825 17.0314 33.7037 18.4102 32.0087 18.4102C30.3137 18.4102 28.935 17.0314 28.935 15.3364H24.5581C24.5581 19.4446 27.9006 22.7871 32.0087 22.7871C36.1169 22.7871 39.4594 19.4446 39.4594 15.3364H35.0825Z" fill="#F4A604"/><path d="M32.0089 40.0752C33.4039 42.6283 34.1971 45.5552 34.1971 48.664C34.1971 41.1658 40.297 35.0658 47.7952 35.0658V30.689C40.9927 30.689 35.0608 34.4877 32.0083 40.0752H32.0089Z" fill="#0B618F"/></svg><div><b>Green Together</b><small>Design System · <span id="ver">v1.4.0</span></small></div></div>
-    <div class="util"><a class="repo" href="https://github.com/GreenTogetherApp/green-together-design-system" target="_blank">GitHub repo ↗</a>
-      <div class="mode" role="group" aria-label="Colour mode"><button id="ml" type="button" aria-pressed="true">Light</button><button id="md" type="button" aria-pressed="false">Dark</button></div></div>
+    <div class="util"><div class="mode" role="group" aria-label="Colour mode"><button id="ml" type="button" aria-pressed="true">Light</button><button id="md" type="button" aria-pressed="false">Dark</button></div>
+      <a class="repo" href="https://github.com/GreenTogetherApp/green-together-design-system" target="_blank">GitHub repo ↗</a></div>
     <nav>
       <h4>Get started</h4>
       <a href="#intro">Introduction</a><a href="#install">Install</a><a href="#surfaces">Surfaces (A/B)</a>

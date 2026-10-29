@@ -106,7 +106,7 @@
     <p class="muted">One app, two lenses — not two apps. <b>Surface A</b> (employee) = green primary. <b>Surface B</b> (admin) = dark-blue primary; green reserved for savings/positive. Set <code>data-surface="a|b"</code> on the root.</p>
 
     <h2 id="colors">Colors</h2>
-    <p class="muted">Grouped by role. Each swatch shows the live hex and the contrast of the pairing it is <b>actually used in</b>. AAA (7:1) is our bar for text and primary labels; other fills with text show AA (4.5:1); the focus ring is a non-text mark (3:1). <b>Two noted overrides</b> pass AA but not AAA: the danger label (white on rose, 4.7:1) and the pressed primary in dark mode (6.2:1).</p>
+    <p class="muted">Grouped by role. Each swatch shows the live hex and the contrast of the pairing it is <b>actually used in</b>. AAA (7:1) is our bar for text and primary labels; other fills with text show AA (4.5:1); the focus ring is a non-text mark (3:1). <b>Three noted overrides</b>, kept so Figma and code match: the danger label (white on rose, 4.7:1) and the pressed primary in dark mode (6.2:1) pass AA but not AAA; the error focus ring in light mode (1.9:1) is below the 3:1 mark.</p>
     <div id="semantic"></div>
     <div id="ramps"></div>
 
@@ -193,8 +193,8 @@ function isColor(v){return /^#|^rgb/.test(v);}
 function pairChip(hex,fgHex,words,bar,ov){
   const r=ratio(hex,fgHex), g=r>=7?'AAA':r>=4.5?'AA':r>=3?'3:1':'✗';
   const pass=bar===3?r>=3:bar===4.5?r>=4.5:r>=7;
-  const bg=pass?'#e7f6ec':r>=3?'#fdf3d6':'#fde8e8', fg=pass?'#137a3a':r>=3?'#8a6d00':'#b42318';
-  return `<b style="background:${bg};color:${fg}">${words} ${r.toFixed(1)} ${bar===3?(pass?'✓':'✗'):g}${ov?' · override':''}</b>`;}
+  const known=ov&&!pass, bg=pass?'#e7f6ec':(known||r>=3)?'#fdf3d6':'#fde8e8', fg=pass?'#137a3a':(known||r>=3)?'#8a6d00':'#b42318';
+  return `<b style="background:${bg};color:${fg}">${words} ${r.toFixed(1)} ${bar===3?(pass?'✓':'✗'):g}${ov?(known?' · known override':' · override'):''}</b>`;}
 const NOTE=t=>`<b style="background:rgba(127,127,127,.18);color:var(--ink2)">${t}</b>`;
 // what each semantic token is used with: [colour token | literal hex, label, bar]; null = never carries text
 const PAIRS={
@@ -233,6 +233,7 @@ function promotedChips(T,k,hex){
   if(/^--interaction-primary-/.test(k)) return pairChip(hex,H('--color-primary-fg'),'label',(k==='--interaction-primary-active'&&dk)?4.5:7,k==='--interaction-primary-active'&&dk);
   if(k==='--interaction-ghost-foreground') return pairChip(page,hex,'on page',7);
   if(/^--interaction-/.test(k)) return NOTE('state tint, no text');
+  if(k==='--focus-ring-error') return pairChip(page,hex,'ring vs page',3,!dk);
   if(/^--focus-/.test(k)) return pairChip(page,hex,'ring vs page',3);
   if(k==='--destructive-text') return pairChip(page,hex,'on page',4.5,!dk);
   if(k==='--destructive-border') return pairChip(page,hex,'border vs page',3);

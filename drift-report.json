@@ -1,7 +1,7 @@
 {
-  "compared": 324,
+  "compared": 398,
   "drifted": 0,
-  "known": 7,
+  "known": 10,
   "snapshot": "2026-10-28",
   "rows": [
     {
@@ -52,6 +52,27 @@
       "code": "#116841",
       "figmaValue": "#14784C",
       "known": "Figma chart 5 (light) is Green 700 #14784C; code chart-a-5 is #116841. Open decision."
+    },
+    {
+      "key": "[a] shadow-md",
+      "figma": "shadows/md",
+      "code": "0 4 8 0 0-0-0@0.08",
+      "figmaValue": "0 2 4 -2 0-0-0@0.1 | 0 4 6 -1 0-0-0@0.1",
+      "known": "Figma shadows/md is the Tailwind default (two layers); code --shadow-md is one softer layer. Open decision: which one is the elevation-3 shadow."
+    },
+    {
+      "key": "[a] shadow-lg",
+      "figma": "shadows/lg",
+      "code": "0 8 16 0 0-0-0@0.12",
+      "figmaValue": "0 10 15 -3 0-0-0@0.1 | 0 4 6 -4 0-0-0@0.1",
+      "known": "Figma shadows/lg is the Tailwind default; code --shadow-lg is one layer. Same open decision as md."
+    },
+    {
+      "key": "[a] shadow-xl",
+      "figma": "shadows/xl",
+      "code": "0 16 32 0 0-0-0@0.12 | 0 8 16 0 0-0-0@0.08",
+      "figmaValue": "0 20 25 -5 0-0-0@0.1 | 0 8 10 -6 0-0-0@0.1",
+      "known": "Figma shadows/xl is the Tailwind default; code --shadow-xl (added in v1.4.0) is two softer layers. Same open decision as md."
     }
   ]
 }

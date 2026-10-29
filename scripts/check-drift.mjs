@@ -31,6 +31,9 @@ export const KNOWN = [
   { key: "[a-dark] color-secondary-fg", code: "#FAFAFA", figma: "#F7F9FA", reason: "Figma secondary label in dark is #F7F9FA, code inherits --color-fg #FAFAFA. Visually the same." },
   { key: "[b-dark] color-secondary-fg", code: "#FAFAFA", figma: "#F7F9FA", reason: "Same as Surface A dark." },
   { key: "[a] chart-a-5", code: "#116841", figma: "#14784C", reason: "Figma chart 5 (light) is Green 700 #14784C; code chart-a-5 is #116841. Open decision." },
+  { key: "[a] shadow-md", code: "0 4 8 0 0-0-0@0.08", figma: "0 2 4 -2 0-0-0@0.1 | 0 4 6 -1 0-0-0@0.1", reason: "Figma shadows/md is the Tailwind default (two layers); code --shadow-md is one softer layer. Open decision: which one is the elevation-3 shadow." },
+  { key: "[a] shadow-lg", code: "0 8 16 0 0-0-0@0.12", figma: "0 10 15 -3 0-0-0@0.1 | 0 4 6 -4 0-0-0@0.1", reason: "Figma shadows/lg is the Tailwind default; code --shadow-lg is one layer. Same open decision as md." },
+  { key: "[a] shadow-xl", code: "0 16 32 0 0-0-0@0.12 | 0 8 16 0 0-0-0@0.08", figma: "0 20 25 -5 0-0-0@0.1 | 0 8 10 -6 0-0-0@0.1", reason: "Figma shadows/xl is the Tailwind default; code --shadow-xl (added in v1.4.0) is two softer layers. Same open decision as md." },
 ];
 
 /* ── read the CSS into scopes ───────────────────────────────────────────── */
@@ -166,6 +169,70 @@ for (const [fname, vals] of Object.entries(snap.typo)) {
     check("a", css, fname, vals[0]);
     check("b", css, fname, vals[1]);
   }
+}
+
+/* ── type: paragraph, caption, mono, weights, font families ────────────── */
+
+const WEIGHT = { Regular: 400, Medium: 500, Semibold: 600 };
+const TYPE_MAP = {
+  "paragraph/large/font-size": "p-large-size", "paragraph/large/line-height": "p-large-lh",
+  "paragraph/regular/font-size": "p-size", "paragraph/regular/line-height": "p-lh",
+  "paragraph/small/font-size": "p-small-size", "paragraph/small/line height": "p-small-lh",
+  "paragraph/mini/font-size": "p-mini-size", "paragraph/mini/line height": "p-mini-lh",
+  "paragraph/paragraph-weight": "p-weight", "paragraph/paragraph-medium-weight": "p-medium-weight", "paragraph/paragraph-bold-weight": "p-bold-weight",
+  "caption/font-size": "caption-size", "caption/line-height": "caption-lh", "caption/letter-spacing": "caption-tracking", "caption/font-weight": "caption-weight",
+  "monospaced/font-size": "mono-size", "monospaced/line-height": "mono-lh", "monospaced/letter-spacing": "mono-tracking", "monospaced/font-weight": "mono-weight",
+  "heading 00/weight": "h00-weight", "heading 1/weight": "h1-weight", "heading 2/weight": "h2-weight", "heading 3/heading 3 weight": "h3-weight", "heading 4/weight": "h4-weight",
+  "font definitions/font-family-sans": "font-sans", "font definitions/font-family-serif": "font-serif", "font definitions/font-family-monospace": "font-mono",
+  "font definitions/font-family-headings": "font-headings", "font definitions/font-family-body": "font-body", "font definitions/font-family-headings-serif": "font-headings-serif",
+};
+for (const [fname, vals] of Object.entries(snap.typo)) {
+  const css = TYPE_MAP[fname];
+  if (!css) continue;
+  const v = (x) => (typeof x === "string" && x in WEIGHT ? WEIGHT[x] : x);
+  check("a", css, fname, v(vals[0]));
+  check("b", css, fname, v(vals[1]));
+}
+
+/* ── spacing (Figma t-shirt scale ↔ code --space-N, matched by role) ────── */
+
+const SPACE_MAP = { "space-1": "2xs", "space-2": "xs", "space-3": "sm", "space-4": "md", "space-5": "xl", "space-6": "2xl", "space-7": "4xl", "space-8": "5xl", "space-9": "7xl" };
+for (const [cssName, fname] of Object.entries(SPACE_MAP)) {
+  if (snap.space?.[fname] === undefined) { failures.push({ key: `[a] ${cssName}`, figma: `spacing/${fname}`, code: norm(resolve("a", cssName)), figmaValue: "(missing in snapshot)", known: null }); continue; }
+  check("a", cssName, `spacing/${fname}`, snap.space[fname]);
+}
+
+/* ── shadows (compared layer by layer, light only) ──────────────────────── */
+
+function splitTop(v) { // split on commas outside parentheses
+  const out = []; let depth = 0, cur = "";
+  for (const ch of v) { if (ch === "(") depth++; if (ch === ")") depth--; if (ch === "," && depth === 0) { out.push(cur.trim()); cur = ""; } else cur += ch; }
+  if (cur.trim()) out.push(cur.trim()); return out;
+}
+function colourKey(c) { const m = c.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)$/i); return m ? `${m[1]}-${m[2]}-${m[3]}@${+(m[4] ?? 1)}` : c; }
+function shadowKey(layers) { return layers.map((l) => `${l[0]} ${l[1]} ${l[2]} ${l[3]} ${l[4]}`).sort().join(" | "); }
+function cssShadow(v) {
+  const layers = [];
+  for (const part of splitTop(v)) {
+    const m = part.match(/^(-?[\d.]+)(?:px)?\s+(-?[\d.]+)(?:px)?\s+(-?[\d.]+)(?:px)?\s+(-?[\d.]+)(?:px)?\s+(rgba?\([^)]*\)|#[0-9a-f]+)$/i);
+    if (!m) return null;
+    layers.push([+m[1], +m[2], +m[3], +m[4], colourKey(m[5])]);
+  }
+  return shadowKey(layers);
+}
+for (const size of ["xs", "sm", "md", "lg", "xl"]) {
+  const f = snap.shadows?.[size];
+  if (!f) continue;
+  const key = `[a] shadow-${size}`;
+  compared++;
+  const raw = resolve("a", `shadow-${size}`);
+  const a = raw === undefined ? "(missing in code)" : cssShadow(raw) ?? `(unreadable: ${raw})`;
+  const b = shadowKey(f.layers.map((l) => [...l, colourKey(f.color)]));
+  if (a === b) continue;
+  const known = KNOWN.find((k) => k.key === key && k.code === a && k.figma === b);
+  const row = { key, figma: `shadows/${size}`, code: a, figmaValue: b, known: known?.reason ?? null };
+  rows.push(row);
+  (known ? knownHit : failures).push(row);
 }
 
 /* ── report ─────────────────────────────────────────────────────────────── */

@@ -36,6 +36,9 @@
   .toggle button{border:0;background:var(--panel);padding:7px 14px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink2)}
   .toggle button[aria-pressed=true]{background:var(--color-primary);color:var(--color-primary-fg)}
   /* utility row: colour mode switch first, then the repo link (compact, labelled) */
+  .runbtn{display:inline-block;padding:7px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600;font-size:12.5px}
+  .runbtn:hover{border-color:var(--ink3)}
+  .runbtn:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}
   .util{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin:14px 0 18px}
   .util .repo{margin:0}
   .mode{display:inline-flex;gap:2px;padding:2px;border-radius:999px;background:var(--color-bg-muted);border:1px solid var(--line)}
@@ -145,8 +148,9 @@
     <p class="hint"><b>Days are a prop, not a constant</b> — Mon–Fri is the Surface A default, but a 21-calendar-day challenge can pass seven days without the strip and the challenge card disagreeing about what a week is.</p>
 
     <h2 id="drift">Drift check</h2>
-    <p class="muted">Is the code still the same as Figma? A script compares every shared token (colour per surface and theme, brand ramps, radius, charts, type) with a snapshot of Figma's variables and fails the build if they differ. This panel shows the last result.</p>
+    <p class="muted">Is the code still the same as Figma? A script compares every shared token (colour per surface and theme, brand ramps, radius, charts, type, spacing, shadows) with a snapshot of Figma's variables and fails the build if they differ. This panel shows the last result.</p>
     <div id="drift-panel" class="hint">Loading the drift report…</div>
+    <p class="hint" id="drift-run"><a class="runbtn" href="https://github.com/GreenTogetherApp/green-together-design-system/actions/workflows/guardrails.yml" target="_blank" rel="noopener">Run the check on GitHub ↗</a> <span id="drift-last"></span><br>Opens the Actions page; press "Run workflow" (needs write access). A web page cannot run it for you, because the run needs the repo and a login.</p>
     <p class="hint">Run it yourself: <code>npm run drift</code>. After a Figma change, refresh <code>figma-snapshot.json</code> and run <code>npm run drift:report</code>. It checks the snapshot, so a Figma edit shows up once the snapshot is refreshed.</p>
 
     <h2 id="a11y">Accessibility</h2>
@@ -314,6 +318,12 @@ fetch('drift-report.json').then(r=>r.json()).then(function(d){
   var rows=(d.rows||[]).map(function(r){return '<tr><td><code>'+esc(r.key)+'</code></td><td>'+esc(r.code)+'</td><td>'+esc(r.figmaValue)+'</td><td>'+(r.known?'<span class="note">known</span> '+esc(r.known):'<b style="color:#b42318">drifted</b>')+'</td></tr>';}).join('');
   el.innerHTML='<p style="margin:0 0 10px"><b style="background:'+(ok?'#e7f6ec':'#fde8e8')+';color:'+(ok?'#137a3a':'#b42318')+';padding:3px 9px;border-radius:999px">'+(ok?'In step':'Drifted: '+d.drifted)+'</b> &nbsp; '+d.compared+' tokens compared with the Figma snapshot of '+esc(d.snapshot)+'. '+d.known+' known difference'+(d.known===1?'':'s')+' carried on purpose.</p>'+(rows?'<table style="border-collapse:collapse;font-size:12.5px;width:100%"><thead><tr style="text-align:left"><th>Token</th><th>Code</th><th>Figma</th><th>Why</th></tr></thead><tbody>'+rows+'</tbody></table>':'');
 }).catch(function(e){document.getElementById('drift-panel').textContent=(location.protocol==='file:')?'The drift report loads on the live page (it cannot be read from a local file).':'Could not show the drift report: '+e.message;});
+// last CI run on main (public repo, no token); fails quietly
+fetch('https://api.github.com/repos/GreenTogetherApp/green-together-design-system/actions/workflows/guardrails.yml/runs?branch=main&per_page=1').then(r=>r.json()).then(function(j){
+  var r=(j.workflow_runs||[])[0]; if(!r) return;
+  var ok=r.conclusion==='success', when=new Date(r.updated_at).toISOString().slice(0,10);
+  document.getElementById('drift-last').innerHTML='Last run on main: <b style="color:'+(ok?'#137a3a':'#b42318')+'">'+(ok?'passed':esc(r.conclusion||r.status))+'</b>, '+when+' (<a href="'+esc(r.html_url)+'" target="_blank" rel="noopener">details</a>)';
+}).catch(function(){});
 </script>
 </body>
 </html>

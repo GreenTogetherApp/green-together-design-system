@@ -11,6 +11,7 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:   # lets someone press "Run workflow" on the Actions page (linked from the demo's Drift panel)
 
 jobs:
   guardrails:
